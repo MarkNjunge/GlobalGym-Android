@@ -10,23 +10,36 @@
         <item name="android:fontFamily">@font/kanit</item>
     </style>
 
+    <style name="AppThemeNoBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/colorPrimaryDark</item>
+        <item name="android:fontFamily">@font/kanit</item>
+    </style>
+
     <style name="ButtonPrimary">
+        <item name="android:layout_height">56dp</item>
         <item name="android:backgroundTint">@color/colorAccent</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
 
     <style name="ButtonSecondary">
+        <item name="android:layout_height">56dp</item>
         <item name="android:background">@drawable/button_secondary_background</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:elevation">4dp</item>
     </style>
 
     <style name="ButtonDanger">
+        <item name="android:layout_height">56dp</item>
         <item name="android:backgroundTint">@color/colorAccentAlt</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
 
     <style name="TextInput">
+        <item name="android:layout_height">48dp</item>
         <item name="android:background">@drawable/text_input_backround</item>
         <item name="android:elevation">4dp</item>
         <item name="android:padding">8dp</item>

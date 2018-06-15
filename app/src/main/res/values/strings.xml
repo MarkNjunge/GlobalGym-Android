@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">GlobalGym</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="create_account">Create account</string>
+    <string name="sign_up">Sign up</string>
+    <string name="retype_password">Retype password</string>
+    <string name="forgot_password">Forgot password</string>
+    <string name="app_icon">App icon</string>
 </resources>

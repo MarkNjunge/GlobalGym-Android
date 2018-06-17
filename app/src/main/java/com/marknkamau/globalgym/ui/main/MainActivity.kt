@@ -6,6 +6,7 @@ import android.os.Bundle
 import com.marknkamau.globalgym.App
 import com.marknkamau.globalgym.R
 import com.marknkamau.globalgym.ui.login.LoginActivity
+import com.marknkamau.globalgym.ui.register.RegisterActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), MainView {
@@ -15,7 +16,7 @@ class MainActivity : AppCompatActivity(), MainView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        presenter = MainPresenter(this, App.authService)
+        presenter = MainPresenter(this, App.authService, App.networkProvider)
 
         button.setOnClickListener {
             App.authService.signOut()
@@ -29,6 +30,11 @@ class MainActivity : AppCompatActivity(), MainView {
 
     override fun onNotSignedIn() {
         startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+        finish()
+    }
+
+    override fun onNotRegistered() {
+        startActivity(Intent(this@MainActivity, RegisterActivity::class.java))
         finish()
     }
 }

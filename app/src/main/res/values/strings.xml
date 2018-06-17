@@ -8,4 +8,14 @@
     <string name="retype_password">Retype password</string>
     <string name="forgot_password">Forgot password</string>
     <string name="app_icon">App icon</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="phone_number">Phone number</string>
+    <string name="year_of_birth">Year of birth</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
+    <string name="weight">Weight</string>
+    <string name="target_weight">Target Weight</string>
+    <string name="proceed">Continue</string>
+    <string name="country">Country</string>
 </resources>

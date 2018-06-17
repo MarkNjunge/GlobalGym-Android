@@ -9,6 +9,7 @@ import com.marknkamau.globalgym.App
 import com.marknkamau.globalgym.R
 import com.marknkamau.globalgym.ui.login.LoginActivity
 import com.marknkamau.globalgym.ui.main.MainActivity
+import com.marknkamau.globalgym.ui.register.RegisterActivity
 import com.marknkamau.globalgym.utils.trimmedText
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
@@ -37,7 +38,7 @@ class SignUpActivity : AppCompatActivity(), SignUpView {
     }
 
     override fun onSignedUp() {
-        startActivity(Intent(this@SignUpActivity, MainActivity::class.java))
+        startActivity(Intent(this@SignUpActivity, RegisterActivity::class.java))
         finish()
     }
 

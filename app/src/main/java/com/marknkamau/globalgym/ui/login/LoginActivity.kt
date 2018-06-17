@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.marknkamau.globalgym.App
 import com.marknkamau.globalgym.R
 import com.marknkamau.globalgym.ui.main.MainActivity
+import com.marknkamau.globalgym.ui.register.RegisterActivity
 import com.marknkamau.globalgym.ui.signup.SignUpActivity
 import com.marknkamau.globalgym.utils.trimmedText
 import kotlinx.android.synthetic.main.activity_login.*
@@ -19,7 +20,7 @@ class LoginActivity : AppCompatActivity(), LoginView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        presenter = LoginPresenter(this, App.authService)
+        presenter = LoginPresenter(this, App.authService, App.networkProvider)
 
         tvCreateAccount.setOnClickListener {
             startActivity(Intent(this@LoginActivity, SignUpActivity::class.java))
@@ -41,6 +42,11 @@ class LoginActivity : AppCompatActivity(), LoginView {
 
     override fun onLoggedIn() {
         startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+        finish()
+    }
+
+    override fun onNotRegistered() {
+        startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
         finish()
     }
 

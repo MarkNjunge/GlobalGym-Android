@@ -1,4 +1,4 @@
-package com.marknkamau.globalgym.ui.login
+package com.marknkamau.globalgym.ui.register
 
 /**
  * Created by MarkNjunge.
@@ -6,8 +6,7 @@ package com.marknkamau.globalgym.ui.login
  * https://github.com/MarkNjunge
  */
 
-interface LoginView {
+interface RegisterView {
     fun displayMessage(message: String)
-    fun onLoggedIn()
-    fun onNotRegistered()
+    fun onRegistered()
 }

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.marknkamau.globalgym">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -23,6 +25,7 @@
         <activity
             android:name=".ui.signup.SignUpActivity"
             android:theme="@style/AppThemeNoBar" />
+        <activity android:name=".ui.register.RegisterActivity"></activity>
     </application>
 
 </manifest>

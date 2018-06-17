@@ -21,7 +21,5 @@
     <string name="workouts">Workouts</string>
     <string name="gyms">Gyms</string>
     <string name="profile">Profile</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="settings">Settings</string>
 </resources>

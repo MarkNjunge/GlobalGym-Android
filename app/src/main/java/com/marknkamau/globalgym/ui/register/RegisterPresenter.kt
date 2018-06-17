@@ -30,12 +30,18 @@ class RegisterPresenter(private val view: RegisterView,
         if (!authService.isSignedIn())
             return
 
+        val profileImage = if(gender == "Male"){
+            "https://firebasestorage.googleapis.com/v0/b/globalgym-65a9a.appspot.com/o/profile_male.jpg?alt=media&token=dfb93938-171a-4cf7-8c72-177f09821805"
+        }else{
+            "https://firebasestorage.googleapis.com/v0/b/globalgym-65a9a.appspot.com/o/profile_female.jpg?alt=media&token=89a66237-e4ea-45d8-b56b-2994319b7b76"
+        }
+
         val user = User(authService.getUser()!!.id,
                 firstName,
                 lastName,
                 authService.getUser()!!.email,
                 phone,
-                "http://via.placeholder.com/350x350",
+                profileImage,
                 year,
                 country,
                 gender.first().toString(),

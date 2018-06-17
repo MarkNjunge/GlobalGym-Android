@@ -25,7 +25,7 @@
         <activity
             android:name=".ui.signup.SignUpActivity"
             android:theme="@style/AppThemeNoBar" />
-        <activity android:name=".ui.register.RegisterActivity"></activity>
+        <activity android:name=".ui.register.RegisterActivity" />
     </application>
 
 </manifest>

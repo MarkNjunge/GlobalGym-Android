@@ -18,4 +18,10 @@
     <string name="target_weight">Target Weight</string>
     <string name="proceed">Continue</string>
     <string name="country">Country</string>
+    <string name="workouts">Workouts</string>
+    <string name="gyms">Gyms</string>
+    <string name="profile">Profile</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

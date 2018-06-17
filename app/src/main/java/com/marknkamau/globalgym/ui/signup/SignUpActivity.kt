@@ -8,7 +8,6 @@ import android.widget.Toast
 import com.marknkamau.globalgym.App
 import com.marknkamau.globalgym.R
 import com.marknkamau.globalgym.ui.login.LoginActivity
-import com.marknkamau.globalgym.ui.main.MainActivity
 import com.marknkamau.globalgym.ui.register.RegisterActivity
 import com.marknkamau.globalgym.utils.trimmedText
 import kotlinx.android.synthetic.main.activity_sign_up.*

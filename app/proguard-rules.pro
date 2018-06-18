@@ -49,3 +49,8 @@
     <fields>;
 }
 -keepnames @com.squareup.moshi.JsonClass class *
+
+############################
+# Paper
+############################
+-keep class com.marknkamau.globalgym.data.models.** { *; }

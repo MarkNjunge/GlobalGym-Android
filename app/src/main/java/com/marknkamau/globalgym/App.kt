@@ -3,7 +3,10 @@ package com.marknkamau.globalgym
 import android.app.Application
 import com.marknkamau.globalgym.data.auth.AuthService
 import com.marknkamau.globalgym.data.auth.AuthServiceImpl
+import com.marknkamau.globalgym.data.local.PaperService
+import com.marknkamau.globalgym.data.local.PaperServiceImpl
 import com.marknkamau.globalgym.data.remote.NetworkProvider
+import io.paperdb.Paper
 import timber.log.Timber
 
 /**
@@ -17,6 +20,7 @@ class App : Application() {
     companion object {
         lateinit var authService: AuthService
         lateinit var networkProvider: NetworkProvider
+        lateinit var paperService: PaperService
     }
 
     override fun onCreate() {
@@ -30,6 +34,7 @@ class App : Application() {
 
         authService = AuthServiceImpl()
         networkProvider = NetworkProvider()
+        paperService = PaperServiceImpl(this)
     }
 
 }

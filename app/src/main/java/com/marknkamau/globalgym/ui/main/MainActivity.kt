@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity(), MainView {
             false
         }
 
-        presenter = MainPresenter(this, App.authService, App.networkProvider)
+        presenter = MainPresenter(this, App.authService, App.networkProvider, App.paperService)
     }
 
     override fun onResume() {

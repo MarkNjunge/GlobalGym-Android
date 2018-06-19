@@ -1,15 +1,18 @@
 package com.marknkamau.globalgym.ui.gyms
 
+import android.Manifest
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
 import com.marknkamau.globalgym.R
+import com.tbruyelle.rxpermissions2.RxPermissions
 
 class GymsMapFragment : Fragment(), OnMapReadyCallback {
 
@@ -20,8 +23,17 @@ class GymsMapFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val fragment:SupportMapFragment = childFragmentManager.findFragmentById(R.id.mapGyms) as SupportMapFragment
-        fragment.getMapAsync(this)
+        val rxPermissions = RxPermissions(activity!!)
+        rxPermissions.request(Manifest.permission.ACCESS_FINE_LOCATION)
+                .subscribe { granted: Boolean ->
+                    if (granted) {
+                        val fragment: SupportMapFragment = childFragmentManager.findFragmentById(R.id.mapGyms) as SupportMapFragment
+                        fragment.getMapAsync(this)
+                    } else {
+                        Toast.makeText(activity, "Location permission is required", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
     }
 
     override fun onMapReady(googleMap: GoogleMap) {

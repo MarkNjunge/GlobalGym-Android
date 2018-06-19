@@ -8,14 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.bumptech.glide.Glide
 import com.marknkamau.globalgym.App
 
 import com.marknkamau.globalgym.R
 import com.marknkamau.globalgym.data.models.User
 import com.marknkamau.globalgym.ui.login.LoginActivity
+import com.marknkamau.globalgym.utils.GlideApp
 import kotlinx.android.synthetic.main.fragment_profile.*
-import timber.log.Timber
 
 class ProfileFragment : Fragment(), ProfileView {
 
@@ -47,6 +46,12 @@ class ProfileFragment : Fragment(), ProfileView {
         presenter.getUser()
     }
 
+    override fun onPause() {
+        super.onPause()
+
+        presenter.dispose()
+    }
+
     override fun displayMessage(message: String) {
         Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
     }
@@ -62,9 +67,11 @@ class ProfileFragment : Fragment(), ProfileView {
         tvWeight.text = user.weight.toString() + "kg"
         tvTargetWeight.text = user.targetWeight.toString() + "kg"
 
-        Glide.with(this@ProfileFragment)
+        GlideApp.with(this@ProfileFragment)
                 .load(user.profilePhoto)
+                .circleCrop()
                 .into(imgProfileIcon)
+
     }
 
 }

@@ -4,6 +4,7 @@ import com.marknkamau.globalgym.data.auth.AuthService
 import com.marknkamau.globalgym.data.local.PaperService
 import com.marknkamau.globalgym.data.remote.NetworkProvider
 import com.marknkamau.globalgym.utils.RxUtils
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 
 /**
@@ -17,12 +18,19 @@ class ProfilePresenter(private val view: ProfileView,
                        private val paperService: PaperService,
                        private val networkProvider: NetworkProvider) {
 
+
+    private val compositeDisposable = CompositeDisposable()
+
+    fun dispose() {
+        compositeDisposable.dispose()
+    }
+
     fun getUser() {
         paperService.getUser()?.let {
             view.onUserRetrieved(it)
         }
 
-        networkProvider.apiService.getUser(authService.getUser()!!.id)
+        val disposable = networkProvider.apiService.getUser(authService.getUser()!!.id)
                 .compose(RxUtils.applySingleSchedulers())
                 .subscribeBy(
                         onSuccess = { user ->
@@ -34,6 +42,8 @@ class ProfilePresenter(private val view: ProfileView,
                                     ?: "There was an error retrieving your profile")
                         }
                 )
+
+        compositeDisposable.add(disposable)
     }
 
 }

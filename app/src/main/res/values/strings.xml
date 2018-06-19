@@ -22,4 +22,6 @@
     <string name="gyms">Gyms</string>
     <string name="profile">Profile</string>
     <string name="settings">Settings</string>
+    <string name="gender">Gender</string>
+    <string name="profile_icon_content_description">User\'s profile icon</string>
 </resources>

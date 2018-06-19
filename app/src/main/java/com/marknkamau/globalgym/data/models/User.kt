@@ -12,4 +12,7 @@ data class User(
         val gender: String,
         val weight: Int,
         val targetWeight: Int
-)
+) {
+    val genderFull: String
+        get() = if (gender == "M") "Male" else "Female"
+}

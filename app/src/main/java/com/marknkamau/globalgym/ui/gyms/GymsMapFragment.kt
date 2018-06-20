@@ -1,6 +1,7 @@
 package com.marknkamau.globalgym.ui.gyms
 
 import android.Manifest
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +13,8 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
 import com.marknkamau.globalgym.R
+import com.marknkamau.globalgym.data.models.Cords
+import com.marknkamau.globalgym.data.models.Gym
 import com.tbruyelle.rxpermissions2.RxPermissions
 
 class GymsMapFragment : Fragment(), OnMapReadyCallback {
@@ -30,7 +33,7 @@ class GymsMapFragment : Fragment(), OnMapReadyCallback {
                         val fragment: SupportMapFragment = childFragmentManager.findFragmentById(R.id.mapGyms) as SupportMapFragment
                         fragment.getMapAsync(this)
                     } else {
-                        Toast.makeText(activity, "Location permission is required", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Location permission is required", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -38,8 +41,19 @@ class GymsMapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         val sydney = LatLng(-34.0, 151.0)
-        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+        val marker = googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+
+        val gym = Gym("abc", "Pam Colding Gym", "http://via.placeholder.com/350x350", "0724",
+                "www.pamcolding.com", "5:30AM", "9:00PM", "Kenya", "Nairobi", Cords(1L, 1L))
+
+        val infoWindowAdapter = GymInfoWindowAdapter(context!!) {
+            Toast.makeText(context, "Selected gym", Toast.LENGTH_SHORT).show();
+        }
+        googleMap.setInfoWindowAdapter(infoWindowAdapter)
+
+        marker.tag = gym
+        marker.showInfoWindow()
     }
 
 }

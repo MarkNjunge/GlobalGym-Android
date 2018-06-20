@@ -47,8 +47,9 @@ class GymsMapFragment : Fragment(), OnMapReadyCallback {
         val gym = Gym("abc", "Pam Colding Gym", "http://via.placeholder.com/350x350", "0724",
                 "www.pamcolding.com", "5:30AM", "9:00PM", "Kenya", "Nairobi", Cords(1L, 1L))
 
-        val infoWindowAdapter = GymInfoWindowAdapter(context!!) {
-            Toast.makeText(context, "Selected gym", Toast.LENGTH_SHORT).show();
+        val infoWindowAdapter = GymInfoWindowAdapter(context!!)
+        googleMap.setOnInfoWindowClickListener {
+            Toast.makeText(context, "Clicked!", Toast.LENGTH_SHORT).show();
         }
         googleMap.setInfoWindowAdapter(infoWindowAdapter)
 

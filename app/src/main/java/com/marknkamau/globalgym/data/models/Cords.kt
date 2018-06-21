@@ -6,4 +6,4 @@ package com.marknkamau.globalgym.data.models
  * https://github.com/MarkNjunge
  */
 
-data class Cords(val lat: Long, val lng: Long)
+data class Cords(val lat: Double, val lng: Double)

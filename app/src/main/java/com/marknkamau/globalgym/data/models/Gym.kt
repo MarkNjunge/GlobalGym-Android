@@ -15,4 +15,5 @@ data class Gym(val gymId: String,
                val closeTime: String,
                val country: String,
                val city: String,
+               val images: List<String>,
                val cords: Cords)

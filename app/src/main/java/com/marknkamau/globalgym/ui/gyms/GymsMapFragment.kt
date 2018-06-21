@@ -8,24 +8,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.marknkamau.globalgym.App
 
 import com.marknkamau.globalgym.R
 import com.marknkamau.globalgym.data.models.Cords
 import com.marknkamau.globalgym.data.models.Gym
 import com.marknkamau.globalgym.utils.RxUtils
 import com.marknkamau.globalgym.utils.maps.LocationUtils
+import com.marknkamau.globalgym.utils.maps.MapUtils
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.rxkotlin.subscribeBy
 import timber.log.Timber
 
-class GymsMapFragment : Fragment(), OnMapReadyCallback {
-
+class GymsMapFragment : Fragment(), OnMapReadyCallback, GymsView {
     private lateinit var locationUtils: LocationUtils
+    private lateinit var mapUtils: MapUtils
 
+    private lateinit var presenter: GymsPresenter
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_gyms_map, container, false)
     }
@@ -44,13 +46,12 @@ class GymsMapFragment : Fragment(), OnMapReadyCallback {
                     }
                 }
 
+        presenter = GymsPresenter(this, App.networkProvider.apiService)
+
     }
 
     @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
-        val gym = Gym("abc", "Pam Colding Gym", "http://via.placeholder.com/350x350", "0724",
-                "www.pamcolding.com", "5:30AM", "9:00PM", "Kenya", "Nairobi", Cords(-1.297433, 36.793425))
-
 //        googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style))
         googleMap.isMyLocationEnabled = true
         googleMap.uiSettings.run {
@@ -58,17 +59,15 @@ class GymsMapFragment : Fragment(), OnMapReadyCallback {
             isMapToolbarEnabled = false
         }
 
-        val gymLoc = LatLng(gym.cords.lat, gym.cords.lng)
-        val marker = googleMap.addMarker(MarkerOptions().position(gymLoc).title(gym.name))
-        marker.tag = gym
+        locationUtils = LocationUtils(context!!)
+        mapUtils = MapUtils(googleMap)
 
         val infoWindowAdapter = GymInfoWindowAdapter(context!!)
         googleMap.setInfoWindowAdapter(infoWindowAdapter)
-        googleMap.setOnInfoWindowClickListener {
-            Toast.makeText(context, "Clicked!", Toast.LENGTH_SHORT).show()
+        googleMap.setOnInfoWindowClickListener { marker ->
+            val gym = marker.tag as Gym
+            Toast.makeText(context, "Clicked on ${gym.name}", Toast.LENGTH_SHORT).show()
         }
-
-        locationUtils = LocationUtils(context!!)
 
         locationUtils.getCurrentLocation()
                 .compose(RxUtils.applySingleSchedulers())
@@ -76,15 +75,25 @@ class GymsMapFragment : Fragment(), OnMapReadyCallback {
                     locationUtils.reverseGeocode(location.latitude, location.longitude)
                 }
                 .subscribeBy(
-                        onSuccess = {address ->
+                        onSuccess = { address ->
                             Timber.d("${address.latitude},${address.longitude}")
-                            Timber.d(address.countryName)
                             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(address.latitude, address.longitude), 13f))
+                            presenter.getGyms(address.latitude, address.longitude, address.countryName)
                         },
                         onError = { exception ->
                             Timber.e(exception)
                         }
                 )
+    }
+
+    override fun displayMessage(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onGymsRetrieved(gyms: List<Gym>) {
+        gyms.forEach { gym ->
+            mapUtils.addGymMarker(gym)
+        }
     }
 
 }

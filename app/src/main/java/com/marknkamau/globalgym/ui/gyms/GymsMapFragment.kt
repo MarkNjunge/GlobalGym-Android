@@ -2,6 +2,7 @@ package com.marknkamau.globalgym.ui.gyms
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -10,12 +11,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.marknkamau.globalgym.App
 
 import com.marknkamau.globalgym.R
-import com.marknkamau.globalgym.data.models.Cords
 import com.marknkamau.globalgym.data.models.Gym
+import com.marknkamau.globalgym.ui.gymdetail.GymDetailsActivity
 import com.marknkamau.globalgym.utils.RxUtils
 import com.marknkamau.globalgym.utils.maps.LocationUtils
 import com.marknkamau.globalgym.utils.maps.MapUtils
@@ -66,7 +66,9 @@ class GymsMapFragment : Fragment(), OnMapReadyCallback, GymsView {
         googleMap.setInfoWindowAdapter(infoWindowAdapter)
         googleMap.setOnInfoWindowClickListener { marker ->
             val gym = marker.tag as Gym
-            Toast.makeText(context, "Clicked on ${gym.name}", Toast.LENGTH_SHORT).show()
+            val intent = Intent(context, GymDetailsActivity::class.java)
+            intent.putExtra(GymDetailsActivity.GYM_KEY, gym)
+            startActivity(intent)
         }
 
         locationUtils.getCurrentLocation()

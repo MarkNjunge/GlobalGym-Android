@@ -21,6 +21,7 @@ import com.marknkamau.globalgym.utils.maps.LocationUtils
 import com.marknkamau.globalgym.utils.maps.MapUtils
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.rxkotlin.subscribeBy
+import kotlinx.android.synthetic.main.fragment_gyms_map.*
 import timber.log.Timber
 
 class GymsMapFragment : Fragment(), OnMapReadyCallback, GymsView {
@@ -93,6 +94,7 @@ class GymsMapFragment : Fragment(), OnMapReadyCallback, GymsView {
     }
 
     override fun onGymsRetrieved(gyms: List<Gym>) {
+        pbLoading.visibility = View.GONE
         gyms.forEach { gym ->
             mapUtils.addGymMarker(gym)
         }

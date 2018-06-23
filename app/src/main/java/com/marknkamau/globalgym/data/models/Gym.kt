@@ -17,6 +17,7 @@ data class Gym(val gymId: String,
                val openTime: String,
                val closeTime: String,
                val country: String,
+               val instructors: List<String>,
                val city: String,
                val images: List<String>,
                val cords: Cords) : Parcelable {
@@ -29,11 +30,10 @@ data class Gym(val gymId: String,
             source.readString(),
             source.readString(),
             source.readString(),
+            source.createStringArrayList(),
             source.readString(),
             source.createStringArrayList(),
-            // Manually written
             source.readParcelable<Cords>(Cords::class.java.classLoader)
-//            source.readCords()
     )
 
     override fun describeContents() = 0
@@ -47,11 +47,10 @@ data class Gym(val gymId: String,
         writeString(openTime)
         writeString(closeTime)
         writeString(country)
+        writeStringList(instructors)
         writeString(city)
         writeStringList(images)
-        // Manually written
-        writeParcelable(cords, flags)
-//        writeCords(cords)
+        writeParcelable(cords, 0)
     }
 
     companion object {

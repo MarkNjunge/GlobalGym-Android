@@ -1,6 +1,7 @@
 package com.marknkamau.globalgym.data.remote
 
 import com.marknkamau.globalgym.data.models.Gym
+import com.marknkamau.globalgym.data.models.Instructor
 import com.marknkamau.globalgym.data.models.User
 import io.reactivex.Single
 import retrofit2.http.*
@@ -23,4 +24,7 @@ interface ApiService {
                       @Query("lat") lat: Double,
                       @Query("lng") lng: Double,
                       @Query("radius") radius: Int): Single<List<Gym>>
+
+    @POST("instructors")
+    fun getInstructors(@Body instructorIds: List<String>): Single<List<Instructor>>
 }

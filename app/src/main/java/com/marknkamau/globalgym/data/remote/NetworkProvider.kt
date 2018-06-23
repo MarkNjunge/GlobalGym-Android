@@ -11,8 +11,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import okhttp3.ResponseBody
 import retrofit2.Converter
-import timber.log.Timber
-import java.io.IOException
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -24,6 +23,7 @@ import java.io.IOException
 class NetworkProvider {
     private val BASE_URL = "https://global-gym.herokuapp.com/"
     val apiService: ApiService
+    private val TIMEOUT = 60L
     private var converter: Converter<ResponseBody, ApiError>
     private val adapter by lazy {
         val moshi = Moshi.Builder()
@@ -53,6 +53,9 @@ class NetworkProvider {
 
         return OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
+                .readTimeout(TIMEOUT, TimeUnit.SECONDS)
+                .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+                .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
                 .build()
     }
 

@@ -2,7 +2,7 @@ package com.marknkamau.globalgym.ui.profile
 
 import com.marknkamau.globalgym.data.auth.AuthService
 import com.marknkamau.globalgym.data.local.PaperService
-import com.marknkamau.globalgym.data.remote.NetworkProvider
+import com.marknkamau.globalgym.data.remote.ApiService
 import com.marknkamau.globalgym.utils.RxUtils
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
@@ -16,7 +16,7 @@ import io.reactivex.rxkotlin.subscribeBy
 class ProfilePresenter(private val view: ProfileView,
                        private val authService: AuthService,
                        private val paperService: PaperService,
-                       private val networkProvider: NetworkProvider) {
+                       private val apiService: ApiService) {
 
 
     private val compositeDisposable = CompositeDisposable()
@@ -30,7 +30,7 @@ class ProfilePresenter(private val view: ProfileView,
             view.onUserRetrieved(it)
         }
 
-        val disposable = networkProvider.apiService.getUser(authService.getUser()!!.id)
+        val disposable = apiService.getUser(authService.getUser()!!.id)
                 .compose(RxUtils.applySingleSchedulers())
                 .subscribeBy(
                         onSuccess = { user ->

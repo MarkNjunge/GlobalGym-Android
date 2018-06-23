@@ -2,7 +2,8 @@ package com.marknkamau.globalgym.ui.register
 
 import com.marknkamau.globalgym.data.auth.AuthService
 import com.marknkamau.globalgym.data.models.User
-import com.marknkamau.globalgym.data.remote.NetworkProvider
+import com.marknkamau.globalgym.data.remote.ApiService
+import com.marknkamau.globalgym.utils.NetworkUtils
 import com.marknkamau.globalgym.utils.RxUtils
 import io.reactivex.rxkotlin.subscribeBy
 import retrofit2.HttpException
@@ -16,7 +17,9 @@ import timber.log.Timber
 
 class RegisterPresenter(private val view: RegisterView,
                         private val authService: AuthService,
-                        private val networkProvider: NetworkProvider) {
+                        private val apiService: ApiService) {
+
+    private val networkUtils = NetworkUtils()
 
     fun registerUser(firstName: String,
                      lastName: String,
@@ -48,7 +51,7 @@ class RegisterPresenter(private val view: RegisterView,
                 weight,
                 targetWeight)
 
-        networkProvider.apiService.registerUser(user)
+        apiService.registerUser(user)
                 .compose(RxUtils.applySingleSchedulers())
                 .subscribeBy(
                         onSuccess = {
@@ -56,7 +59,7 @@ class RegisterPresenter(private val view: RegisterView,
                         },
                         onError = {
                             if (it is HttpException) {
-                                val apiError = networkProvider.parseError(it.response())
+                                val apiError = networkUtils.parseError(it.response())
                                 Timber.d(apiError.message)
                                 view.displayMessage(apiError.message)
                             } else {

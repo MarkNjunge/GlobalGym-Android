@@ -46,7 +46,7 @@ class GymsMapFragment : Fragment(), OnMapReadyCallback, GymsView {
                     }
                 }
 
-        presenter = GymsPresenter(this, App.networkProvider.apiService)
+        presenter = GymsPresenter(this, App.apiService)
 
     }
 

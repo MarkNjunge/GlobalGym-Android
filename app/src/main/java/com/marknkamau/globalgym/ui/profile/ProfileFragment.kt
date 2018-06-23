@@ -23,7 +23,7 @@ class ProfileFragment : Fragment(), ProfileView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        presenter = ProfilePresenter(this, App.authService, App.paperService, App.networkProvider)
+        presenter = ProfilePresenter(this, App.authService, App.paperService, App.apiService)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

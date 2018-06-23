@@ -33,7 +33,7 @@ class GymDetailsActivity : AppCompatActivity(), GymDetailView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_gym_details)
 
-        presenter = GymDetailPresenter(this, App.networkProvider.apiService)
+        presenter = GymDetailPresenter(this, App.apiService)
 
         val gym = intent.extras.get(GYM_KEY) as Gym
 

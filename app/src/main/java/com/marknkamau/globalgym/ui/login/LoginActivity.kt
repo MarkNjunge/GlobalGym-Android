@@ -20,7 +20,7 @@ class LoginActivity : AppCompatActivity(), LoginView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        presenter = LoginPresenter(this, App.authService, App.networkProvider)
+        presenter = LoginPresenter(this, App.authService, App.apiService)
 
         tvCreateAccount.setOnClickListener {
             startActivity(Intent(this@LoginActivity, SignUpActivity::class.java))

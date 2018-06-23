@@ -20,7 +20,7 @@ class RegisterActivity : AppCompatActivity(), RegisterView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        presenter = RegisterPresenter(this, App.authService, App.networkProvider)
+        presenter = RegisterPresenter(this, App.authService, App.apiService)
 
         btnContinue.setOnClickListener {
             registerUser()

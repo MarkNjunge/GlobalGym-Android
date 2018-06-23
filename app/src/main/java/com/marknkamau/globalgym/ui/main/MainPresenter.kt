@@ -2,7 +2,8 @@ package com.marknkamau.globalgym.ui.main
 
 import com.marknkamau.globalgym.data.auth.AuthService
 import com.marknkamau.globalgym.data.local.PaperService
-import com.marknkamau.globalgym.data.remote.NetworkProvider
+import com.marknkamau.globalgym.data.remote.ApiService
+import com.marknkamau.globalgym.utils.NetworkUtils
 import com.marknkamau.globalgym.utils.RxUtils
 import io.reactivex.rxkotlin.subscribeBy
 import retrofit2.HttpException
@@ -16,8 +17,10 @@ import timber.log.Timber
 
 class MainPresenter(private val view: MainView,
                     private val authService: AuthService,
-                    private val networkProvider: NetworkProvider,
+                    private val apiService: ApiService,
                     private val paperService: PaperService) {
+
+    private val networkUtils = NetworkUtils()
 
     fun checkIfSignedIn() {
         if (!authService.isSignedIn()) {
@@ -29,7 +32,7 @@ class MainPresenter(private val view: MainView,
 
     private fun checkIfRegistered() {
         if (paperService.getUser() == null) {
-            networkProvider.apiService.getUser(authService.getUser()!!.id)
+            apiService.getUser(authService.getUser()!!.id)
                     .compose(RxUtils.applySingleSchedulers())
                     .subscribeBy(
                             onSuccess = { user ->
@@ -38,7 +41,7 @@ class MainPresenter(private val view: MainView,
                             },
                             onError = {
                                 if (it is HttpException) {
-                                    val apiError = networkProvider.parseError(it.response())
+                                    val apiError = networkUtils.parseError(it.response())
                                     if (it.response().code() == 404) {
                                         view.onNotRegistered()
                                     }

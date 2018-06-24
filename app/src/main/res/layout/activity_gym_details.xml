@@ -102,7 +102,7 @@
 
                 <TextView
                     android:id="@+id/textView8"
-                    style="@style/TextContent_large"
+                    style="@style/TextContent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -129,7 +129,7 @@
 
                 <TextView
                     android:id="@+id/textView14"
-                    style="@style/TextContent_large"
+                    style="@style/TextContent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -156,7 +156,7 @@
 
                 <TextView
                     android:id="@+id/textView17"
-                    style="@style/TextContent_large"
+                    style="@style/TextContent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -182,7 +182,7 @@
 
                 <TextView
                     android:id="@+id/textView4"
-                    style="@style/TextContent_large"
+                    style="@style/TextContent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center"
@@ -218,7 +218,7 @@
 
         <TextView
             android:id="@+id/textView10"
-            style="@style/TextContent_large"
+            style="@style/TextContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -231,7 +231,7 @@
 
         <TextView
             android:id="@+id/tvOpenTime"
-            style="@style/TextContent_large"
+            style="@style/TextContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -243,7 +243,7 @@
 
         <TextView
             android:id="@+id/tvCloseTime"
-            style="@style/TextContent_large"
+            style="@style/TextContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -266,7 +266,7 @@
 
         <TextView
             android:id="@+id/tvPhone"
-            style="@style/TextContent_large"
+            style="@style/TextContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -281,7 +281,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:padding="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView4"
@@ -289,7 +288,7 @@
 
         <TextView
             android:id="@+id/tvWebsite"
-            style="@style/TextContent_large"
+            style="@style/TextContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -303,7 +302,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:padding="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView5"
@@ -311,7 +309,7 @@
 
         <TextView
             android:id="@+id/tvAddress"
-            style="@style/TextContent_large"
+            style="@style/TextContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -322,7 +320,7 @@
 
         <TextView
             android:id="@+id/tvLocation"
-            style="@style/TextContent_large"
+            style="@style/TextContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"

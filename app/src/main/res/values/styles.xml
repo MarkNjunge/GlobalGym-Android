@@ -62,4 +62,10 @@
         <item name="android:alpha">.87</item>
     </style>
 
+    <style name="TextContent">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:alpha">.87</item>
+    </style>
+
 </resources>

@@ -11,7 +11,8 @@ data class User(
         val country: String,
         val gender: String,
         val weight: Int,
-        val targetWeight: Int
+        val targetWeight: Int,
+        val preferredGym: String?
 ) {
     val genderFull: String
         get() = if (gender == "M") "Male" else "Female"

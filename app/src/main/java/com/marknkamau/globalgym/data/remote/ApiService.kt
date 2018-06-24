@@ -1,8 +1,7 @@
 package com.marknkamau.globalgym.data.remote
 
-import com.marknkamau.globalgym.data.models.Gym
-import com.marknkamau.globalgym.data.models.Instructor
-import com.marknkamau.globalgym.data.models.User
+import com.marknkamau.globalgym.data.models.*
+import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.http.*
 
@@ -27,4 +26,7 @@ interface ApiService {
 
     @POST("instructors")
     fun getInstructors(@Body instructorIds: List<String>): Single<List<Instructor>>
+
+    @POST("users/update")
+    fun updateUser(@Body userPreferredGym: UserPreferredGym): Single<ApiResponse>
 }

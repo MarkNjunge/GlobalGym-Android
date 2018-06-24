@@ -33,9 +33,9 @@ class GymDetailsActivity : AppCompatActivity(), GymDetailView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_gym_details)
 
-        presenter = GymDetailPresenter(this, App.apiService)
-
         val gym = intent.extras.get(GYM_KEY) as Gym
+
+        presenter = GymDetailPresenter(this, gym, App.paperService, App.apiService)
 
         tvGymTitle.text = gym.name
         tvOpenTime.text = gym.openTime
@@ -66,6 +66,10 @@ class GymDetailsActivity : AppCompatActivity(), GymDetailView {
             if (mapIntent.resolveActivity(packageManager) != null) {
                 startActivity(mapIntent)
             }
+        }
+
+        layoutPreferred.setOnClickListener {
+            presenter.setGymAsPreferred()
         }
 
         GlideApp.with(this)
@@ -99,5 +103,9 @@ class GymDetailsActivity : AppCompatActivity(), GymDetailView {
     override fun onInstructorsReceived(instructors: List<Instructor>) {
         adapter.setItems(instructors)
         Timber.d(adapter.itemCount.toString())
+    }
+
+    override fun onGymIsPreferred() {
+        imgPreferred.setImageResource(R.drawable.ic_favorite)
     }
 }

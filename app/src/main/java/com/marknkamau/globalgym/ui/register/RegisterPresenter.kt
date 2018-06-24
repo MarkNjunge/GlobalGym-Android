@@ -49,7 +49,8 @@ class RegisterPresenter(private val view: RegisterView,
                 country,
                 gender.first().toString(),
                 weight,
-                targetWeight)
+                targetWeight,
+                null)
 
         apiService.registerUser(user)
                 .compose(RxUtils.applySingleSchedulers())

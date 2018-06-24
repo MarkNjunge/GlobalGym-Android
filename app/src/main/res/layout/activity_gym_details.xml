@@ -87,7 +87,6 @@
                 android:id="@+id/layoutCall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -115,7 +114,6 @@
                 android:id="@+id/layoutWebsite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -143,7 +141,6 @@
                 android:id="@+id/layoutDirections"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -165,6 +162,31 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
                     android:text="@string/directions" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutPreferred"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imgPreferred"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:padding="8dp"
+                    app:srcCompat="@drawable/ic_favorite_border" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    style="@style/TextContent_large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center"
+                    android:text="Preferred" />
             </LinearLayout>
 
         </LinearLayout>

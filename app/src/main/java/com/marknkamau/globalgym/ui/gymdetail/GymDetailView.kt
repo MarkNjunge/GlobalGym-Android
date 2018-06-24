@@ -11,4 +11,5 @@ import com.marknkamau.globalgym.data.models.Instructor
 interface GymDetailView {
     fun displayMessage(message: String)
     fun onInstructorsReceived(instructors: List<Instructor>)
+    fun onGymIsPreferred()
 }

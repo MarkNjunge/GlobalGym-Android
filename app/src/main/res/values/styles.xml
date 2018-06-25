@@ -67,5 +67,8 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="android:alpha">.87</item>
     </style>
-
+    <style name="AlertDialogCustom" parent="@android:style/Theme.Material.Dialog">
+        <item name="android:background">@color/colorBackground</item>
+        <item name="android:textColor">@color/colorOffWhite</item>
+    </style>
 </resources>

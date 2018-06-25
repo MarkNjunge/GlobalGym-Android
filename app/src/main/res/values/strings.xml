@@ -36,4 +36,13 @@
     <string name="directions_icon">Directions icon</string>
     <string name="call">Call</string>
     <string name="instructors">Instructors</string>
+    <string name="exercise_title_hint">Title</string>
+    <string name="exercise_reps_hint">Reps</string>
+    <string name="exercise_sets_hint">Sets</string>
+    <string name="save_exercise">Save</string>
+    <string name="delete_exercise">Delete</string>
+    <string name="session_name">Session name</string>
+    <string name="exercises">Exercises</string>
+    <string name="save">Save</string>
+    <string name="add">Add</string>
 </resources>

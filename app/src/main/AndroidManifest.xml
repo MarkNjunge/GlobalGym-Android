@@ -33,6 +33,9 @@
             android:value="@string/google_maps_key" />
 
         <activity android:name=".ui.gymdetail.GymDetailsActivity" />
+        <activity
+            android:name=".ui.addworkout.AddWorkoutActivity"
+            android:parentActivityName=".ui.main.MainActivity" />
     </application>
 
 </manifest>

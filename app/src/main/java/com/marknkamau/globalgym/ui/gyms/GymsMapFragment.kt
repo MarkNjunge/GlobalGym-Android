@@ -51,6 +51,11 @@ class GymsMapFragment : Fragment(), OnMapReadyCallback, GymsView {
 
     }
 
+    override fun onStop() {
+        super.onStop()
+        presenter.dispose()
+    }
+
     @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
 //        googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style))

@@ -46,5 +46,10 @@
     <string name="save">Save</string>
     <string name="add">Add</string>
     <string name="gym_name_search_hint">Gym name</string>
-    <string name="select_gym_hint">Select gym...</string>
+    <string name="sets_resps_text">%s x %d sets</string>
+    <string name="select_gym_hint">Select gym…</string>
+    <string name="preferred">Preferred</string>
+    <string name="logout">Logout</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="open_hours_text">Open:</string>
 </resources>

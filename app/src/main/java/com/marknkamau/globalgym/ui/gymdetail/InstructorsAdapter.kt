@@ -1,5 +1,6 @@
 package com.marknkamau.globalgym.ui.gymdetail
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -37,6 +38,7 @@ class InstructorsAdapter(private val context: Context, private val onClick: (Ins
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        @SuppressLint("SetTextI18n")
         fun bind(context: Context, item: Instructor, onClick: (Instructor) -> Unit) = with(itemView) {
             GlideApp.with(context)
                     .load(item.profilePhoto)

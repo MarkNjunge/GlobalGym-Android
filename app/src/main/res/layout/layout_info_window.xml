@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
-        android:text="Open:"
+        android:text="@string/open_hours_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imgGymIcon"
         app:layout_constraintTop_toBottomOf="@+id/tvGymTitle" />

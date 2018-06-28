@@ -36,7 +36,7 @@ class AddWorkoutActivity : AppCompatActivity() {
 
         rvExercises.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
         rvExercises.addItemDecoration(DividerItemDecoration(this, LinearLayout.VERTICAL))
-        val exerciseAdapter = ExerciseAdapter { exercise ->
+        val exerciseAdapter = ExerciseAdapter(this) { exercise ->
             val args = Bundle()
             args.putParcelable(ExerciseDialog.EXERCISE_KEY, exercise)
             exerciseDialog.arguments = args

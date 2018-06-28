@@ -1,5 +1,6 @@
 package com.marknkamau.globalgym.ui.gyms
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.view.View
@@ -18,6 +19,7 @@ import com.mikhaellopez.circularimageview.CircularImageView
  */
 
 class GymInfoWindowAdapter(private val context: Context) : GoogleMap.InfoWindowAdapter {
+    @SuppressLint("SetTextI18n")
     override fun getInfoContents(marker: Marker): View {
         val view = (context as Activity).layoutInflater.inflate(R.layout.layout_info_window, null)
 

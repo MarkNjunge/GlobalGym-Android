@@ -1,5 +1,7 @@
 package com.marknkamau.globalgym.ui.addworkout
 
+import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +17,7 @@ import java.util.*
  * https://github.com/MarkNjunge
  */
 
-class ExerciseAdapter(private val onEditClick: (Exercise) -> Unit) : RecyclerView.Adapter<ExerciseAdapter.ViewHolder>() {
+class ExerciseAdapter(private val context: Context, private val onEditClick: (Exercise) -> Unit) : RecyclerView.Adapter<ExerciseAdapter.ViewHolder>() {
 
     private var data: List<Exercise> = ArrayList()
 
@@ -27,7 +29,7 @@ class ExerciseAdapter(private val onEditClick: (Exercise) -> Unit) : RecyclerVie
 
     override fun getItemCount() = data.size
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(data[position], onEditClick)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(context, data[position], onEditClick)
 
     fun setItems(data: List<Exercise>) {
         this.data = data
@@ -35,9 +37,9 @@ class ExerciseAdapter(private val onEditClick: (Exercise) -> Unit) : RecyclerVie
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(item: Exercise, onEditClick: (Exercise) -> Unit) = with(itemView) {
+        fun bind(context: Context, item: Exercise, onEditClick: (Exercise) -> Unit) = with(itemView) {
             tvExerciseTitle.text = item.title
-            tvRepsSets.text = "${item.reps} x ${item.sets} sets"
+            tvRepsSets.text = context.getString(R.string.sets_resps_text, item.reps, item.sets)
 
             imgEditExercise.setOnClickListener {
                 onEditClick(item)

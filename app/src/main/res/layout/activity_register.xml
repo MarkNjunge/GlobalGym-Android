@@ -139,7 +139,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="Gender"
+                android:text="@string/gender"
                 android:textColor="@android:color/white" />
 
             <RadioGroup

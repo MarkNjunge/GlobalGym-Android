@@ -65,7 +65,7 @@ class SelectGymActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         locationUtils = LocationUtils(this)
-        mapUtils = MapUtils(googleMap)
+        mapUtils = MapUtils(this, googleMap)
 
         val infoWindowAdapter = GymInfoWindowAdapter(this)
         googleMap.setInfoWindowAdapter(infoWindowAdapter)

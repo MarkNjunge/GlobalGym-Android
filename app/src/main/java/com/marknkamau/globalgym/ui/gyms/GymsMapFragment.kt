@@ -66,7 +66,7 @@ class GymsMapFragment : Fragment(), OnMapReadyCallback, GymsView {
         }
 
         locationUtils = LocationUtils(context!!)
-        mapUtils = MapUtils(googleMap)
+        mapUtils = MapUtils(requireContext(), googleMap)
 
         val infoWindowAdapter = GymInfoWindowAdapter(context!!)
         googleMap.setInfoWindowAdapter(infoWindowAdapter)

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context=".ui.addworkout.AddWorkoutActivity">
+    tools:context=".ui.activity.addworkout.AddWorkoutActivity">
 
     <EditText
         android:id="@+id/etSessionName"

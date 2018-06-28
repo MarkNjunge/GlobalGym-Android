@@ -36,6 +36,7 @@
         <activity
             android:name=".ui.addworkout.AddWorkoutActivity"
             android:parentActivityName=".ui.main.MainActivity" />
+        <activity android:name=".ui.selectGym.SelectGymActivity" />
     </application>
 
 </manifest>

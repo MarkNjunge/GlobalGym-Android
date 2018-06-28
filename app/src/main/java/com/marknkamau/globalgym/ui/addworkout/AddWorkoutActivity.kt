@@ -1,5 +1,6 @@
 package com.marknkamau.globalgym.ui.addworkout
 
+import android.app.Activity
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.marknkamau.globalgym.R
@@ -7,10 +8,13 @@ import kotlinx.android.synthetic.main.activity_add_workout.*
 import timber.log.Timber
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Intent
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.LinearLayout
 import com.marknkamau.globalgym.data.models.Exercise
+import com.marknkamau.globalgym.data.models.Gym
+import com.marknkamau.globalgym.ui.selectGym.SelectGymActivity
 import com.marknkamau.globalgym.utils.DateTime
 import java.util.*
 
@@ -18,6 +22,8 @@ class AddWorkoutActivity : AppCompatActivity() {
 
     private var dateTime = DateTime.now
     private val exercises = mutableListOf<Exercise>()
+    private var selectedGym: Gym? = null
+    private val LOCATION_REQUEST_ID = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,6 +80,19 @@ class AddWorkoutActivity : AppCompatActivity() {
         btnAddExercise.setOnClickListener {
             exerciseDialog.arguments = null
             exerciseDialog.show(supportFragmentManager, "exercise_dialog")
+        }
+
+        tvLocation.setOnClickListener {
+            val i = Intent(this, SelectGymActivity::class.java)
+            startActivityForResult(i, LOCATION_REQUEST_ID)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK && requestCode == LOCATION_REQUEST_ID) {
+            val gym = data?.getParcelableExtra<Gym>(SelectGymActivity.SELECTED_GYM)!!
+            selectedGym = gym
+            tvLocation.text = gym.name
         }
     }
 

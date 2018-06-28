@@ -45,4 +45,6 @@
     <string name="exercises">Exercises</string>
     <string name="save">Save</string>
     <string name="add">Add</string>
+    <string name="gym_name_search_hint">Gym name</string>
+    <string name="select_gym_hint">Select gym...</string>
 </resources>

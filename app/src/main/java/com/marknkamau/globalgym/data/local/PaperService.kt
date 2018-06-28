@@ -13,4 +13,6 @@ interface PaperService {
     fun saveUser(user: User)
     fun updateUser(user: User)
     fun deleteUser()
+    fun getLanguageCode(): String
+    fun saveLanguageCode(code: String)
 }

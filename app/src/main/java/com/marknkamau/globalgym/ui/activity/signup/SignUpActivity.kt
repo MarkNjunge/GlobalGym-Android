@@ -1,18 +1,18 @@
 package com.marknkamau.globalgym.ui.activity.signup
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.marknkamau.globalgym.App
 import com.marknkamau.globalgym.R
+import com.marknkamau.globalgym.ui.activity.BaseActivity
 import com.marknkamau.globalgym.ui.activity.login.LoginActivity
 import com.marknkamau.globalgym.ui.activity.register.RegisterActivity
 import com.marknkamau.globalgym.utils.trimmedText
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
-class SignUpActivity : AppCompatActivity(), SignUpView {
+class SignUpActivity : BaseActivity(), SignUpView {
     private lateinit var presenter: SignUpPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {

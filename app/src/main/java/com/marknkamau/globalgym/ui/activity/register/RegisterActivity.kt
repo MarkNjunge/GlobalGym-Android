@@ -1,18 +1,18 @@
 package com.marknkamau.globalgym.ui.activity.register
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.RadioButton
 import android.widget.Toast
 import com.marknkamau.globalgym.App
 import com.marknkamau.globalgym.R
+import com.marknkamau.globalgym.ui.activity.BaseActivity
 import com.marknkamau.globalgym.ui.activity.main.MainActivity
 import com.marknkamau.globalgym.utils.trimmedText
 import kotlinx.android.synthetic.main.activity_register.*
 
-class RegisterActivity : AppCompatActivity(), RegisterView {
+class RegisterActivity : BaseActivity(), RegisterView {
     private var country = ""
 
     private lateinit var presenter: RegisterPresenter

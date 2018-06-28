@@ -1,7 +1,6 @@
 package com.marknkamau.globalgym.ui.activity.addworkout
 
 import android.app.Activity
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.marknkamau.globalgym.R
 import kotlinx.android.synthetic.main.activity_add_workout.*
@@ -14,11 +13,12 @@ import android.support.v7.widget.LinearLayoutManager
 import android.widget.LinearLayout
 import com.marknkamau.globalgym.data.models.Exercise
 import com.marknkamau.globalgym.data.models.Gym
+import com.marknkamau.globalgym.ui.activity.BaseActivity
 import com.marknkamau.globalgym.ui.activity.selectGym.SelectGymActivity
 import com.marknkamau.globalgym.utils.DateTime
 import java.util.*
 
-class AddWorkoutActivity : AppCompatActivity() {
+class AddWorkoutActivity : BaseActivity() {
 
     private var dateTime = DateTime.now
     private val exercises = mutableListOf<Exercise>()

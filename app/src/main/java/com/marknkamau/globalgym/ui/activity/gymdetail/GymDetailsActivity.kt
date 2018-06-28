@@ -3,7 +3,6 @@ package com.marknkamau.globalgym.ui.activity.gymdetail
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
@@ -13,6 +12,7 @@ import com.marknkamau.globalgym.App
 import com.marknkamau.globalgym.R
 import com.marknkamau.globalgym.data.models.Gym
 import com.marknkamau.globalgym.data.models.Instructor
+import com.marknkamau.globalgym.ui.activity.BaseActivity
 import com.marknkamau.globalgym.utils.GlideApp
 import com.marknkamau.globalgym.utils.RxUtils
 import com.marknkamau.globalgym.utils.maps.LocationUtils
@@ -20,7 +20,7 @@ import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.activity_gym_details.*
 import timber.log.Timber
 
-class GymDetailsActivity : AppCompatActivity(), GymDetailView {
+class GymDetailsActivity : BaseActivity(), GymDetailView {
     companion object {
         const val GYM_KEY = "gym_key"
     }

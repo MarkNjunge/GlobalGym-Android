@@ -52,4 +52,6 @@
     <string name="logout">Logout</string>
     <string name="edit_profile">Edit profile</string>
     <string name="open_hours_text">Open:</string>
+    <string name="select_language">Select language</string>
+    <string name="general_settings">General settings</string>
 </resources>

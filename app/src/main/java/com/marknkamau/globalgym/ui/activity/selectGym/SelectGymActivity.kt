@@ -4,7 +4,6 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -17,6 +16,7 @@ import com.marknkamau.globalgym.App
 import com.marknkamau.globalgym.R
 import com.marknkamau.globalgym.data.models.Gym
 import com.marknkamau.globalgym.data.remote.ApiService
+import com.marknkamau.globalgym.ui.activity.BaseActivity
 import com.marknkamau.globalgym.ui.fragment.gyms.GymInfoWindowAdapter
 import com.marknkamau.globalgym.utils.RxUtils
 import com.marknkamau.globalgym.utils.maps.LocationUtils
@@ -26,7 +26,7 @@ import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.activity_select_gym.*
 import timber.log.Timber
 
-class SelectGymActivity : AppCompatActivity(), OnMapReadyCallback {
+class SelectGymActivity : BaseActivity(), OnMapReadyCallback {
 
     private lateinit var locationUtils: LocationUtils
     private lateinit var mapUtils: MapUtils

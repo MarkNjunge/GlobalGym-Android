@@ -3,17 +3,20 @@ package com.marknkamau.globalgym.ui.activity.main
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
+import android.view.Menu
+import android.view.MenuItem
 import com.marknkamau.globalgym.App
 import com.marknkamau.globalgym.R
+import com.marknkamau.globalgym.ui.activity.BaseActivity
 import com.marknkamau.globalgym.ui.fragment.gyms.GymsMapFragment
 import com.marknkamau.globalgym.ui.activity.login.LoginActivity
 import com.marknkamau.globalgym.ui.fragment.profile.ProfileFragment
 import com.marknkamau.globalgym.ui.activity.register.RegisterActivity
+import com.marknkamau.globalgym.ui.activity.settings.SettingsActivity
 import com.marknkamau.globalgym.ui.fragment.workouts.WorkoutFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), MainView {
+class MainActivity : BaseActivity(), MainView {
 
     private lateinit var presenter: MainPresenter
     private val fragments = mutableListOf<Fragment>()
@@ -55,6 +58,20 @@ class MainActivity : AppCompatActivity(), MainView {
         }
 
         presenter = MainPresenter(this, App.authService, App.apiService, App.paperService)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.toolbar_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.menu_settings -> {
+                startActivity(Intent(this, SettingsActivity::class.java))
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onResume() {

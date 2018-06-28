@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.marknkamau.globalgym.ui.activity.main.MainActivity">
+        <activity android:name=".ui.activity.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,22 +21,25 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.marknkamau.globalgym.ui.activity.login.LoginActivity"
+            android:name=".ui.activity.login.LoginActivity"
             android:theme="@style/AppThemeNoBar" />
         <activity
-            android:name="com.marknkamau.globalgym.ui.activity.signup.SignUpActivity"
+            android:name=".ui.activity.signup.SignUpActivity"
             android:theme="@style/AppThemeNoBar" />
-        <activity android:name="com.marknkamau.globalgym.ui.activity.register.RegisterActivity" />
+        <activity android:name=".ui.activity.register.RegisterActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name="com.marknkamau.globalgym.ui.activity.gymdetail.GymDetailsActivity" />
+        <activity android:name=".ui.activity.gymdetail.GymDetailsActivity" />
         <activity
-            android:name="com.marknkamau.globalgym.ui.activity.addworkout.AddWorkoutActivity"
-            android:parentActivityName="com.marknkamau.globalgym.ui.activity.main.MainActivity" />
-        <activity android:name="com.marknkamau.globalgym.ui.activity.selectGym.SelectGymActivity" />
+            android:name=".ui.activity.addworkout.AddWorkoutActivity"
+            android:parentActivityName=".ui.activity.main.MainActivity" />
+        <activity android:name=".ui.activity.selectGym.SelectGymActivity" />
+        <activity
+            android:name=".ui.activity.settings.SettingsActivity"
+            android:parentActivityName=".ui.activity.main.MainActivity" />
     </application>
 
 </manifest>

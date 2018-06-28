@@ -1,19 +1,19 @@
 package com.marknkamau.globalgym.ui.activity.login
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.marknkamau.globalgym.App
 import com.marknkamau.globalgym.R
+import com.marknkamau.globalgym.ui.activity.BaseActivity
 import com.marknkamau.globalgym.ui.activity.main.MainActivity
 import com.marknkamau.globalgym.ui.activity.register.RegisterActivity
 import com.marknkamau.globalgym.ui.activity.signup.SignUpActivity
 import com.marknkamau.globalgym.utils.trimmedText
 import kotlinx.android.synthetic.main.activity_login.*
 
-class LoginActivity : AppCompatActivity(), LoginView {
+class LoginActivity : BaseActivity(), LoginView {
     private lateinit var presenter: LoginPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -11,23 +11,28 @@ import android.content.Intent
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.LinearLayout
+import android.widget.Toast
+import com.marknkamau.globalgym.App
 import com.marknkamau.globalgym.data.models.Exercise
 import com.marknkamau.globalgym.data.models.Gym
 import com.marknkamau.globalgym.ui.activity.BaseActivity
 import com.marknkamau.globalgym.ui.activity.selectGym.SelectGymActivity
 import com.marknkamau.globalgym.utils.DateTime
+import com.marknkamau.globalgym.utils.trimmedText
 import java.util.*
 
-class AddWorkoutActivity : BaseActivity() {
-
+class AddSessionActivity : BaseActivity(), AddSessionView {
     private var dateTime = DateTime.now
     private val exercises = mutableListOf<Exercise>()
     private var selectedGym: Gym? = null
+    private lateinit var presenter: AddSessionPresenter
     private val LOCATION_REQUEST_ID = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_workout)
+
+        presenter = AddSessionPresenter(this, App.paperService, App.apiService)
 
         tvDate.text = dateTime.format(DateTime.APP_DATE_FORMAT)
         tvTime.text = dateTime.format(DateTime.APP_TIME_FORMAT)
@@ -86,6 +91,15 @@ class AddWorkoutActivity : BaseActivity() {
             val i = Intent(this, SelectGymActivity::class.java)
             startActivityForResult(i, LOCATION_REQUEST_ID)
         }
+
+        btnSave.setOnClickListener {
+            saveSession()
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        presenter.dispose()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -94,6 +108,15 @@ class AddWorkoutActivity : BaseActivity() {
             selectedGym = gym
             tvLocation.text = gym.name
         }
+    }
+
+    override fun displayMessage(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onSessionAdded() {
+        Toast.makeText(this, "Session added!", Toast.LENGTH_SHORT).show()
+        finish()
     }
 
     private fun showDatePicker() {
@@ -133,6 +156,14 @@ class AddWorkoutActivity : BaseActivity() {
         val timePickerDialog = TimePickerDialog(this, listener, hourOfDay, minute, true)
 
         timePickerDialog.show()
+    }
+
+    private fun saveSession() {
+        val sessionName = etSessionName.trimmedText
+
+        if (sessionName.isNotEmpty() || exercises.isNotEmpty() || selectedGym != null) {
+            presenter.addSession(sessionName, dateTime.unix, selectedGym!!, exercises)
+        }
     }
 
     private fun refreshStepIndices() {

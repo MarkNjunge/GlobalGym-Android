@@ -13,7 +13,7 @@ import com.marknkamau.globalgym.ui.activity.login.LoginActivity
 import com.marknkamau.globalgym.ui.fragment.profile.ProfileFragment
 import com.marknkamau.globalgym.ui.activity.register.RegisterActivity
 import com.marknkamau.globalgym.ui.activity.settings.SettingsActivity
-import com.marknkamau.globalgym.ui.fragment.workouts.WorkoutFragment
+import com.marknkamau.globalgym.ui.fragment.sessionsList.SessionsListFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity(), MainView {
@@ -29,7 +29,7 @@ class MainActivity : BaseActivity(), MainView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val workoutFragment = WorkoutFragment()
+        val workoutFragment = SessionsListFragment()
         val gymsMapFragment = GymsMapFragment()
         val profileFragment = ProfileFragment()
 

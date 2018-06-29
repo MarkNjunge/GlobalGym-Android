@@ -29,4 +29,10 @@ interface ApiService {
 
     @POST("users/update")
     fun updateUser(@Body userPreferredGym: UserPreferredGym): Single<ApiResponse>
+
+    @GET("sessions/{id}")
+    fun getSessions(@Path("id") userId: String): Single<List<Session>>
+
+    @POST("sessions/create")
+    fun createSession(@Body session: Session): Single<Session>
 }

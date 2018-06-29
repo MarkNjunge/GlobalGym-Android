@@ -12,6 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
+        app:civ_border_width="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/tvInstructorPhone"
         app:layout_constraintDimensionRatio="h,1:1"
         app:layout_constraintStart_toStartOf="parent"

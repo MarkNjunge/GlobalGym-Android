@@ -1,9 +1,9 @@
-package com.marknkamau.globalgym.ui.activity.addworkout
+package com.marknkamau.globalgym.ui.activity.addSession
 
 import android.app.Activity
 import android.os.Bundle
 import com.marknkamau.globalgym.R
-import kotlinx.android.synthetic.main.activity_add_workout.*
+import kotlinx.android.synthetic.main.activity_add_session.*
 import timber.log.Timber
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -30,7 +30,7 @@ class AddSessionActivity : BaseActivity(), AddSessionView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_workout)
+        setContentView(R.layout.activity_add_session)
 
         presenter = AddSessionPresenter(this, App.paperService, App.apiService)
 

@@ -21,7 +21,7 @@ class MainActivity : BaseActivity(), MainView {
     private lateinit var presenter: MainPresenter
     private val fragments = mutableListOf<Fragment>()
 
-    private val WORKOUT_TAG = "workout"
+    private val SESSION_TAG = "session"
     private val GYMS_TAG = "gyms"
     private val PROFILE_TAG = "profile"
 
@@ -29,20 +29,20 @@ class MainActivity : BaseActivity(), MainView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val workoutFragment = SessionsListFragment()
+        val sessionsListFragment = SessionsListFragment()
         val gymsMapFragment = GymsMapFragment()
         val profileFragment = ProfileFragment()
 
-        fragments.add(workoutFragment)
+        fragments.add(sessionsListFragment)
         fragments.add(gymsMapFragment)
         fragments.add(profileFragment)
 
-        switchFragment(0, WORKOUT_TAG)
+        switchFragment(0, SESSION_TAG)
 
         navigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.navigation_workouts -> {
-                    switchFragment(0, WORKOUT_TAG)
+                R.id.navigation_session -> {
+                    switchFragment(0, SESSION_TAG)
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.navigation_gyms -> {

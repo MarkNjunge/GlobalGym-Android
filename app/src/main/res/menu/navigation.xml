@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_workouts"
-        android:icon="@drawable/ic_workout"
-        android:title="@string/workouts" />
+        android:id="@+id/navigation_session"
+        android:icon="@drawable/ic_session"
+        android:title="@string/sessions" />
 
     <item
         android:id="@+id/navigation_gyms"

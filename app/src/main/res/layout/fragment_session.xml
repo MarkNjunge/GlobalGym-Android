@@ -13,13 +13,13 @@
         tools:listitem="@layout/item_session" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabAddWorkout"
+        android:id="@+id/fabAddSession"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:clickable="true"
-        android:src="@drawable/ic_add_workout"
+        android:src="@drawable/ic_add_session"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

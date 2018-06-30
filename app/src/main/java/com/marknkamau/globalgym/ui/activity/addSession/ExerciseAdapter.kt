@@ -1,4 +1,4 @@
-package com.marknkamau.globalgym.ui.activity.addworkout
+package com.marknkamau.globalgym.ui.activity.addSession
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView

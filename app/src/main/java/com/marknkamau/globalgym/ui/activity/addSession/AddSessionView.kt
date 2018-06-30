@@ -1,4 +1,4 @@
-package com.marknkamau.globalgym.ui.activity.addworkout
+package com.marknkamau.globalgym.ui.activity.addSession
 
 /**
  * Created by MarkNjunge.

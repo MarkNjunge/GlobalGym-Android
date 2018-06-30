@@ -14,9 +14,9 @@ import com.marknkamau.globalgym.App
 
 import com.marknkamau.globalgym.R
 import com.marknkamau.globalgym.data.models.Session
-import com.marknkamau.globalgym.ui.activity.addworkout.AddSessionActivity
+import com.marknkamau.globalgym.ui.activity.addSession.AddSessionActivity
 import com.marknkamau.globalgym.ui.activity.sessionDetails.SessionDetailsActivity
-import kotlinx.android.synthetic.main.fragment_workout.*
+import kotlinx.android.synthetic.main.fragment_session.*
 
 class SessionsListFragment : Fragment(), SessionsListView {
     private lateinit var presenter: SessionsListPresenter
@@ -29,13 +29,13 @@ class SessionsListFragment : Fragment(), SessionsListView {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_workout, container, false)
+        return inflater.inflate(R.layout.fragment_session, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fabAddWorkout.setOnClickListener {
+        fabAddSession.setOnClickListener {
             startActivity(Intent(requireContext(), AddSessionActivity::class.java))
         }
 

@@ -1,4 +1,4 @@
-package com.marknkamau.globalgym.ui.activity.addworkout
+package com.marknkamau.globalgym.ui.activity.addSession
 
 import android.app.Dialog
 import android.os.Bundle

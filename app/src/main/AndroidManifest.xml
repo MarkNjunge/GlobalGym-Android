@@ -34,7 +34,7 @@
 
         <activity android:name=".ui.activity.gymdetail.GymDetailsActivity" />
         <activity
-            android:name=".ui.activity.addworkout.AddSessionActivity"
+            android:name=".ui.activity.addSession.AddSessionActivity"
             android:parentActivityName=".ui.activity.main.MainActivity" />
         <activity android:name=".ui.activity.selectGym.SelectGymActivity" />
         <activity

@@ -1,4 +1,4 @@
-package com.marknkamau.globalgym.ui.activity.addworkout
+package com.marknkamau.globalgym.ui.activity.addSession
 
 import com.marknkamau.globalgym.data.local.PaperService
 import com.marknkamau.globalgym.data.models.Exercise

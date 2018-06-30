@@ -24,6 +24,9 @@ interface ApiService {
                       @Query("lng") lng: Double,
                       @Query("radius") radius: Int): Single<List<Gym>>
 
+    @GET("gyms/{id}")
+    fun getGym(@Path("id") gymId: String): Single<Gym>
+
     @POST("instructors")
     fun getInstructors(@Body instructorIds: List<String>): Single<List<Instructor>>
 
@@ -35,4 +38,7 @@ interface ApiService {
 
     @POST("sessions/create")
     fun createSession(@Body session: Session): Single<Session>
+
+    @POST("sessions/update")
+    fun setSessionCompleted(@Body sessionCompleted: SessionCompleted): Single<ApiResponse>
 }

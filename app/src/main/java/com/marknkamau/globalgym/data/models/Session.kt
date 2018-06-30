@@ -9,13 +9,15 @@ import android.os.Parcelable
  * https://github.com/MarkNjunge
  */
 
-data class Session(val userId: String,
+data class Session(val sessionId: String,
+                   val userId: String,
                    val sessionName: String,
                    val dateTime: Long,
                    val gymId: String,
                    val sessionSteps: List<Exercise>,
                    val completed: Boolean = false) : Parcelable {
     constructor(source: Parcel) : this(
+            source.readString(),
             source.readString(),
             source.readString(),
             source.readLong(),
@@ -27,6 +29,7 @@ data class Session(val userId: String,
     override fun describeContents() = 0
 
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
+        writeString(sessionId)
         writeString(userId)
         writeString(sessionName)
         writeLong(dateTime)

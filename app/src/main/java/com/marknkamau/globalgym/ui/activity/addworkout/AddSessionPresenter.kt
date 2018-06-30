@@ -21,7 +21,7 @@ class AddSessionPresenter(val view: AddSessionView, val paperService: PaperServi
     private val disposables = CompositeDisposable()
 
     fun addSession(sessionName: String, dateTime: Long, gym: Gym, sessionSteps: List<Exercise>) {
-        val session = Session(paperService.getUser()!!.userId, sessionName, dateTime, gym.gymId, sessionSteps)
+        val session = Session("", paperService.getUser()!!.userId, sessionName, dateTime, gym.gymId, sessionSteps)
 
         val disposable = apiService.createSession(session)
                 .compose(RxUtils.applySingleSchedulers())
@@ -38,7 +38,7 @@ class AddSessionPresenter(val view: AddSessionView, val paperService: PaperServi
         disposables.add(disposable)
     }
 
-    fun dispose(){
+    fun dispose() {
         disposables.dispose()
     }
 }

@@ -40,6 +40,9 @@
         <activity
             android:name=".ui.activity.settings.SettingsActivity"
             android:parentActivityName=".ui.activity.main.MainActivity" />
+        <activity
+            android:name=".ui.activity.sessionDetails.SessionDetailsActivity"
+            android:parentActivityName=".ui.activity.main.MainActivity" />
     </application>
 
 </manifest>

@@ -15,6 +15,7 @@ import com.marknkamau.globalgym.App
 import com.marknkamau.globalgym.R
 import com.marknkamau.globalgym.data.models.Session
 import com.marknkamau.globalgym.ui.activity.addworkout.AddSessionActivity
+import com.marknkamau.globalgym.ui.activity.sessionDetails.SessionDetailsActivity
 import kotlinx.android.synthetic.main.fragment_workout.*
 
 class SessionsListFragment : Fragment(), SessionsListView {
@@ -38,7 +39,11 @@ class SessionsListFragment : Fragment(), SessionsListView {
             startActivity(Intent(requireContext(), AddSessionActivity::class.java))
         }
 
-        adapter = SessionListAdapter { }
+        adapter = SessionListAdapter { session ->
+            val intent = Intent(requireContext(), SessionDetailsActivity::class.java)
+            intent.putExtra(SessionDetailsActivity.SESSION_KEY, session)
+            startActivity(intent)
+        }
 
         rvSessions.layoutManager = LinearLayoutManager(requireContext(), LinearLayout.VERTICAL, false)
         rvSessions.addItemDecoration(DividerItemDecoration(requireContext(), LinearLayout.VERTICAL))

@@ -5,6 +5,7 @@ import android.os.Bundle
 import com.marknkamau.globalgym.App
 import com.marknkamau.globalgym.R
 import com.marknkamau.globalgym.ui.activity.BaseActivity
+import com.marknkamau.globalgym.ui.activity.login.LoginActivity
 import com.marknkamau.globalgym.ui.activity.main.MainActivity
 import com.marknkamau.globalgym.utils.LocaleManager
 import kotlinx.android.synthetic.main.activity_settings.*
@@ -35,6 +36,12 @@ class SettingsActivity : BaseActivity() {
 
         layoutLanguage.setOnClickListener {
             dialog.show(supportFragmentManager, "lang")
+        }
+
+        tvLogout.setOnClickListener{
+            App.authService.signOut()
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
         }
 
     }

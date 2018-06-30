@@ -30,16 +30,6 @@ class ProfileFragment : Fragment(), ProfileView {
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        btnLogout.setOnClickListener {
-            App.authService.signOut()
-            startActivity(Intent(activity, LoginActivity::class.java))
-            activity!!.finish()
-        }
-    }
-
     override fun onResume() {
         super.onResume()
 

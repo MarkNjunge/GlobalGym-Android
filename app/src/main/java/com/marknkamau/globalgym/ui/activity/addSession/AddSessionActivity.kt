@@ -32,6 +32,10 @@ class AddSessionActivity : BaseActivity(), AddSessionView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_session)
 
+        supportActionBar?.run {
+            title = getString(R.string.add_session)
+        }
+
         presenter = AddSessionPresenter(this, App.paperService, App.apiService)
 
         tvDate.text = dateTime.format(DateTime.APP_DATE_FORMAT)

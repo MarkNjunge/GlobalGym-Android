@@ -35,6 +35,10 @@ class GymDetailsActivity : BaseActivity(), GymDetailView {
 
         val gym = intent.extras.get(GYM_KEY) as Gym
 
+        supportActionBar?.run {
+            title = gym.name
+        }
+
         presenter = GymDetailPresenter(this, gym, App.paperService, App.apiService)
 
         tvGymTitle.text = gym.name

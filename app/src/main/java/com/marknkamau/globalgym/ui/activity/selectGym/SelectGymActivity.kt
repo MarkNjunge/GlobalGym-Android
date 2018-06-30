@@ -40,6 +40,10 @@ class SelectGymActivity : BaseActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select_gym)
 
+        supportActionBar?.run {
+            title = getString(R.string.select_gym)
+        }
+
         apiService = App.apiService
 
         val rxPermissions = RxPermissions(this)

@@ -55,4 +55,6 @@
     <string name="select_language">Select language</string>
     <string name="general_settings">General settings</string>
     <string name="button_completed">Completed</string>
+    <string name="add_session">Add session</string>
+    <string name="select_gym">Select gym</string>
 </resources>

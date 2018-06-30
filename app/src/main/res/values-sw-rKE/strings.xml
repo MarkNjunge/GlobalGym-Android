@@ -55,4 +55,8 @@
     <string name="button_completed">Maliza</string>
     <string name="add_session">Ongeza kipindi</string>
     <string name="select_gym">Chagua mahali</string>
+    <string name="about">Kuhusu</string>
+    <string name="logout">Toka</string>
+    <string name="developer">Mhandisi programu</string>
+    <string name="version">Toleo: %s</string>
 </resources>

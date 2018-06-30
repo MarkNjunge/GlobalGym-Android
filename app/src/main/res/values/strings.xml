@@ -57,4 +57,9 @@
     <string name="button_completed">Completed</string>
     <string name="add_session">Add session</string>
     <string name="select_gym">Select gym</string>
+    <string name="about">About</string>
+    <string name="version">Version: %s</string>
+    <string name="developer">Developer</string>
+    <string name="developer_name" translatable="false">Mark Njung\'e</string>
+    <string name="developer_email" translatable="false">mark.kamau@outlook.com</string>
 </resources>

@@ -3,6 +3,7 @@ package com.marknkamau.globalgym.ui.activity.settings
 import android.content.Intent
 import android.os.Bundle
 import com.marknkamau.globalgym.App
+import com.marknkamau.globalgym.BuildConfig
 import com.marknkamau.globalgym.R
 import com.marknkamau.globalgym.ui.activity.BaseActivity
 import com.marknkamau.globalgym.ui.activity.login.LoginActivity
@@ -43,6 +44,8 @@ class SettingsActivity : BaseActivity() {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
+
+        tvVersion.text = getString(R.string.version, BuildConfig.VERSION_NAME)
 
     }
 }

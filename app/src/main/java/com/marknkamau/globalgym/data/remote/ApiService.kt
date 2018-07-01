@@ -18,6 +18,9 @@ interface ApiService {
     @POST("users/register")
     fun registerUser(@Body user: User): Single<User>
 
+    @POST("users/update")
+    fun updateUser(@Body user: User): Single<User>
+
     @GET("gyms/nearby")
     fun getNearbyGyms(@Query("country") country: String,
                       @Query("lat") lat: Double,

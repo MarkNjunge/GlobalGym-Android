@@ -14,6 +14,7 @@ import com.marknkamau.globalgym.App
 import com.marknkamau.globalgym.R
 import com.marknkamau.globalgym.data.models.Gym
 import com.marknkamau.globalgym.data.models.User
+import com.marknkamau.globalgym.ui.activity.editProfile.EditProfileActivity
 import com.marknkamau.globalgym.ui.activity.gymdetail.GymDetailsActivity
 import com.marknkamau.globalgym.ui.activity.login.LoginActivity
 import com.marknkamau.globalgym.utils.GlideApp
@@ -65,6 +66,12 @@ class ProfileFragment : Fragment(), ProfileView {
                 .load(user.profilePhoto)
                 .circleCrop()
                 .into(imgProfileIcon)
+
+        btnEditProfile.setOnClickListener {
+            val i = Intent(requireContext(), EditProfileActivity::class.java)
+            i.putExtra(EditProfileActivity.USER_KEY, user)
+            startActivity(i)
+        }
 
     }
 

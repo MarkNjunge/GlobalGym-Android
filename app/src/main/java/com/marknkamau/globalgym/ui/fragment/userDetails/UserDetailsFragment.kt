@@ -9,6 +9,8 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 
 import com.marknkamau.globalgym.R
+import com.marknkamau.globalgym.data.models.User
+import com.marknkamau.globalgym.ui.activity.editProfile.EditProfileActivity
 import com.marknkamau.globalgym.utils.trimmedText
 import kotlinx.android.synthetic.main.fragment_user_details.*
 
@@ -32,6 +34,21 @@ class UserDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        (arguments?.get(EditProfileActivity.USER_KEY) as User).let { user ->
+            etFirstName.setText(user.firstName)
+            etLastName.setText(user.lastName)
+            etPhone.setText(user.phone)
+            etYearBirth.setText(user.yearOfBirth.toString())
+            etWeight.setText(user.weight.toString())
+            etTargetWeight.setText(user.targetWeight.toString())
+            tvCountry.text = user.country
+            country = user.country
+            if (user.genderFull == "Male") {
+                rgGender.check(R.id.rbMale)
+            }
+            btnContinue.text = getString(R.string.save)
+        }
 
         btnContinue.setOnClickListener {
             registerUser()

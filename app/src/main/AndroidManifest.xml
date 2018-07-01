@@ -43,6 +43,7 @@
         <activity
             android:name=".ui.activity.sessionDetails.SessionDetailsActivity"
             android:parentActivityName=".ui.activity.main.MainActivity" />
+        <activity android:name=".ui.activity.editProfile.EditProfileActivity" />
     </application>
 
 </manifest>

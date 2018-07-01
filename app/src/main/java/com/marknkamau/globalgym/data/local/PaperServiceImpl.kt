@@ -1,6 +1,7 @@
 package com.marknkamau.globalgym.data.local
 
 import android.content.Context
+import com.marknkamau.globalgym.data.models.Gym
 import com.marknkamau.globalgym.data.models.User
 import com.marknkamau.globalgym.utils.LocaleManager
 import io.paperdb.Book
@@ -16,6 +17,7 @@ class PaperServiceImpl(context: Context) : PaperService {
 
     private val book: Book
     private val USER_KEY = "user"
+    private val GYM_KEY = "gym"
     private val LANGUAGE_KEY = "lang"
 
     init {
@@ -38,6 +40,23 @@ class PaperServiceImpl(context: Context) : PaperService {
 
     override fun deleteUser() {
         book.delete(USER_KEY)
+    }
+
+    override fun getPreferredGym(): Gym? {
+        return book.read(GYM_KEY)
+    }
+
+    override fun savePreferredGym(gym: Gym) {
+        book.write(GYM_KEY, gym)
+    }
+
+    override fun updatePreferredGym(gym: Gym) {
+        deletePreferredGym()
+        savePreferredGym(gym)
+    }
+
+    override fun deletePreferredGym() {
+        book.delete(GYM_KEY)
     }
 
     override fun getLanguageCode(): String {

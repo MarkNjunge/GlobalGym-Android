@@ -1,5 +1,6 @@
 package com.marknkamau.globalgym.ui.fragment.profile
 
+import com.marknkamau.globalgym.data.models.Gym
 import com.marknkamau.globalgym.data.models.User
 
 /**
@@ -11,4 +12,5 @@ import com.marknkamau.globalgym.data.models.User
 interface ProfileView {
     fun displayMessage(message: String)
     fun onUserRetrieved(user: User)
+    fun onGymRetrieved(gym: Gym)
 }

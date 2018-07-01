@@ -6,6 +6,7 @@ import com.marknkamau.globalgym.data.remote.ApiService
 import com.marknkamau.globalgym.utils.RxUtils
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
+import timber.log.Timber
 
 /**
  * Created by MarkNjunge.
@@ -26,8 +27,11 @@ class ProfilePresenter(private val view: ProfileView,
     }
 
     fun getUser() {
-        paperService.getUser()?.let {
-            view.onUserRetrieved(it)
+        paperService.getUser()?.let { user ->
+            view.onUserRetrieved(user)
+            user.preferredGym?.let {
+                getGym(it)
+            }
         }
 
         val disposable = apiService.getUser(authService.getUser()!!.id)
@@ -36,10 +40,36 @@ class ProfilePresenter(private val view: ProfileView,
                         onSuccess = { user ->
                             view.onUserRetrieved(user)
                             paperService.saveUser(user)
+
+                            user.preferredGym?.let {
+                                getGym(it)
+                            }
                         },
                         onError = {
                             view.displayMessage(it.message
                                     ?: "There was an error retrieving your profile")
+                        }
+                )
+
+        compositeDisposable.add(disposable)
+    }
+
+    private fun getGym(gymId: String) {
+        paperService.getPreferredGym()?.let {
+            view.onGymRetrieved(it)
+        }
+
+        val disposable = apiService.getGym(gymId)
+                .compose(RxUtils.applySingleSchedulers())
+                .subscribeBy(
+                        onSuccess = {
+                            view.onGymRetrieved(it)
+                            paperService.savePreferredGym(it)
+                        },
+                        onError = {
+                            Timber.e(it)
+                            view.displayMessage(it.message
+                                    ?: "There was an error retrieving your preferred gym")
                         }
                 )
 

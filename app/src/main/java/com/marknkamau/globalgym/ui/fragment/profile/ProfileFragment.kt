@@ -3,6 +3,7 @@ package com.marknkamau.globalgym.ui.fragment.profile
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.support.constraint.Group
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +12,12 @@ import android.widget.Toast
 import com.marknkamau.globalgym.App
 
 import com.marknkamau.globalgym.R
+import com.marknkamau.globalgym.data.models.Gym
 import com.marknkamau.globalgym.data.models.User
+import com.marknkamau.globalgym.ui.activity.gymdetail.GymDetailsActivity
 import com.marknkamau.globalgym.ui.activity.login.LoginActivity
 import com.marknkamau.globalgym.utils.GlideApp
+import com.marknkamau.globalgym.utils.onClick
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileFragment : Fragment(), ProfileView {
@@ -64,4 +68,13 @@ class ProfileFragment : Fragment(), ProfileView {
 
     }
 
+    override fun onGymRetrieved(gym: Gym) {
+        tvPreferredGym.text = gym.name
+        groupPreferredGym.visibility = View.VISIBLE
+        groupPreferredGym.onClick {
+            val intent = Intent(context, GymDetailsActivity::class.java)
+            intent.putExtra(GymDetailsActivity.GYM_KEY, gym)
+            startActivity(intent)
+        }
+    }
 }

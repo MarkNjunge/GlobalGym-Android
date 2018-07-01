@@ -4,6 +4,8 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.support.constraint.Group
+import android.view.View
 import android.widget.EditText
 
 /**
@@ -33,4 +35,10 @@ fun Drawable.toBitmap(): Bitmap? {
     this.setBounds(0, 0, canvas.width, canvas.height)
     this.draw(canvas)
     return bitmap
+}
+
+fun Group.onClick(listener: () -> Unit) {
+    referencedIds.forEach { id ->
+        rootView.findViewById<View>(id).setOnClickListener { listener() }
+    }
 }

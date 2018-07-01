@@ -62,4 +62,5 @@
     <string name="developer">Developer</string>
     <string name="developer_name" translatable="false">Mark Njung\'e</string>
     <string name="developer_email" translatable="false">mark.kamau@outlook.com</string>
+    <string name="preferred_gym">Preferred Gym</string>
 </resources>

@@ -50,6 +50,7 @@ class GymDetailPresenter(private val view: GymDetailView,
                         onSuccess = {
                             val copy = user.copy(preferredGym = gym.gymId)
                             paperService.saveUser(copy)
+                            paperService.savePreferredGym(gym)
                             view.displayMessage("Gym set as preferred")
                             view.onGymIsPreferred()
                         },

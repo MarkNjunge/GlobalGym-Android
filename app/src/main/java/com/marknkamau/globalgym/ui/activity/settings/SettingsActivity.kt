@@ -41,6 +41,8 @@ class SettingsActivity : BaseActivity() {
 
         tvLogout.setOnClickListener{
             App.authService.signOut()
+            App.paperService.deleteUser()
+            App.paperService.deletePreferredGym()
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }

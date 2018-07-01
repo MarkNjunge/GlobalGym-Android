@@ -38,6 +38,7 @@ class MainPresenter(private val view: MainView,
                             onSuccess = { user ->
                                 paperService.saveUser(user)
                                 Timber.d(user.toString())
+                                view.onSignedInAndRegistered()
                             },
                             onError = {
                                 if (it is HttpException) {
@@ -50,6 +51,8 @@ class MainPresenter(private val view: MainView,
                                 }
                             }
                     )
+        } else {
+            view.onSignedInAndRegistered()
         }
     }
 

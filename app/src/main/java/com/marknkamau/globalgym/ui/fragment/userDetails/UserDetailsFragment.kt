@@ -35,7 +35,8 @@ class UserDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (arguments?.get(EditProfileActivity.USER_KEY) as User).let { user ->
+        arguments?.get(EditProfileActivity.USER_KEY)?.let {
+            val user: User = it as User
             etFirstName.setText(user.firstName)
             etLastName.setText(user.lastName)
             etPhone.setText(user.phone)

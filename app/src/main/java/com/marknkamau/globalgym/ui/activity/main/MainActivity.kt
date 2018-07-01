@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.marknkamau.globalgym.App
 import com.marknkamau.globalgym.R
 import com.marknkamau.globalgym.ui.activity.BaseActivity
@@ -36,8 +37,6 @@ class MainActivity : BaseActivity(), MainView {
         fragments.add(sessionsListFragment)
         fragments.add(gymsMapFragment)
         fragments.add(profileFragment)
-
-        switchFragment(0, SESSION_TAG)
 
         navigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -87,6 +86,12 @@ class MainActivity : BaseActivity(), MainView {
     override fun onNotRegistered() {
         startActivity(Intent(this@MainActivity, RegisterActivity::class.java))
         finish()
+    }
+
+    override fun onSignedInAndRegistered() {
+        switchFragment(0, SESSION_TAG)
+        navigation.visibility = View.VISIBLE
+        pbLoading.visibility = View.GONE
     }
 
     private fun switchFragment(pos: Int, tag: String) {

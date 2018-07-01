@@ -1,4 +1,4 @@
-package com.marknkamau.globalgym.ui.activity.register
+package com.marknkamau.globalgym.ui.fragment.userDetails
 
 import android.app.Dialog
 import android.content.Context

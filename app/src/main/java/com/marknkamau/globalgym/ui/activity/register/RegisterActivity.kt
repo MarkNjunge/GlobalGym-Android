@@ -3,42 +3,38 @@ package com.marknkamau.globalgym.ui.activity.register
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.RadioButton
 import android.widget.Toast
 import com.marknkamau.globalgym.App
 import com.marknkamau.globalgym.R
 import com.marknkamau.globalgym.ui.activity.BaseActivity
 import com.marknkamau.globalgym.ui.activity.main.MainActivity
-import com.marknkamau.globalgym.utils.trimmedText
+import com.marknkamau.globalgym.ui.fragment.userDetails.UserDetailsFragment
 import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity : BaseActivity(), RegisterView {
-    private var country = ""
-
     private lateinit var presenter: RegisterPresenter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
         presenter = RegisterPresenter(this, App.authService, App.apiService)
 
-        btnContinue.setOnClickListener {
-            registerUser()
+        val userDetailsFragment = UserDetailsFragment()
+        userDetailsFragment.onComplete = {
+            val (firstName, lastName, phone, year, country, gender, weight, targetWeight) = it
+
+            presenter.registerUser(firstName, lastName, phone, year, country, gender, weight, targetWeight)
+            pbLoading.visibility = View.VISIBLE
         }
 
-        val countryDialog = CountryDialog()
-        countryDialog.onSelected {
-            country = it
-            tvCountry.text = it
-        }
-
-        tvCountry.setOnClickListener {
-            countryDialog.show(supportFragmentManager, "Select country")
-        }
+        supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment_holder, userDetailsFragment, "user_details")
+                .commit()
     }
 
     override fun displayMessage(message: String) {
-        pbLoading.visibility = View.GONE
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
@@ -47,20 +43,4 @@ class RegisterActivity : BaseActivity(), RegisterView {
         finish()
     }
 
-    private fun registerUser() {
-        val firstName = etFirstName.trimmedText
-        val lastName = etLastName.trimmedText
-        val phone = etPhone.trimmedText
-        val year = etYearBirth.trimmedText
-        val weight = etWeight.trimmedText
-        val targetWeight = etTargetWeight.trimmedText
-        val gender = findViewById<RadioButton>(rgGender.checkedRadioButtonId).text.toString()
-
-        if (firstName.isEmpty() || lastName.isEmpty() || phone.isEmpty() || year.isEmpty() || weight.isEmpty() || targetWeight.isEmpty() || country.isEmpty()) {
-            return
-        }
-
-        presenter.registerUser(firstName,lastName, phone, year.toInt(), country, gender, weight.toInt(), targetWeight.toInt())
-        pbLoading.visibility = View.VISIBLE
-    }
 }

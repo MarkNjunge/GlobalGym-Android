@@ -35,10 +35,10 @@ class AddSessionPresenter(val view: AddSessionView, val paperService: PaperServi
                         }
                 )
 
-//        disposables.add(disposable)
+        disposables.add(disposable)
     }
 
-    fun dispose() {
-        disposables.dispose()
+    fun clear() {
+        disposables.clear()
     }
 }

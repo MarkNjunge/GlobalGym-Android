@@ -4,7 +4,6 @@ import android.app.Activity
 import android.os.Bundle
 import com.marknkamau.globalgym.R
 import kotlinx.android.synthetic.main.activity_add_session.*
-import timber.log.Timber
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
@@ -20,7 +19,6 @@ import com.marknkamau.globalgym.ui.activity.BaseActivity
 import com.marknkamau.globalgym.ui.activity.selectGym.SelectGymActivity
 import com.marknkamau.globalgym.utils.DateTime
 import com.marknkamau.globalgym.utils.trimmedText
-import java.util.*
 
 class AddSessionActivity : BaseActivity(), AddSessionView {
     private var dateTime = DateTime.now
@@ -121,7 +119,7 @@ class AddSessionActivity : BaseActivity(), AddSessionView {
 
     override fun onStop() {
         super.onStop()
-        presenter.dispose()
+        presenter.clear()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

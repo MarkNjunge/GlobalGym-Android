@@ -57,7 +57,7 @@ class SessionsListFragment : Fragment(), SessionsListView {
 
     override fun onStop() {
         super.onStop()
-        presenter.dispose()
+        presenter.clear()
     }
 
     override fun displayMessage(message: String) {

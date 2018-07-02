@@ -28,6 +28,7 @@ class SessionsListPresenter(val view: SessionsListView, val paperService: PaperS
                         },
                         onError = {
                             Timber.e(it)
+                            view.hideLoading()
                             view.displayMessage(it.message ?: "Error retrieving sessions")
                         }
                 )
@@ -35,8 +36,8 @@ class SessionsListPresenter(val view: SessionsListView, val paperService: PaperS
         disposables.add(disposable)
     }
 
-    fun dispose() {
-        disposables.dispose()
+    fun clear() {
+        disposables.clear()
     }
 
 }

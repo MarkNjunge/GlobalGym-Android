@@ -2,6 +2,7 @@ package com.marknkamau.globalgym.utils
 
 import android.content.Context
 import android.content.res.Configuration
+import android.os.Build
 import java.util.*
 
 /**
@@ -11,7 +12,7 @@ import java.util.*
  */
 
 object LocaleManager {
-    private val CODE_ENGLISH = "en"
+    private val CODE_ENGLISH = "en_US"
     private val CODE_SWAHILI = "sw"
 
     val LANG_ENGLISH = "English"

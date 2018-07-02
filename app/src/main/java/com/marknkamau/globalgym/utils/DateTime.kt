@@ -26,7 +26,7 @@ data class DateTime(var year: Int,
         fun fromTimestamp(timestamp: Long): DateTime = Date(timestamp).toDateTime()
         fun fromUnix(timestamp: Long): DateTime = Date(timestamp * 1000).toDateTime()
 
-        const val APP_DATE_FORMAT = "dd - MMM - YY"
+        const val APP_DATE_FORMAT = "E, dd MMMM"
         const val APP_TIME_FORMAT = "hh:mm a"
     }
 

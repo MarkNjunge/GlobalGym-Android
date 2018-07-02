@@ -1,5 +1,6 @@
 package com.marknkamau.globalgym.ui.activity.sessionDetails
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
@@ -11,14 +12,15 @@ import com.marknkamau.globalgym.App
 import com.marknkamau.globalgym.R
 import com.marknkamau.globalgym.data.models.Gym
 import com.marknkamau.globalgym.data.models.Session
+import com.marknkamau.globalgym.ui.activity.addSession.AddSessionActivity
 import com.marknkamau.globalgym.utils.DateTime
 import kotlinx.android.synthetic.main.activity_session_details.*
 
 class SessionDetailsActivity : AppCompatActivity(), SessionDetailsView {
     private lateinit var presenter: SessionDetailsPresenter
+    private var gym: Gym? = null
 
     companion object {
-
         const val SESSION_KEY = "session_key"
     }
 
@@ -39,9 +41,18 @@ class SessionDetailsActivity : AppCompatActivity(), SessionDetailsView {
         tvSessionTime.text = dateTime.format("${DateTime.APP_TIME_FORMAT}, ${DateTime.APP_DATE_FORMAT}")
         if (session.completed) {
             btnCompleted.visibility = View.GONE
+            btnRepeatSession.visibility = View.VISIBLE
         }
         btnCompleted.setOnClickListener {
             presenter.setSessionCompleted(session.sessionId)
+        }
+        btnRepeatSession.setOnClickListener {
+            val intent = Intent(this, AddSessionActivity::class.java)
+            intent.putExtra(AddSessionActivity.PREVIOUS_SESSION, session)
+            gym?.let {
+                intent.putExtra(AddSessionActivity.PREVIOUS_SESSION_GYM, gym)
+            }
+            startActivity(intent)
         }
 
         val adapter = SessionExercisesAdapter()
@@ -65,6 +76,7 @@ class SessionDetailsActivity : AppCompatActivity(), SessionDetailsView {
     }
 
     override fun onGymRetrieved(gym: Gym) {
+        this.gym = gym
         tvSessionGym.text = gym.name
     }
 

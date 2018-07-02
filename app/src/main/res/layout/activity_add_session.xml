@@ -33,6 +33,7 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/tvDate"
         app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etSessionName"
         tools:text="6:00 AM" />
@@ -48,6 +49,7 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_weight="2"
         app:layout_constraintStart_toEndOf="@+id/tvTime"
         app:layout_constraintTop_toBottomOf="@+id/etSessionName"
         tools:text="6 July 2018" />

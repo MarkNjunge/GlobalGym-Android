@@ -15,6 +15,7 @@ import android.widget.Toast
 import com.marknkamau.globalgym.App
 import com.marknkamau.globalgym.data.models.Exercise
 import com.marknkamau.globalgym.data.models.Gym
+import com.marknkamau.globalgym.data.models.Session
 import com.marknkamau.globalgym.ui.activity.BaseActivity
 import com.marknkamau.globalgym.ui.activity.selectGym.SelectGymActivity
 import com.marknkamau.globalgym.utils.DateTime
@@ -28,6 +29,11 @@ class AddSessionActivity : BaseActivity(), AddSessionView {
     private lateinit var presenter: AddSessionPresenter
     private val LOCATION_REQUEST_ID = 1
 
+    companion object {
+        val PREVIOUS_SESSION = "previous_session"
+        val PREVIOUS_SESSION_GYM = "previous_session_gym"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_session)
@@ -38,25 +44,25 @@ class AddSessionActivity : BaseActivity(), AddSessionView {
 
         presenter = AddSessionPresenter(this, App.paperService, App.apiService)
 
-        tvDate.text = dateTime.format(DateTime.APP_DATE_FORMAT)
-        tvTime.text = dateTime.format(DateTime.APP_TIME_FORMAT)
-
         val exerciseDialog = ExerciseDialog()
 
-        rvExercises.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
-        rvExercises.addItemDecoration(DividerItemDecoration(this, LinearLayout.VERTICAL))
+        // Create adapter for recyclerview
         val exerciseAdapter = ExerciseAdapter(this) { exercise ->
+            // Listener for edit icon
+            // Pass the current exercise as an argument
             val args = Bundle()
             args.putParcelable(ExerciseDialog.EXERCISE_KEY, exercise)
             exerciseDialog.arguments = args
             exerciseDialog.show(supportFragmentManager, "exercise_dialog")
         }
+
+        // Set layout manager and adapter for recyclerview
+        rvExercises.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+        rvExercises.addItemDecoration(DividerItemDecoration(this, LinearLayout.VERTICAL))
         rvExercises.adapter = exerciseAdapter
-        exerciseAdapter.setItems(exercises)
 
+        // Set action to be done when the user clicks save on the exercise dialog
         exerciseDialog.onComplete = { action, exercise ->
-            Timber.d(exercise.toString())
-
             when (action) {
                 ExerciseDialog.ACTION_SAVE -> {
                     exercises.add(exercise)
@@ -78,26 +84,38 @@ class AddSessionActivity : BaseActivity(), AddSessionView {
             }
         }
 
-        tvDate.setOnClickListener {
-            showDatePicker()
-        }
-
-        tvTime.setOnClickListener {
-            showTimePicker()
-        }
-
+        tvDate.setOnClickListener { showDatePicker() }
+        tvTime.setOnClickListener { showTimePicker() }
+        btnSave.setOnClickListener { saveSession() }
         btnAddExercise.setOnClickListener {
             exerciseDialog.arguments = null
             exerciseDialog.show(supportFragmentManager, "exercise_dialog")
         }
 
+        // Create an intent to let the user pick a location
         tvLocation.setOnClickListener {
             val i = Intent(this, SelectGymActivity::class.java)
             startActivityForResult(i, LOCATION_REQUEST_ID)
         }
 
-        btnSave.setOnClickListener {
-            saveSession()
+        // Set default date as one day from now
+        dateTime.dayOfMonth = dateTime.dayOfMonth + 1
+        tvDate.text = dateTime.format(DateTime.APP_DATE_FORMAT)
+        tvTime.text = dateTime.format(DateTime.APP_TIME_FORMAT)
+
+        // If a previous session was passed in the intent,
+        // set the name, exercises and gym
+        val session = intent.getParcelableExtra<Session>(PREVIOUS_SESSION)
+        if (session != null) {
+            etSessionName.setText(session.sessionName)
+            exerciseAdapter.setItems(session.sessionSteps)
+            exercises.addAll(session.sessionSteps)
+            refreshStepIndices()
+        }
+        val gym = intent.getParcelableExtra<Gym>(PREVIOUS_SESSION_GYM)
+        if (gym != null){
+            selectedGym = gym
+            tvLocation.text = gym.name
         }
     }
 

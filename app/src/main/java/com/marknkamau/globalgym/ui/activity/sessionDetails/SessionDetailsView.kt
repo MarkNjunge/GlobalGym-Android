@@ -12,4 +12,5 @@ interface SessionDetailsView{
     fun displayMessage(message:String)
     fun onGymRetrieved(gym: Gym)
     fun onSessionCompleted()
+    fun onSessionDeleted()
 }

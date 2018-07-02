@@ -2,6 +2,7 @@ package com.marknkamau.globalgym.ui.activity.sessionDetails
 
 import com.marknkamau.globalgym.data.models.SessionCompleted
 import com.marknkamau.globalgym.data.remote.ApiService
+import com.marknkamau.globalgym.utils.NetworkUtils
 import com.marknkamau.globalgym.utils.RxUtils
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
@@ -39,6 +40,22 @@ class SessionDetailsPresenter(private val view: SessionDetailsView, private val 
                         onError = {
                             Timber.e(it)
                             view.displayMessage(it.message ?: "Error setting session completed")
+                        }
+                )
+
+        disposables.add(disposable)
+    }
+
+    fun deleteSession(sessionId: String) {
+        val disposable = apiService.deleteSession(sessionId)
+                .compose(RxUtils.applySingleSchedulers())
+                .subscribeBy(
+                        onSuccess = {
+                            view.onSessionDeleted()
+                        },
+                        onError = {
+                            Timber.e(it)
+                            view.displayMessage(it.message ?: "Error deleting session")
                         }
                 )
 

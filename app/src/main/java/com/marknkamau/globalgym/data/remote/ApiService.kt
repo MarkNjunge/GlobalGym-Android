@@ -1,7 +1,6 @@
 package com.marknkamau.globalgym.data.remote
 
 import com.marknkamau.globalgym.data.models.*
-import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.http.*
 
@@ -44,4 +43,7 @@ interface ApiService {
 
     @POST("sessions/update")
     fun setSessionCompleted(@Body sessionCompleted: SessionCompleted): Single<ApiResponse>
+
+    @DELETE("sessions/delete/{id}")
+    fun deleteSession(@Path("id") sessionId: String): Single<ApiResponse>
 }

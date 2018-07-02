@@ -46,6 +46,9 @@ class SessionDetailsActivity : AppCompatActivity(), SessionDetailsView {
         btnCompleted.setOnClickListener {
             presenter.setSessionCompleted(session.sessionId)
         }
+        btnDelete.setOnClickListener {
+            presenter.deleteSession(session.sessionId)
+        }
         btnRepeatSession.setOnClickListener {
             val intent = Intent(this, AddSessionActivity::class.java)
             intent.putExtra(AddSessionActivity.PREVIOUS_SESSION, session)
@@ -82,5 +85,10 @@ class SessionDetailsActivity : AppCompatActivity(), SessionDetailsView {
 
     override fun onSessionCompleted() {
         btnCompleted.visibility = View.GONE
+    }
+
+    override fun onSessionDeleted() {
+        displayMessage("Session deleted")
+        finish()
     }
 }

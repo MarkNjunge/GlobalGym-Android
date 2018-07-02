@@ -48,7 +48,10 @@ class SessionsListFragment : Fragment(), SessionsListView {
         rvSessions.layoutManager = LinearLayoutManager(requireContext(), LinearLayout.VERTICAL, false)
         rvSessions.addItemDecoration(DividerItemDecoration(requireContext(), LinearLayout.VERTICAL))
         rvSessions.adapter = adapter
+    }
 
+    override fun onResume() {
+        super.onResume()
         presenter.getSessions()
     }
 

@@ -64,4 +64,5 @@
     <string name="developer_email" translatable="false">mark.kamau@outlook.com</string>
     <string name="preferred_gym">Preferred Gym</string>
     <string name="reapeat_session">Reapeat session</string>
+    <string name="delete">Delete</string>
 </resources>

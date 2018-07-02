@@ -60,7 +60,7 @@ fun Date.toDateTime(): DateTime {
     val hourOfDay = this.format("H").toInt() // Format according to 24Hr from 0-23
     val minute = this.format("m").toInt()
     val year = this.format("yyyy").toInt()
-    val month = this.format("M").toInt()
+    val month = this.format("M").toInt() - 1
     val dayOfMonth = this.format("dd").toInt()
     val second = this.format("s").toInt()
     val millisecond = this.format("S").toInt()

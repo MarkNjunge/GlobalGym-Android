@@ -147,14 +147,12 @@ class AddSessionActivity : BaseActivity(), AddSessionView {
             dateTime.month = month
             dateTime.dayOfMonth = day
 
-            Timber.d(dateTime.format("DD:MMM:YYY"))
             tvDate.text = dateTime.format(DateTime.APP_DATE_FORMAT)
         }
 
-        val calendar = GregorianCalendar(Locale.getDefault())
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        val year = dateTime.year
+        val month = dateTime.month
+        val day = dateTime.dayOfMonth
 
         val datePickerDialog = DatePickerDialog(this, listener, year, month, day)
         datePickerDialog.datePicker.minDate = DateTime.now.timestamp
@@ -167,13 +165,11 @@ class AddSessionActivity : BaseActivity(), AddSessionView {
             dateTime.hourOfDay = hour
             dateTime.minute = minute
 
-            Timber.d(dateTime.format(DateTime.APP_TIME_FORMAT))
             tvTime.text = dateTime.format(DateTime.APP_TIME_FORMAT)
         }
 
-        val calendar = GregorianCalendar(Locale.getDefault())
-        val hourOfDay = calendar.get(Calendar.HOUR_OF_DAY)
-        val minute = calendar.get(Calendar.MINUTE)
+        val hourOfDay =  dateTime.hourOfDay
+        val minute = dateTime.minute
 
         val timePickerDialog = TimePickerDialog(this, listener, hourOfDay, minute, true)
 

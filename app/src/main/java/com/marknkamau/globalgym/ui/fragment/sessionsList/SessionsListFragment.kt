@@ -47,7 +47,6 @@ class SessionsListFragment : Fragment(), SessionsListView {
         }
 
         rvSessions.layoutManager = LinearLayoutManager(requireContext(), LinearLayout.VERTICAL, false)
-        rvSessions.addItemDecoration(DividerItemDecoration(requireContext(), LinearLayout.VERTICAL))
         rvSessions.adapter = adapter
 
         val suggestedSessionsAdapter = SuggestedSessionsAdapter { suggestedSession ->

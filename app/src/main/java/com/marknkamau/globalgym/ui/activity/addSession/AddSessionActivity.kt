@@ -189,7 +189,7 @@ class AddSessionActivity : BaseActivity(), AddSessionView {
     private fun saveSession() {
         val sessionName = tvSessionName.trimmedText
 
-        if (sessionName.isNotEmpty() || exercises.isNotEmpty() || selectedGym != null) {
+        if (sessionName.isNotEmpty() && exercises.isNotEmpty() && selectedGym != null) {
             presenter.addSession(sessionName, dateTime.unix, selectedGym!!, exercises)
         }
     }

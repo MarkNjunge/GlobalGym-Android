@@ -42,6 +42,7 @@
         <item name="android:layout_height">48dp</item>
         <item name="android:background">@drawable/text_input_backround</item>
         <item name="android:elevation">4dp</item>
+        <item name="android:textColor">@color/colorBlack_87</item>
         <item name="android:padding">8dp</item>
     </style>
 
@@ -67,6 +68,7 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="android:alpha">.87</item>
     </style>
+
     <style name="AlertDialogCustom" parent="@android:style/Theme.Material.Dialog">
         <item name="android:background">@color/colorBackground</item>
         <item name="android:textColor">@color/colorOffWhite</item>

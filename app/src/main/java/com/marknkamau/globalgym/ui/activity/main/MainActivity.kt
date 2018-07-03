@@ -22,6 +22,11 @@ class MainActivity : BaseActivity(), MainView {
     private lateinit var presenter: MainPresenter
     private val fragments = mutableListOf<Fragment>()
 
+    private var lastFragmentId: Int = 0
+    private var lastFragmentTag: String = ""
+
+    private val FRAGMENT_ID_KEY = "fragment_id_key"
+    private val FRAGMENT_STRING_KEY = "fragment_string_key"
     private val SESSION_TAG = "session"
     private val GYMS_TAG = "gyms"
     private val PROFILE_TAG = "profile"
@@ -37,6 +42,11 @@ class MainActivity : BaseActivity(), MainView {
         fragments.add(sessionsListFragment)
         fragments.add(gymsMapFragment)
         fragments.add(profileFragment)
+
+        if (savedInstanceState != null) {
+            val id = savedInstanceState.get(FRAGMENT_ID_KEY) as Int
+            lastFragmentId = id
+        }
 
         navigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -64,6 +74,13 @@ class MainActivity : BaseActivity(), MainView {
         return super.onCreateOptionsMenu(menu)
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putInt(FRAGMENT_ID_KEY, lastFragmentId)
+        outState.putString(FRAGMENT_STRING_KEY, lastFragmentTag)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.menu_settings -> {
@@ -89,13 +106,15 @@ class MainActivity : BaseActivity(), MainView {
     }
 
     override fun onSignedInAndRegistered() {
-        switchFragment(0, SESSION_TAG)
+        switchFragment(lastFragmentId, lastFragmentTag!!)
         navigation.visibility = View.VISIBLE
         pbLoading.visibility = View.GONE
     }
 
     private fun switchFragment(pos: Int, tag: String) {
         if (supportFragmentManager.findFragmentByTag(tag) == null) {
+            lastFragmentId = pos
+            lastFragmentTag = tag
             supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.fragment_holder, fragments[pos], tag)

@@ -67,4 +67,5 @@
     <string name="delete">Delete</string>
     <string name="previous_sessions">Previous sessions</string>
     <string name="suggested_sessions">Suggested sessions</string>
+    <string name="search_for_gym">Search for gym...</string>
 </resources>

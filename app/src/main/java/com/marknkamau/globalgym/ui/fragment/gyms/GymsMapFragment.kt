@@ -5,9 +5,12 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.Toast
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
@@ -16,6 +19,7 @@ import com.marknkamau.globalgym.App
 import com.marknkamau.globalgym.R
 import com.marknkamau.globalgym.data.models.Gym
 import com.marknkamau.globalgym.ui.activity.gymdetail.GymDetailsActivity
+import com.marknkamau.globalgym.utils.RxSearch
 import com.marknkamau.globalgym.utils.RxUtils
 import com.marknkamau.globalgym.utils.maps.LocationUtils
 import com.marknkamau.globalgym.utils.maps.MapUtils
@@ -23,12 +27,14 @@ import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.fragment_gyms_map.*
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 
 class GymsMapFragment : Fragment(), OnMapReadyCallback, GymsView {
     private lateinit var locationUtils: LocationUtils
     private lateinit var mapUtils: MapUtils
-
     private lateinit var presenter: GymsPresenter
+    private lateinit var gymSearchAdapter: GymSearchAdapter
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_gyms_map, container, false)
     }
@@ -47,19 +53,28 @@ class GymsMapFragment : Fragment(), OnMapReadyCallback, GymsView {
                     }
                 }
 
+        gymSearchAdapter = GymSearchAdapter {
+            val intent = Intent(requireContext(), GymDetailsActivity::class.java)
+            intent.putExtra(GymDetailsActivity.GYM_KEY, it)
+            startActivity(intent)
+        }
+
+        rvGymResults.layoutManager = LinearLayoutManager(requireContext(), LinearLayout.VERTICAL, false)
+        rvGymResults.adapter = gymSearchAdapter
+
         presenter = GymsPresenter(this, App.apiService)
 
     }
 
     override fun onStop() {
         super.onStop()
-        presenter.dispose()
+        presenter.clear()
     }
 
     @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
 //        googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style))
-        googleMap.isMyLocationEnabled = true
+//        googleMap.isMyLocationEnabled = true
         googleMap.uiSettings.run {
             isMyLocationButtonEnabled = true
             isMapToolbarEnabled = false
@@ -92,6 +107,19 @@ class GymsMapFragment : Fragment(), OnMapReadyCallback, GymsView {
                             Timber.e(exception)
                         }
                 )
+
+        // Initialize gym search
+        RxSearch.fromEditText(etGymName)
+                .doOnNext {
+                    if (it.isEmpty())
+                        rvGymResults.visibility = View.GONE
+                }
+                .filter { it.length > 3 }
+                .debounce(300, TimeUnit.MILLISECONDS)
+                .subscribeBy {
+
+                    presenter.searchForGym(it)
+                }
     }
 
     override fun displayMessage(message: String) {
@@ -103,6 +131,23 @@ class GymsMapFragment : Fragment(), OnMapReadyCallback, GymsView {
         gyms.forEach { gym ->
             mapUtils.addGymMarker(gym)
         }
+    }
+
+    override fun showSearchLoading() {
+        requireActivity().runOnUiThread {
+            pbGymSearch.visibility = View.VISIBLE
+        }
+    }
+
+    override fun hideSearchLoading() {
+        requireActivity().runOnUiThread {
+            pbGymSearch.visibility = View.GONE
+        }
+    }
+
+    override fun onGymSearchResultRetrieved(gyms: List<Gym>) {
+        gymSearchAdapter.setItems(gyms)
+        rvGymResults.visibility = View.VISIBLE
     }
 
 }

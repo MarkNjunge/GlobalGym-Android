@@ -14,7 +14,7 @@ import timber.log.Timber
 
 class GymsPresenter(private val view: GymsView, private val apiService: ApiService) {
 
-    private val disposables: CompositeDisposable = CompositeDisposable()
+    private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     fun getGyms(lat: Double, lng: Double, country: String) {
         val disposable = apiService.getNearbyGyms(country, lat, lng, 50 * 1000)
@@ -34,10 +34,33 @@ class GymsPresenter(private val view: GymsView, private val apiService: ApiServi
 
                 )
 
-        disposables.add(disposable)
+        compositeDisposable.add(disposable)
     }
 
-    fun dispose(){
-        disposables.dispose()
+    fun searchForGym(name: String) {
+        view.showSearchLoading()
+        val disposable = apiService.searchGyms(name)
+                .compose(RxUtils.applySingleSchedulers())
+                .subscribeBy(
+                        onSuccess = { gyms ->
+                            view.hideSearchLoading()
+                            if (gyms.isEmpty()) {
+                                view.displayMessage("No gyms have been found")
+                            } else {
+                                view.onGymSearchResultRetrieved(gyms)
+                            }
+                        },
+                        onError = {
+                            view.hideSearchLoading()
+                            Timber.d(it)
+                            view.displayMessage(it.message ?: "Error finding gyms")
+                        }
+                )
+
+        compositeDisposable.add(disposable)
+    }
+
+    fun clear() {
+        compositeDisposable.clear()
     }
 }

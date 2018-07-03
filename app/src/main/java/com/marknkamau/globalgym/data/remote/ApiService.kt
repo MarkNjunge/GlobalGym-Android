@@ -29,6 +29,9 @@ interface ApiService {
     @GET("gyms/{id}")
     fun getGym(@Path("id") gymId: String): Single<Gym>
 
+    @GET("gyms/search")
+    fun searchGyms(@Query("name") name: String): Single<List<Gym>>
+
     @POST("instructors")
     fun getInstructors(@Body instructorIds: List<String>): Single<List<Instructor>>
 

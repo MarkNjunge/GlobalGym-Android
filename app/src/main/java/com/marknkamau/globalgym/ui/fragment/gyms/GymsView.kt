@@ -11,4 +11,7 @@ import com.marknkamau.globalgym.data.models.Gym
 interface GymsView {
     fun displayMessage(message: String)
     fun onGymsRetrieved(gyms: List<Gym>)
+    fun showSearchLoading()
+    fun hideSearchLoading()
+    fun onGymSearchResultRetrieved(gyms: List<Gym>)
 }

@@ -15,6 +15,7 @@ import com.marknkamau.globalgym.App
 import com.marknkamau.globalgym.data.models.Exercise
 import com.marknkamau.globalgym.data.models.Gym
 import com.marknkamau.globalgym.data.models.Session
+import com.marknkamau.globalgym.data.models.SuggestedSession
 import com.marknkamau.globalgym.ui.activity.BaseActivity
 import com.marknkamau.globalgym.ui.activity.selectGym.SelectGymActivity
 import com.marknkamau.globalgym.utils.DateTime
@@ -30,6 +31,7 @@ class AddSessionActivity : BaseActivity(), AddSessionView {
     companion object {
         val PREVIOUS_SESSION = "previous_session"
         val PREVIOUS_SESSION_GYM = "previous_session_gym"
+        val SUGGESTED_SESSION = "suggested_session"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -105,7 +107,7 @@ class AddSessionActivity : BaseActivity(), AddSessionView {
         // set the name, exercises and gym
         val session = intent.getParcelableExtra<Session>(PREVIOUS_SESSION)
         if (session != null) {
-            etSessionName.setText(session.sessionName)
+            tvSessionName.setText(session.sessionName)
             exerciseAdapter.setItems(session.sessionSteps)
             exercises.addAll(session.sessionSteps)
             refreshStepIndices()
@@ -114,6 +116,16 @@ class AddSessionActivity : BaseActivity(), AddSessionView {
         if (gym != null){
             selectedGym = gym
             tvLocation.text = gym.name
+        }
+
+        // If a suggestion was passed in the intent,
+        // set the name, exercises and gym
+        val suggested = intent.getParcelableExtra<SuggestedSession>(SUGGESTED_SESSION)
+        if (suggested != null) {
+            tvSessionName.setText(suggested.name)
+            exerciseAdapter.setItems(suggested.exercises)
+            exercises.addAll(suggested.exercises)
+            refreshStepIndices()
         }
     }
 
@@ -175,7 +187,7 @@ class AddSessionActivity : BaseActivity(), AddSessionView {
     }
 
     private fun saveSession() {
-        val sessionName = etSessionName.trimmedText
+        val sessionName = tvSessionName.trimmedText
 
         if (sessionName.isNotEmpty() || exercises.isNotEmpty() || selectedGym != null) {
             presenter.addSession(sessionName, dateTime.unix, selectedGym!!, exercises)

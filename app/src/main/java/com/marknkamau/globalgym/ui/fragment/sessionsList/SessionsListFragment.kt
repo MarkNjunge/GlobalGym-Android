@@ -13,6 +13,7 @@ import android.widget.Toast
 import com.marknkamau.globalgym.App
 
 import com.marknkamau.globalgym.R
+import com.marknkamau.globalgym.data.local.SuggestionsProvider
 import com.marknkamau.globalgym.data.models.Session
 import com.marknkamau.globalgym.ui.activity.addSession.AddSessionActivity
 import com.marknkamau.globalgym.ui.activity.sessionDetails.SessionDetailsActivity
@@ -48,6 +49,15 @@ class SessionsListFragment : Fragment(), SessionsListView {
         rvSessions.layoutManager = LinearLayoutManager(requireContext(), LinearLayout.VERTICAL, false)
         rvSessions.addItemDecoration(DividerItemDecoration(requireContext(), LinearLayout.VERTICAL))
         rvSessions.adapter = adapter
+
+        val suggestedSessionsAdapter = SuggestedSessionsAdapter { suggestedSession ->
+            val intent = Intent(requireContext(), AddSessionActivity::class.java)
+            intent.putExtra(AddSessionActivity.SUGGESTED_SESSION, suggestedSession)
+            startActivity(intent)
+        }
+        rvSuggestedSessions.layoutManager = LinearLayoutManager(requireContext(), LinearLayout.VERTICAL, false)
+        rvSuggestedSessions.adapter = suggestedSessionsAdapter
+        suggestedSessionsAdapter.setItems(SuggestionsProvider.get())
     }
 
     override fun onResume() {

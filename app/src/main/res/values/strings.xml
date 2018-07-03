@@ -65,4 +65,6 @@
     <string name="preferred_gym">Preferred Gym</string>
     <string name="reapeat_session">Reapeat session</string>
     <string name="delete">Delete</string>
+    <string name="previous_sessions">Previous sessions</string>
+    <string name="suggested_sessions">Suggested sessions</string>
 </resources>

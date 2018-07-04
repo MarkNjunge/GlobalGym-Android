@@ -30,8 +30,6 @@ class MapUtils(private val context: Context, private val googleMap: GoogleMap) {
 
         val marker = googleMap.addMarker(markerOptions)
         marker.tag = gym
-
-        googleMap.addMarker(markerOptions)
     }
 
 }

@@ -1,18 +1,18 @@
 package com.marknkamau.globalgym.ui.activity.editProfile
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.marknkamau.globalgym.App
 import com.marknkamau.globalgym.R
 import com.marknkamau.globalgym.data.models.User
+import com.marknkamau.globalgym.ui.activity.BaseActivity
 import com.marknkamau.globalgym.ui.fragment.userDetails.UserDetailsFragment
 import com.marknkamau.globalgym.utils.RxUtils
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 import timber.log.Timber
 
-class EditProfileActivity : AppCompatActivity() {
+class EditProfileActivity : BaseActivity() {
 
     companion object {
         val USER_KEY = "user"

@@ -12,11 +12,12 @@ import com.marknkamau.globalgym.App
 import com.marknkamau.globalgym.R
 import com.marknkamau.globalgym.data.models.Gym
 import com.marknkamau.globalgym.data.models.Session
+import com.marknkamau.globalgym.ui.activity.BaseActivity
 import com.marknkamau.globalgym.ui.activity.addSession.AddSessionActivity
 import com.marknkamau.globalgym.utils.DateTime
 import kotlinx.android.synthetic.main.activity_session_details.*
 
-class SessionDetailsActivity : AppCompatActivity(), SessionDetailsView {
+class SessionDetailsActivity : BaseActivity(), SessionDetailsView {
     private lateinit var presenter: SessionDetailsPresenter
     private var gym: Gym? = null
 

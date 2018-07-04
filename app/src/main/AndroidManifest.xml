@@ -44,6 +44,8 @@
             android:name=".ui.activity.sessionDetails.SessionDetailsActivity"
             android:parentActivityName=".ui.activity.main.MainActivity" />
         <activity android:name=".ui.activity.editProfile.EditProfileActivity" />
+
+        <meta-data android:name="firebase_crashlytics_collection_enabled" android:value="false" />
     </application>
 
 </manifest>

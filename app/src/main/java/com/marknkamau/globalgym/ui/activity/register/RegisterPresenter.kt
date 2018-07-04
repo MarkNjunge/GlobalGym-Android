@@ -5,6 +5,7 @@ import com.marknkamau.globalgym.data.models.User
 import com.marknkamau.globalgym.data.remote.ApiService
 import com.marknkamau.globalgym.utils.NetworkUtils
 import com.marknkamau.globalgym.utils.RxUtils
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 import retrofit2.HttpException
 import timber.log.Timber
@@ -20,6 +21,7 @@ class RegisterPresenter(private val view: RegisterView,
                         private val apiService: ApiService) {
 
     private val networkUtils = NetworkUtils()
+    private val compositeDisposable = CompositeDisposable()
 
     fun registerUser(firstName: String,
                      lastName: String,
@@ -33,9 +35,9 @@ class RegisterPresenter(private val view: RegisterView,
         if (!authService.isSignedIn())
             return
 
-        val profileImage = if(gender == "Male"){
+        val profileImage = if (gender == "Male") {
             "https://firebasestorage.googleapis.com/v0/b/globalgym-65a9a.appspot.com/o/profile_male.jpg?alt=media&token=dfb93938-171a-4cf7-8c72-177f09821805"
-        }else{
+        } else {
             "https://firebasestorage.googleapis.com/v0/b/globalgym-65a9a.appspot.com/o/profile_female.jpg?alt=media&token=89a66237-e4ea-45d8-b56b-2994319b7b76"
         }
 
@@ -52,7 +54,7 @@ class RegisterPresenter(private val view: RegisterView,
                 targetWeight,
                 null)
 
-        apiService.registerUser(user)
+        val disposable = apiService.registerUser(user)
                 .compose(RxUtils.applySingleSchedulers())
                 .subscribeBy(
                         onSuccess = {
@@ -69,5 +71,11 @@ class RegisterPresenter(private val view: RegisterView,
                             }
                         }
                 )
+
+        compositeDisposable.add(disposable)
+    }
+
+    fun clearDisposables(){
+        compositeDisposable.clear()
     }
 }

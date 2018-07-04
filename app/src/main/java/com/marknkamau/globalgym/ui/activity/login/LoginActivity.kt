@@ -35,6 +35,11 @@ class LoginActivity : BaseActivity(), LoginView {
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        presenter.clearDisposables()
+    }
+
     override fun displayMessage(message: String) {
         pbLoading.visibility = View.GONE
         Toast.makeText(this@LoginActivity, message, Toast.LENGTH_SHORT).show()

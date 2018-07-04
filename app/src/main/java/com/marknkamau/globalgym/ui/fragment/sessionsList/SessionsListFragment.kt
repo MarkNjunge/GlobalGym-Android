@@ -3,7 +3,6 @@ package com.marknkamau.globalgym.ui.fragment.sessionsList
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -66,7 +65,7 @@ class SessionsListFragment : Fragment(), SessionsListView {
 
     override fun onStop() {
         super.onStop()
-        presenter.clear()
+        presenter.clearDisposables()
     }
 
     override fun displayMessage(message: String) {

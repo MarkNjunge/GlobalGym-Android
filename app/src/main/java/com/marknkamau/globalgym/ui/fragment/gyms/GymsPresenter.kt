@@ -14,7 +14,7 @@ import timber.log.Timber
 
 class GymsPresenter(private val view: GymsView, private val apiService: ApiService) {
 
-    private val compositeDisposable: CompositeDisposable = CompositeDisposable()
+    private val compositeDisposable = CompositeDisposable()
 
     fun getGyms(lat: Double, lng: Double, country: String) {
         val disposable = apiService.getNearbyGyms(country, lat, lng, 50 * 1000)
@@ -60,7 +60,7 @@ class GymsPresenter(private val view: GymsView, private val apiService: ApiServi
         compositeDisposable.add(disposable)
     }
 
-    fun clear() {
+    fun clearDisposables() {
         compositeDisposable.clear()
     }
 }

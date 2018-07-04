@@ -2,7 +2,6 @@ package com.marknkamau.globalgym.ui.activity.sessionDetails
 
 import com.marknkamau.globalgym.data.models.SessionCompleted
 import com.marknkamau.globalgym.data.remote.ApiService
-import com.marknkamau.globalgym.utils.NetworkUtils
 import com.marknkamau.globalgym.utils.RxUtils
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
@@ -16,7 +15,7 @@ import timber.log.Timber
 
 class SessionDetailsPresenter(private val view: SessionDetailsView, private val apiService: ApiService) {
 
-    private val disposables = CompositeDisposable()
+    private val compositeDisposable = CompositeDisposable()
 
     fun getGym(gymId: String) {
         val disposable = apiService.getGym(gymId)
@@ -29,7 +28,7 @@ class SessionDetailsPresenter(private val view: SessionDetailsView, private val 
                         }
                 )
 
-        disposables.add(disposable)
+        compositeDisposable.add(disposable)
     }
 
     fun setSessionCompleted(sessionId: String) {
@@ -43,7 +42,7 @@ class SessionDetailsPresenter(private val view: SessionDetailsView, private val 
                         }
                 )
 
-        disposables.add(disposable)
+        compositeDisposable.add(disposable)
     }
 
     fun deleteSession(sessionId: String) {
@@ -59,11 +58,11 @@ class SessionDetailsPresenter(private val view: SessionDetailsView, private val 
                         }
                 )
 
-        disposables.add(disposable)
+        compositeDisposable.add(disposable)
     }
 
-    fun dispose() {
-        disposables.dispose()
+    fun clearDisposables() {
+        compositeDisposable.clear()
     }
 
 }

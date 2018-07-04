@@ -6,6 +6,7 @@ import com.marknkamau.globalgym.data.models.User
 import com.marknkamau.globalgym.data.models.UserPreferredGym
 import com.marknkamau.globalgym.data.remote.ApiService
 import com.marknkamau.globalgym.utils.RxUtils
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 import timber.log.Timber
 
@@ -28,8 +29,10 @@ class GymDetailPresenter(private val view: GymDetailView,
         }
     }
 
+    private val compositeDisposable = CompositeDisposable()
+
     fun getInstructors(instructors: List<String>) {
-        apiService.getInstructors(instructors)
+        val disposable = apiService.getInstructors(instructors)
                 .compose(RxUtils.applySingleSchedulers())
                 .subscribeBy(
                         onSuccess = {
@@ -41,10 +44,12 @@ class GymDetailPresenter(private val view: GymDetailView,
                             view.displayMessage(it.message ?: "Error getting instructors")
                         }
                 )
+
+        compositeDisposable.add(disposable)
     }
 
     fun setGymAsPreferred() {
-        apiService.updateUser(UserPreferredGym(user.userId, gym.gymId))
+        val disposable = apiService.updateUser(UserPreferredGym(user.userId, gym.gymId))
                 .compose(RxUtils.applySingleSchedulers())
                 .subscribeBy(
                         onSuccess = {
@@ -60,6 +65,11 @@ class GymDetailPresenter(private val view: GymDetailView,
                         }
                 )
 
+        compositeDisposable.add(disposable)
+    }
+
+    fun clearDisposables() {
+        compositeDisposable.clear()
     }
 
 }

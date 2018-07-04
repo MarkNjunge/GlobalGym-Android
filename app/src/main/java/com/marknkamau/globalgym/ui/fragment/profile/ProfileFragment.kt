@@ -3,7 +3,6 @@ package com.marknkamau.globalgym.ui.fragment.profile
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.support.constraint.Group
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +15,6 @@ import com.marknkamau.globalgym.data.models.Gym
 import com.marknkamau.globalgym.data.models.User
 import com.marknkamau.globalgym.ui.activity.editProfile.EditProfileActivity
 import com.marknkamau.globalgym.ui.activity.gymdetail.GymDetailsActivity
-import com.marknkamau.globalgym.ui.activity.login.LoginActivity
 import com.marknkamau.globalgym.utils.GlideApp
 import com.marknkamau.globalgym.utils.onClick
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -41,10 +39,9 @@ class ProfileFragment : Fragment(), ProfileView {
         presenter.getUser()
     }
 
-    override fun onPause() {
-        super.onPause()
-
-        presenter.dispose()
+    override fun onStop() {
+        super.onStop()
+        presenter.clearDisposables()
     }
 
     override fun displayMessage(message: String) {

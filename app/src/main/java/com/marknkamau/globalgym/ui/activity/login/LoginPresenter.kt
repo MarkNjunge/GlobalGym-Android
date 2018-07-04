@@ -4,6 +4,7 @@ import com.marknkamau.globalgym.data.auth.AuthService
 import com.marknkamau.globalgym.data.remote.ApiService
 import com.marknkamau.globalgym.utils.NetworkUtils
 import com.marknkamau.globalgym.utils.RxUtils
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 import retrofit2.HttpException
 
@@ -18,25 +19,28 @@ class LoginPresenter(private val view: LoginView,
                      private val apiService: ApiService) {
 
     private val networkUtils = NetworkUtils()
+    private val compositeDisposable = CompositeDisposable()
 
     fun sendPasswordReset(email: String) {
         authService.setPasswordReset(email)
     }
 
     fun logIn(email: String, password: String) {
-        authService.logIn(email, password)
+        val disposable = authService.logIn(email, password)
                 .subscribeBy(
                         onComplete = { checkIfRegistered() },
                         onError = {
                             view.displayMessage(it.message ?: "There was an error logging in")
                         }
                 )
+
+        compositeDisposable.add(disposable)
     }
 
     private fun checkIfRegistered() {
         val id = authService.getUser()!!.id
 
-        apiService.getUser(id)
+        val disposable = apiService.getUser(id)
                 .compose(RxUtils.applySingleSchedulers())
                 .subscribeBy(
                         onSuccess = {
@@ -55,6 +59,12 @@ class LoginPresenter(private val view: LoginView,
                             }
                         }
                 )
+
+        compositeDisposable.add(disposable)
+    }
+
+    fun clearDisposables(){
+        compositeDisposable.clear()
     }
 
 }

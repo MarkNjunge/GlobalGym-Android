@@ -131,7 +131,7 @@ class AddSessionActivity : BaseActivity(), AddSessionView {
 
     override fun onStop() {
         super.onStop()
-        presenter.clear()
+        presenter.clearDisposables()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

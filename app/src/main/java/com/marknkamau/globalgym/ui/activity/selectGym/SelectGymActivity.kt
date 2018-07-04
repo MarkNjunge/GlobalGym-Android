@@ -22,6 +22,7 @@ import com.marknkamau.globalgym.utils.RxUtils
 import com.marknkamau.globalgym.utils.maps.LocationUtils
 import com.marknkamau.globalgym.utils.maps.MapUtils
 import com.tbruyelle.rxpermissions2.RxPermissions
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.activity_select_gym.*
 import timber.log.Timber
@@ -31,6 +32,7 @@ class SelectGymActivity : BaseActivity(), OnMapReadyCallback {
     private lateinit var locationUtils: LocationUtils
     private lateinit var mapUtils: MapUtils
     private lateinit var apiService: ApiService
+    private val compositeDisposable = CompositeDisposable()
 
     companion object {
         const val SELECTED_GYM = "selected_gym"
@@ -84,7 +86,7 @@ class SelectGymActivity : BaseActivity(), OnMapReadyCallback {
         // Get current location
         // Reverse geocode to get the country
         // Get nearby gyms
-        locationUtils.getCurrentLocation()
+        val disposable = locationUtils.getCurrentLocation()
                 .flatMap { location ->
                     locationUtils.reverseGeocode(location.latitude, location.longitude)
                 }
@@ -109,5 +111,12 @@ class SelectGymActivity : BaseActivity(), OnMapReadyCallback {
                         }
                 )
 
+        compositeDisposable.add(disposable)
+
+    }
+
+    override fun onStop() {
+        super.onStop()
+        compositeDisposable.clear()
     }
 }

@@ -18,7 +18,7 @@ import timber.log.Timber
 
 class AddSessionPresenter(val view: AddSessionView, val paperService: PaperService, val apiService: ApiService) {
 
-    private val disposables = CompositeDisposable()
+    private val compositeDisposable = CompositeDisposable()
 
     fun addSession(sessionName: String, dateTime: Long, gym: Gym, sessionSteps: List<Exercise>) {
         val session = Session("", paperService.getUser()!!.userId, sessionName, dateTime, gym.gymId, sessionSteps)
@@ -35,10 +35,10 @@ class AddSessionPresenter(val view: AddSessionView, val paperService: PaperServi
                         }
                 )
 
-        disposables.add(disposable)
+        compositeDisposable.add(disposable)
     }
 
-    fun clear() {
-        disposables.clear()
+    fun clearDisposables() {
+        compositeDisposable.clear()
     }
 }

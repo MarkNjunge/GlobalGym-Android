@@ -100,6 +100,11 @@ class GymDetailsActivity : BaseActivity(), GymDetailView {
                 )
     }
 
+    override fun onStop() {
+        super.onStop()
+        presenter.clearDisposables()
+    }
+
     override fun displayMessage(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }

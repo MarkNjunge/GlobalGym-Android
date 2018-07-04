@@ -71,7 +71,7 @@ class SessionDetailsActivity : AppCompatActivity(), SessionDetailsView {
 
     override fun onStop() {
         super.onStop()
-        presenter.dispose()
+        presenter.clearDisposables()
     }
 
     override fun displayMessage(message: String) {

@@ -15,7 +15,7 @@ import timber.log.Timber
 
 class SessionsListPresenter(val view: SessionsListView, val paperService: PaperService, val apiService: ApiService) {
 
-    private val disposables = CompositeDisposable()
+    private val compositeDisposable = CompositeDisposable()
 
     fun getSessions() {
         view.showLoading()
@@ -33,11 +33,11 @@ class SessionsListPresenter(val view: SessionsListView, val paperService: PaperS
                         }
                 )
 
-        disposables.add(disposable)
+        compositeDisposable.add(disposable)
     }
 
-    fun clear() {
-        disposables.clear()
+    fun clearDisposables() {
+        compositeDisposable.clear()
     }
 
 }

@@ -8,6 +8,7 @@ import com.marknkamau.globalgym.R
 import com.marknkamau.globalgym.data.models.User
 import com.marknkamau.globalgym.ui.fragment.userDetails.UserDetailsFragment
 import com.marknkamau.globalgym.utils.RxUtils
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 import timber.log.Timber
 
@@ -16,6 +17,8 @@ class EditProfileActivity : AppCompatActivity() {
     companion object {
         val USER_KEY = "user"
     }
+
+    private val compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +36,7 @@ class EditProfileActivity : AppCompatActivity() {
             val (firstName, lastName, phone, year, country, gender, weight, targetWeight) = it
             val newUser = User(user.userId, firstName, lastName, user.email, phone, user.profilePhoto, year, country, gender, weight, targetWeight, user.preferredGym)
 
-            App.apiService.updateUser(newUser)
+            val disposable = App.apiService.updateUser(newUser)
                     .compose(RxUtils.applySingleSchedulers())
                     .subscribeBy(
                             onSuccess = {
@@ -46,11 +49,18 @@ class EditProfileActivity : AppCompatActivity() {
                                 Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show();
                             }
                     )
+
+            compositeDisposable.add(disposable)
         }
 
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fragment_holder, userDetailsFragment, "user_details")
                 .commit()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        compositeDisposable.clear()
     }
 }

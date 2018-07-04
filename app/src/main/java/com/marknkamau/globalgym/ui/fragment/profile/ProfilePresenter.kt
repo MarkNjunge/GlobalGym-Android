@@ -22,8 +22,8 @@ class ProfilePresenter(private val view: ProfileView,
 
     private val compositeDisposable = CompositeDisposable()
 
-    fun dispose() {
-        compositeDisposable.dispose()
+    fun clearDisposables() {
+        compositeDisposable.clear()
     }
 
     fun getUser() {

@@ -31,6 +31,11 @@ class SignUpActivity : BaseActivity(), SignUpView {
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        presenter.clearDisposables()
+    }
+
     override fun displayMessage(message: String) {
         pbLoading.visibility = View.GONE
         Toast.makeText(this@SignUpActivity, message, Toast.LENGTH_SHORT).show()

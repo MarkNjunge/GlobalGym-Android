@@ -1,6 +1,7 @@
 package com.marknkamau.globalgym.ui.activity.signup
 
 import com.marknkamau.globalgym.data.auth.AuthService
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 
 /**
@@ -11,8 +12,10 @@ import io.reactivex.rxkotlin.subscribeBy
 
 class SignUpPresenter(private val view: SignUpView, private val authService: AuthService) {
 
+    private val compositeDisposable = CompositeDisposable()
+
     fun signUp(email: String, password: String) {
-        authService.signUp(email, password)
+        val disposable = authService.signUp(email, password)
                 .andThen(authService.logIn(email, password))
                 .subscribeBy(
                         onComplete = { view.onSignedUp() },
@@ -21,6 +24,12 @@ class SignUpPresenter(private val view: SignUpView, private val authService: Aut
                                     ?: "There was an error creating an account")
                         }
                 )
+
+        compositeDisposable.add(disposable)
+    }
+
+    fun clearDisposables(){
+        compositeDisposable.clear()
     }
 
 }

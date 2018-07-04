@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -68,7 +67,7 @@ class GymsMapFragment : Fragment(), OnMapReadyCallback, GymsView {
 
     override fun onStop() {
         super.onStop()
-        presenter.clear()
+        presenter.clearDisposables()
     }
 
     @SuppressLint("MissingPermission")

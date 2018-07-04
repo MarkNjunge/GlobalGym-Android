@@ -5,6 +5,7 @@ import com.marknkamau.globalgym.data.local.PaperService
 import com.marknkamau.globalgym.data.remote.ApiService
 import com.marknkamau.globalgym.utils.NetworkUtils
 import com.marknkamau.globalgym.utils.RxUtils
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 import retrofit2.HttpException
 import timber.log.Timber
@@ -21,6 +22,7 @@ class MainPresenter(private val view: MainView,
                     private val paperService: PaperService) {
 
     private val networkUtils = NetworkUtils()
+    private val compositeDisposable = CompositeDisposable()
 
     fun checkIfSignedIn() {
         if (!authService.isSignedIn()) {
@@ -32,7 +34,7 @@ class MainPresenter(private val view: MainView,
 
     private fun checkIfRegistered() {
         if (paperService.getUser() == null) {
-            apiService.getUser(authService.getUser()!!.id)
+            val disposable = apiService.getUser(authService.getUser()!!.id)
                     .compose(RxUtils.applySingleSchedulers())
                     .subscribeBy(
                             onSuccess = { user ->
@@ -51,9 +53,15 @@ class MainPresenter(private val view: MainView,
                                 }
                             }
                     )
+
+            compositeDisposable.add(disposable)
         } else {
             view.onSignedInAndRegistered()
         }
+    }
+
+    fun clearDisposables() {
+        compositeDisposable.clear()
     }
 
 }

@@ -69,6 +69,11 @@ class MainActivity : BaseActivity(), MainView {
         presenter = MainPresenter(this, App.authService, App.apiService, App.paperService)
     }
 
+    override fun onStop() {
+        super.onStop()
+        presenter.clearDisposables()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
         return super.onCreateOptionsMenu(menu)

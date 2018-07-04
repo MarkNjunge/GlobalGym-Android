@@ -42,20 +42,21 @@ class ExerciseDialog : DialogFragment() {
         })
 
         arguments?.let {
-            builder.setNegativeButton("Delete", { _, _ ->
-                val exercise = Exercise(0, etExerciseTitle.trimmedText, etExerciseReps.trimmedText, etExerciseSets.trimmedText.toInt())
-                onComplete(ACTION_DELETE, exercise)
-            })
-
-            builder.setPositiveButton("Update", { _, _ ->
-                val exercise = Exercise(0, etExerciseTitle.trimmedText, etExerciseReps.trimmedText, etExerciseSets.trimmedText.toInt())
-                onComplete(ACTION_UPDATE, exercise)
-            })
-
             val exercise = it.getParcelable(EXERCISE_KEY) as Exercise
+
             etExerciseTitle.setText(exercise.title)
             etExerciseReps.setText(exercise.reps)
             etExerciseSets.setText(exercise.sets.toString())
+
+            builder.setNegativeButton("Delete", { _, _ ->
+                val newExercise = Exercise(exercise.stepIndex, etExerciseTitle.trimmedText, etExerciseReps.trimmedText, etExerciseSets.trimmedText.toInt())
+                onComplete(ACTION_DELETE, newExercise)
+            })
+
+            builder.setPositiveButton("Update", { _, _ ->
+                val newExercise = Exercise(exercise.stepIndex, etExerciseTitle.trimmedText, etExerciseReps.trimmedText, etExerciseSets.trimmedText.toInt())
+                onComplete(ACTION_UPDATE, newExercise)
+            })
         }
 
 

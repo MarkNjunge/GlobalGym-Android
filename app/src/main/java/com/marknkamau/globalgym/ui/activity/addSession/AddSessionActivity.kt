@@ -70,7 +70,6 @@ class AddSessionActivity : BaseActivity(), AddSessionView {
                     exerciseAdapter.setItems(exercises)
                 }
                 ExerciseDialog.ACTION_UPDATE -> {
-                    // TODO: Figure out why the index is wrong
                     exercises.removeAt(exercise.stepIndex)
                     exercises.add(exercise.stepIndex, exercise)
                     refreshStepIndices()

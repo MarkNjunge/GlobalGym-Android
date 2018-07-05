@@ -15,7 +15,7 @@ import timber.log.Timber
 class EditProfileActivity : BaseActivity() {
 
     companion object {
-        val USER_KEY = "user"
+        const val USER_KEY = "user"
     }
 
     private val compositeDisposable = CompositeDisposable()

@@ -25,14 +25,17 @@ class ExerciseDialog : DialogFragment() {
     }
 
     lateinit var onComplete: (action: Int, exercise: Exercise) -> Unit
+    private lateinit var etExerciseTitle: EditText
+    private lateinit var etExerciseReps: EditText
+    private lateinit var etExerciseSets: EditText
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val inflater = requireActivity().layoutInflater
 
         val view = inflater.inflate(R.layout.dialog_exercise, null)
-        val etExerciseTitle = view.findViewById<EditText>(R.id.etExerciseTitle)
-        val etExerciseReps = view.findViewById<EditText>(R.id.etExerciseReps)
-        val etExerciseSets = view.findViewById<EditText>(R.id.etExerciseSets)
+        etExerciseTitle = view.findViewById(R.id.etExerciseTitle)
+        etExerciseReps = view.findViewById(R.id.etExerciseReps)
+        etExerciseSets = view.findViewById(R.id.etExerciseSets)
 
         val builder = AlertDialog.Builder(requireActivity(), R.style.AlertDialogCustom)
         builder.setView(view)
@@ -49,18 +52,22 @@ class ExerciseDialog : DialogFragment() {
             etExerciseSets.setText(exercise.sets.toString())
 
             builder.setNegativeButton("Delete", { _, _ ->
-                val newExercise = Exercise(exercise.stepIndex, etExerciseTitle.trimmedText, etExerciseReps.trimmedText, etExerciseSets.trimmedText.toInt())
+                val newExercise = createExercise(exercise.stepIndex)
                 onComplete(ACTION_DELETE, newExercise)
             })
 
             builder.setPositiveButton("Update", { _, _ ->
-                val newExercise = Exercise(exercise.stepIndex, etExerciseTitle.trimmedText, etExerciseReps.trimmedText, etExerciseSets.trimmedText.toInt())
+                val newExercise = createExercise(exercise.stepIndex)
                 onComplete(ACTION_UPDATE, newExercise)
             })
         }
 
 
         return builder.create()
+    }
+
+    private fun createExercise(stepIndex: Int = 0): Exercise {
+        return Exercise(stepIndex, etExerciseTitle.trimmedText, etExerciseReps.trimmedText, etExerciseSets.trimmedText.toInt())
     }
 
 }

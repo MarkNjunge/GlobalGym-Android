@@ -49,7 +49,9 @@ class GymDetailsActivity : BaseActivity(), GymDetailView {
         tvLocation.text = "${gym.city},${gym.country}"
 
         rvInstructors.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
-        adapter = InstructorsAdapter(this) { }
+        adapter = InstructorsAdapter(this) {
+            // TODO: Add ability to contact instructor
+        }
         rvInstructors.adapter = adapter
         presenter.getInstructors(gym.instructors)
 
@@ -63,7 +65,6 @@ class GymDetailsActivity : BaseActivity(), GymDetailView {
         }
 
         layoutDirections.setOnClickListener {
-            //            val gmmIntentUri = Uri.parse("geo:${gym.cords.lat},${gym.cords.lng}")
             val gmmIntentUri = Uri.parse("google.navigation:q=${gym.cords.lat},${gym.cords.lng}")
             val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
             mapIntent.`package` = "com.google.android.apps.maps"

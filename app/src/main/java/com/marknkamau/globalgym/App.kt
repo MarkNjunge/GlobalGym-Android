@@ -9,8 +9,6 @@ import com.marknkamau.globalgym.data.remote.ApiService
 import com.marknkamau.globalgym.data.remote.NetworkProvider
 import io.paperdb.Paper
 import timber.log.Timber
-import com.crashlytics.android.Crashlytics
-import io.fabric.sdk.android.Fabric
 
 /**
  * Created by MarkNjunge.
@@ -34,8 +32,6 @@ class App : Application() {
                 return "Timber/${element.fileName.substringBefore(".")}.${element.methodName}(Ln${element.lineNumber})"
             }
         })
-
-        Fabric.with(this, Crashlytics())
 
         val networkProvider = NetworkProvider()
 

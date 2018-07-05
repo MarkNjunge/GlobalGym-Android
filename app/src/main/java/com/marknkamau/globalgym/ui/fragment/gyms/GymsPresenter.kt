@@ -1,5 +1,6 @@
 package com.marknkamau.globalgym.ui.fragment.gyms
 
+import com.marknkamau.globalgym.data.local.PaperService
 import com.marknkamau.globalgym.data.remote.ApiService
 import com.marknkamau.globalgym.utils.RxUtils
 import io.reactivex.disposables.CompositeDisposable
@@ -12,12 +13,12 @@ import timber.log.Timber
  * https://github.com/MarkNjunge
  */
 
-class GymsPresenter(private val view: GymsView, private val apiService: ApiService) {
+class GymsPresenter(private val view: GymsView, private val paperService: PaperService, private val apiService: ApiService) {
 
     private val compositeDisposable = CompositeDisposable()
 
-    fun getGyms(lat: Double, lng: Double, country: String) {
-        val disposable = apiService.getNearbyGyms(country, lat, lng, 50 * 1000)
+    fun getGyms(lat: Double, lng: Double) {
+        val disposable = apiService.getNearbyGyms(paperService.getCurrentCountry(), lat, lng, 50 * 1000)
                 .compose(RxUtils.applySingleSchedulers())
                 .subscribeBy(
                         onSuccess = { gyms ->

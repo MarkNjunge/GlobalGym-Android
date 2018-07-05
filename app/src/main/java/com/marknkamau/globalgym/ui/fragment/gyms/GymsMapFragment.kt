@@ -61,7 +61,7 @@ class GymsMapFragment : Fragment(), OnMapReadyCallback, GymsView {
         rvGymResults.layoutManager = LinearLayoutManager(requireContext(), LinearLayout.VERTICAL, false)
         rvGymResults.adapter = gymSearchAdapter
 
-        presenter = GymsPresenter(this, App.apiService)
+        presenter = GymsPresenter(this, App.paperService, App.apiService)
 
     }
 
@@ -93,14 +93,11 @@ class GymsMapFragment : Fragment(), OnMapReadyCallback, GymsView {
 
         locationUtils.getCurrentLocation()
                 .compose(RxUtils.applySingleSchedulers())
-                .flatMap { location ->
-                    locationUtils.reverseGeocode(location.latitude, location.longitude)
-                }
                 .subscribeBy(
-                        onSuccess = { address ->
-                            Timber.d("${address.latitude},${address.longitude}")
-                            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(address.latitude, address.longitude), 13f))
-                            presenter.getGyms(address.latitude, address.longitude, address.countryName)
+                        onSuccess = { location ->
+                            Timber.d("${location.latitude},${location.longitude}")
+                            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(location.latitude, location.longitude), 13f))
+                            presenter.getGyms(location.latitude, location.longitude)
                         },
                         onError = { exception ->
                             Timber.e(exception)

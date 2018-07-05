@@ -19,6 +19,7 @@ class PaperServiceImpl(context: Context) : PaperService {
     private val USER_KEY = "user"
     private val GYM_KEY = "gym"
     private val LANGUAGE_KEY = "lang"
+    private val COUNTRY_KEY = "country"
 
     init {
         Paper.init(context)
@@ -70,5 +71,13 @@ class PaperServiceImpl(context: Context) : PaperService {
 
     override fun saveLanguageCode(code: String) {
         book.write(LANGUAGE_KEY, code)
+    }
+
+    override fun getCurrentCountry(): String {
+        return book.read(COUNTRY_KEY) ?: "Kenya"
+    }
+
+    override fun saveCurrentCountry(country: String) {
+        book.write(COUNTRY_KEY, country)
     }
 }

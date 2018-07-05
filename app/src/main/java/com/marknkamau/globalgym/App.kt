@@ -7,7 +7,10 @@ import com.marknkamau.globalgym.data.local.PaperService
 import com.marknkamau.globalgym.data.local.PaperServiceImpl
 import com.marknkamau.globalgym.data.remote.ApiService
 import com.marknkamau.globalgym.data.remote.NetworkProvider
-import io.paperdb.Paper
+import com.marknkamau.globalgym.utils.NetworkUtils
+import com.marknkamau.globalgym.utils.RxUtils
+import com.marknkamau.globalgym.utils.maps.LocationUtils
+import io.reactivex.rxkotlin.subscribeBy
 import timber.log.Timber
 
 /**
@@ -38,6 +41,21 @@ class App : Application() {
         authService = AuthServiceImpl()
         apiService = networkProvider.apiService
         paperService = PaperServiceImpl(this)
+
+        val locationUtils = LocationUtils(this)
+        locationUtils.getCurrentLocation()
+                .flatMap { location ->
+                    locationUtils.reverseGeocode(location.latitude, location.longitude)
+                }
+                .compose(RxUtils.applySingleSchedulers())
+                .subscribeBy(
+                        onSuccess = { address ->
+                            paperService.saveCurrentCountry(address.countryName)
+                        },
+                        onError = {
+                            Timber.e(it)
+                        }
+                )
     }
 
 }

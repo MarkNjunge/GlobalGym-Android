@@ -22,4 +22,7 @@ interface PaperService {
 
     fun getLanguageCode(): String
     fun saveLanguageCode(code: String)
+
+    fun getCurrentCountry(): String
+    fun saveCurrentCountry(country: String)
 }

@@ -84,17 +84,13 @@ class SelectGymActivity : BaseActivity(), OnMapReadyCallback {
         }
 
         // Get current location
-        // Reverse geocode to get the country
         // Get nearby gyms
         val disposable = locationUtils.getCurrentLocation()
-                .flatMap { location ->
-                    locationUtils.reverseGeocode(location.latitude, location.longitude)
-                }
                 .flatMap { address ->
                     Timber.d("${address.latitude},${address.longitude}")
                     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(address.latitude, address.longitude), 13f))
 
-                    apiService.getNearbyGyms(address.countryName, address.latitude, address.longitude, 50 * 1000)
+                    apiService.getNearbyGyms(App.paperService.getCurrentCountry(), address.latitude, address.longitude, 50 * 1000)
                             .compose(RxUtils.applySingleSchedulers())
                 }
                 .subscribeBy(

@@ -61,7 +61,7 @@ class GymsMapFragment : Fragment(), OnMapReadyCallback, GymsView {
         rvGymResults.layoutManager = LinearLayoutManager(requireContext(), LinearLayout.VERTICAL, false)
         rvGymResults.adapter = gymSearchAdapter
 
-        presenter = GymsPresenter(this, App.paperService, App.apiService)
+        presenter = GymsPresenter(this, App.dataRepository)
 
     }
 

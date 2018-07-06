@@ -3,6 +3,7 @@ package com.marknkamau.globalgym.ui.activity.main
 import com.marknkamau.globalgym.data.auth.AuthService
 import com.marknkamau.globalgym.data.local.PaperService
 import com.marknkamau.globalgym.data.remote.ApiService
+import com.marknkamau.globalgym.data.repository.DataRepository
 import com.marknkamau.globalgym.utils.NetworkUtils
 import com.marknkamau.globalgym.utils.RxUtils
 import io.reactivex.disposables.CompositeDisposable
@@ -18,8 +19,7 @@ import timber.log.Timber
 
 class MainPresenter(private val view: MainView,
                     private val authService: AuthService,
-                    private val apiService: ApiService,
-                    private val paperService: PaperService) {
+                    private val dataRepository: DataRepository) {
 
     private val networkUtils = NetworkUtils()
     private val compositeDisposable = CompositeDisposable()
@@ -33,12 +33,12 @@ class MainPresenter(private val view: MainView,
     }
 
     private fun checkIfRegistered() {
-        if (paperService.getUser() == null) {
-            val disposable = apiService.getUser(authService.getUser()!!.id)
+        if (dataRepository.paperService.getUser() == null) {
+            val disposable = dataRepository.apiService.getUser(authService.getUser()!!.id)
                     .compose(RxUtils.applySingleSchedulers())
                     .subscribeBy(
                             onSuccess = { user ->
-                                paperService.saveUser(user)
+                                dataRepository.paperService.saveUser(user)
                                 Timber.d(user.toString())
                                 view.onSignedInAndRegistered()
                             },

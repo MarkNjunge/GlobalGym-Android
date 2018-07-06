@@ -1,10 +1,9 @@
 package com.marknkamau.globalgym.ui.activity.gymdetail
 
-import com.marknkamau.globalgym.data.local.PaperService
 import com.marknkamau.globalgym.data.models.Gym
 import com.marknkamau.globalgym.data.models.User
 import com.marknkamau.globalgym.data.models.UserPreferredGym
-import com.marknkamau.globalgym.data.remote.ApiService
+import com.marknkamau.globalgym.data.repository.DataRepository
 import com.marknkamau.globalgym.utils.RxUtils
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
@@ -18,10 +17,9 @@ import timber.log.Timber
 
 class GymDetailPresenter(private val view: GymDetailView,
                          private val gym: Gym,
-                         private val paperService: PaperService,
-                         private val apiService: ApiService) {
+                         private val dataRepository: DataRepository) {
 
-    private val user: User = paperService.getUser()!!
+    private val user: User = dataRepository.paperService.getUser()!!
 
     init {
         if (user.preferredGym == gym.gymId) {
@@ -32,7 +30,7 @@ class GymDetailPresenter(private val view: GymDetailView,
     private val compositeDisposable = CompositeDisposable()
 
     fun getInstructors(instructors: List<String>) {
-        val disposable = apiService.getInstructors(instructors)
+        val disposable = dataRepository.apiService.getInstructors(instructors)
                 .compose(RxUtils.applySingleSchedulers())
                 .subscribeBy(
                         onSuccess = {
@@ -49,13 +47,13 @@ class GymDetailPresenter(private val view: GymDetailView,
     }
 
     fun setGymAsPreferred() {
-        val disposable = apiService.updateUser(UserPreferredGym(user.userId, gym.gymId))
+        val disposable = dataRepository.apiService.updateUser(UserPreferredGym(user.userId, gym.gymId))
                 .compose(RxUtils.applySingleSchedulers())
                 .subscribeBy(
                         onSuccess = {
                             val copy = user.copy(preferredGym = gym.gymId)
-                            paperService.saveUser(copy)
-                            paperService.savePreferredGym(gym)
+                            dataRepository.paperService.saveUser(copy)
+                            dataRepository.paperService.savePreferredGym(gym)
                             view.displayMessage("Gym set as preferred")
                             view.onGymIsPreferred()
                         },

@@ -39,7 +39,7 @@ class GymDetailsActivity : BaseActivity(), GymDetailView {
             title = gym.name
         }
 
-        presenter = GymDetailPresenter(this, gym, App.paperService, App.apiService)
+        presenter = GymDetailPresenter(this, gym, App.dataRepository)
 
         tvGymTitle.text = gym.name
         tvOpenTime.text = gym.openTime

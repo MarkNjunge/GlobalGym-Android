@@ -23,7 +23,7 @@ class SettingsActivity : BaseActivity() {
         dialog.onSelected = { language ->
             val code = LocaleManager.getCode(language)
 
-            App.paperService.saveLanguageCode(code)
+            App.dataRepository.paperService.saveLanguageCode(code)
 
             LocaleManager.updateResources(this, code)
 
@@ -32,7 +32,7 @@ class SettingsActivity : BaseActivity() {
             startActivity(intent)
         }
 
-        val code = App.paperService.getLanguageCode()
+        val code = App.dataRepository.paperService.getLanguageCode()
         tvCurrentLanguage.text = LocaleManager.getLanguage(code)
 
         layoutLanguage.setOnClickListener {
@@ -41,8 +41,8 @@ class SettingsActivity : BaseActivity() {
 
         tvLogout.setOnClickListener{
             App.authService.signOut()
-            App.paperService.deleteUser()
-            App.paperService.deletePreferredGym()
+            App.dataRepository.paperService.deleteUser()
+            App.dataRepository.paperService.deletePreferredGym()
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }

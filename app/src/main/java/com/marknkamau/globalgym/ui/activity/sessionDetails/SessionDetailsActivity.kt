@@ -29,7 +29,7 @@ class SessionDetailsActivity : BaseActivity(), SessionDetailsView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_session_details)
 
-        presenter = SessionDetailsPresenter(this, App.apiService)
+        presenter = SessionDetailsPresenter(this, App.dataRepository.apiService)
 
         val session = intent.getParcelableExtra<Session>(SESSION_KEY)
 

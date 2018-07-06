@@ -46,7 +46,7 @@ class SelectGymActivity : BaseActivity(), OnMapReadyCallback {
             title = getString(R.string.select_gym)
         }
 
-        apiService = App.apiService
+        apiService = App.dataRepository.apiService
 
         val rxPermissions = RxPermissions(this)
         rxPermissions.request(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -90,7 +90,7 @@ class SelectGymActivity : BaseActivity(), OnMapReadyCallback {
                     Timber.d("${address.latitude},${address.longitude}")
                     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(address.latitude, address.longitude), 13f))
 
-                    apiService.getNearbyGyms(App.paperService.getCurrentCountry(), address.latitude, address.longitude, 50 * 1000)
+                    apiService.getNearbyGyms(App.dataRepository.paperService.getCurrentCountry(), address.latitude, address.longitude, 50 * 1000)
                             .compose(RxUtils.applySingleSchedulers())
                 }
                 .subscribeBy(

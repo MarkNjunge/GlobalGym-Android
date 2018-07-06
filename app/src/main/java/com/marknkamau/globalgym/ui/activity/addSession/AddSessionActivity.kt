@@ -42,7 +42,7 @@ class AddSessionActivity : BaseActivity(), AddSessionView {
             title = getString(R.string.add_session)
         }
 
-        presenter = AddSessionPresenter(this, App.paperService, App.apiService)
+        presenter = AddSessionPresenter(this, App.dataRepository)
 
         val exerciseDialog = ExerciseDialog()
 

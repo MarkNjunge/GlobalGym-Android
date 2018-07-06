@@ -1,12 +1,16 @@
 package com.marknkamau.globalgym
 
 import android.app.Application
+import android.arch.persistence.room.Room
 import com.marknkamau.globalgym.data.auth.AuthService
 import com.marknkamau.globalgym.data.auth.AuthServiceImpl
+import com.marknkamau.globalgym.data.local.AppDatabase
 import com.marknkamau.globalgym.data.local.PaperService
 import com.marknkamau.globalgym.data.local.PaperServiceImpl
 import com.marknkamau.globalgym.data.remote.ApiService
 import com.marknkamau.globalgym.data.remote.NetworkProvider
+import com.marknkamau.globalgym.data.repository.DataRepository
+import com.marknkamau.globalgym.data.repository.DataRepositoryImpl
 import com.marknkamau.globalgym.utils.NetworkUtils
 import com.marknkamau.globalgym.utils.RxUtils
 import com.marknkamau.globalgym.utils.maps.LocationUtils
@@ -25,6 +29,7 @@ class App : Application() {
         lateinit var authService: AuthService
         lateinit var apiService: ApiService
         lateinit var paperService: PaperService
+        lateinit var dataRepository: DataRepository
     }
 
     override fun onCreate() {
@@ -36,11 +41,17 @@ class App : Application() {
             }
         })
 
+        val appDatabase = Room.databaseBuilder(this, AppDatabase::class.java, "local-cache")
+                .fallbackToDestructiveMigration()
+                .build()
+
         val networkProvider = NetworkProvider()
 
         authService = AuthServiceImpl()
         apiService = networkProvider.apiService
         paperService = PaperServiceImpl(this)
+
+        dataRepository = DataRepositoryImpl(appDatabase, apiService, paperService)
 
         val locationUtils = LocationUtils(this)
         locationUtils.getCurrentLocation()

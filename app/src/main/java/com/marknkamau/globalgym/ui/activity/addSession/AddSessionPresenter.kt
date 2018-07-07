@@ -22,21 +22,27 @@ class AddSessionPresenter(val view: AddSessionView, val dataRepository: DataRepo
     private val compositeDisposable = CompositeDisposable()
 
     fun addSession(sessionName: String, dateTime: Long, gym: Gym, sessionSteps: List<Exercise>) {
-        val session = Session("", dataRepository.paperService.getUser()!!.userId, sessionName, dateTime, gym.gymId, sessionSteps)
+        dataRepository.paperService.getUser()?.let { user ->
+            val session = Session("", user.userId, sessionName, dateTime, gym.gymId, sessionSteps)
 
-        val disposable = dataRepository.apiService.createSession(session)
-                .compose(RxUtils.applySingleSchedulers())
-                .subscribeBy(
-                        onSuccess = {
-                            view.onSessionAdded()
-                        },
-                        onError = {
-                            Timber.e(it)
-                            view.displayMessage(it.message ?: "Error adding session")
-                        }
-                )
+            val disposable = dataRepository.apiService.createSession(session)
+                    .compose(RxUtils.applySingleSchedulers())
+                    .subscribeBy(
+                            onSuccess = {
+                                view.onSessionAdded()
+                            },
+                            onError = {
+                                Timber.e(it)
+                                view.displayMessage(it.message ?: "Error adding session")
+                            }
+                    )
 
-        compositeDisposable.add(disposable)
+            compositeDisposable.add(disposable)
+            return
+        }
+
+        Timber.e("User is not signed in")
+        view.displayMessage("Please sign in again")
     }
 
     fun clearDisposables() {

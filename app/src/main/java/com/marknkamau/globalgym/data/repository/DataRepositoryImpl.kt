@@ -41,12 +41,15 @@ class DataRepositoryImpl(private val appDatabase: AppDatabase, override val apiS
     }
 
     private fun getSessionsFromApi(): Observable<List<Session>> {
-        return apiService.getSessions(paperService.getUser()!!.userId)
-                .toObservable()
-                .doOnNext {
-                    Timber.d("Dispatching ${it.size} sessions from API...")
-                    storeSessions(it)
-                }
+        paperService.getUser()?.let {
+            return apiService.getSessions(it.userId)
+                    .toObservable()
+                    .doOnNext {
+                        Timber.d("Dispatching ${it.size} sessions from API...")
+                        storeSessions(it)
+                    }
+        }
+        return Observable.error(Throwable("User is not signed in"))
     }
 
     private fun storeSessions(sessions: List<Session>) {

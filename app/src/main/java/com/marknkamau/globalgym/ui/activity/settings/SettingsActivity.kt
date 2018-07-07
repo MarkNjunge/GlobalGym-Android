@@ -40,7 +40,7 @@ class SettingsActivity : BaseActivity() {
             dialog.show(supportFragmentManager, "lang")
         }
 
-        tvLogout.setOnClickListener {
+        layoutLogout.setOnClickListener {
             App.dataRepository.clearUserCache()
                     .compose(RxUtils.applyCompletableSchedulers())
 

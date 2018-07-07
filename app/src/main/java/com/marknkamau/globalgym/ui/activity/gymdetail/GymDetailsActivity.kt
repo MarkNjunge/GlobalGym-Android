@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.support.transition.TransitionManager
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.LinearLayout
@@ -16,6 +17,9 @@ import com.marknkamau.globalgym.ui.activity.BaseActivity
 import com.marknkamau.globalgym.utils.GlideApp
 import com.marknkamau.globalgym.utils.RxUtils
 import com.marknkamau.globalgym.utils.maps.LocationUtils
+import com.uber.sdk.android.rides.RideParameters
+import com.uber.sdk.android.rides.RideRequestButtonCallback
+import com.uber.sdk.rides.client.error.ApiError
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.activity_gym_details.*
 import timber.log.Timber
@@ -97,6 +101,45 @@ class GymDetailsActivity : BaseActivity(), GymDetailView {
                         onError = {
                             Timber.e(it)
                             Toast.makeText(this, "Unable to get street address", Toast.LENGTH_SHORT).show()
+                        }
+                )
+
+        locationUtils.getCurrentLocation()
+                .subscribeBy(
+                        onSuccess = { location ->
+                            TransitionManager.beginDelayedTransition(linearLayout5)
+                            val rideParameters = RideParameters.Builder()
+                                    .setDropoffLocation(gym.cords.lat, gym.cords.lng, gym.name, null)
+                                    .setPickupLocation(location.latitude, location.longitude, "My location", null)
+                                    .build()
+                            btnUber.setRideParameters(rideParameters)
+                            btnUber.setSession(App.uberSession)
+                            btnUber.visibility = View.VISIBLE
+
+                            val value: RideRequestButtonCallback = object : RideRequestButtonCallback {
+                                override fun onRideInformationLoaded() {}
+
+                                override fun onError(apiError: ApiError?) {
+                                    Toast.makeText(this@GymDetailsActivity, "Error getting Uber estimate", Toast.LENGTH_SHORT).show()
+                                    apiError?.let { error ->
+                                        error.clientErrors.forEach { clientError ->
+                                            Timber.e("${clientError.code}, ${clientError.status}, ${clientError.title}")
+                                        }
+                                    }
+                                }
+
+                                override fun onError(throwable: Throwable?) {
+                                    Toast.makeText(this@GymDetailsActivity, "Error getting Uber estimate", Toast.LENGTH_SHORT).show()
+                                    throwable?.let { Timber.e(throwable) }
+                                }
+
+                            }
+
+                            btnUber.setCallback(value)
+                            btnUber.loadRideInformation()
+                        },
+                        onError = {
+                            Timber.e(it)
                         }
                 )
     }

@@ -14,6 +14,9 @@ import com.marknkamau.globalgym.data.repository.DataRepositoryImpl
 import com.marknkamau.globalgym.utils.NetworkUtils
 import com.marknkamau.globalgym.utils.RxUtils
 import com.marknkamau.globalgym.utils.maps.LocationUtils
+import com.uber.sdk.android.core.UberSdk
+import com.uber.sdk.rides.client.ServerTokenSession
+import com.uber.sdk.rides.client.SessionConfiguration
 import io.reactivex.rxkotlin.subscribeBy
 import timber.log.Timber
 
@@ -28,6 +31,7 @@ class App : Application() {
     companion object {
         lateinit var authService: AuthService
         lateinit var dataRepository: DataRepository
+        lateinit var uberSession: ServerTokenSession
     }
 
     override fun onCreate() {
@@ -50,6 +54,16 @@ class App : Application() {
         val paperService = PaperServiceImpl(this)
 
         dataRepository = DataRepositoryImpl(appDatabase, apiService, paperService)
+
+        val configuration = SessionConfiguration.Builder()
+                .setClientId(getString(R.string.uber_client_id))
+                .setServerToken(getString(R.string.uber_server_token))
+                .setEnvironment(SessionConfiguration.Environment.SANDBOX)
+                .build()
+
+        uberSession = ServerTokenSession(configuration)
+
+        UberSdk.initialize(configuration)
 
         val locationUtils = LocationUtils(this)
         locationUtils.getCurrentLocation()

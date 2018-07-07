@@ -191,6 +191,22 @@
 
         </LinearLayout>
 
+        <com.uber.sdk.android.rides.RideRequestButton
+            android:id="@+id/btnUber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            tools:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/linearLayout6"
+            app:ub__style="white">
+
+        </com.uber.sdk.android.rides.RideRequestButton>
+
         <View
             android:id="@+id/view3"
             android:layout_width="0dp"
@@ -202,7 +218,7 @@
             android:background="@android:color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
+            app:layout_constraintTop_toBottomOf="@id/btnUber" />
 
         <ImageView
             android:id="@+id/imageView2"
@@ -363,8 +379,8 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView21"
-            tools:listitem="@layout/item_instructor"
-            tools:itemCount="1">
+            tools:itemCount="1"
+            tools:listitem="@layout/item_instructor">
 
         </android.support.v7.widget.RecyclerView>
 

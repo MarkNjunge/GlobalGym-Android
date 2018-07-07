@@ -18,6 +18,8 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         resValue "string", "google_maps_key", (project.findProperty("GOOGLE_API_KEY") ?: "")
+        resValue "string", "uber_client_id", (project.findProperty("UBER_CLENT_ID") ?: "")
+        resValue "string", "uber_server_token", (project.findProperty("UBER_SERVER_TOKEN") ?: "")
     }
     buildTypes {
         release {
@@ -72,6 +74,7 @@ dependencies {
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
     implementation 'com.github.bumptech.glide:glide:4.7.1'
     kapt 'com.github.bumptech.glide:compiler:4.7.1'
+    implementation 'com.uber.sdk:rides-android:0.5.3'
 
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:support-v4:27.1.1'

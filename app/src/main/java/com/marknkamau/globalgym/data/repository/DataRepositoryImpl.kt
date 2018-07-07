@@ -4,6 +4,7 @@ import com.marknkamau.globalgym.data.local.AppDatabase
 import com.marknkamau.globalgym.data.local.PaperService
 import com.marknkamau.globalgym.data.models.Session
 import com.marknkamau.globalgym.data.remote.ApiService
+import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
@@ -15,8 +16,18 @@ import timber.log.Timber
  */
 
 class DataRepositoryImpl(private val appDatabase: AppDatabase, override val apiService: ApiService, override val paperService: PaperService) : DataRepository {
+    private val sessionsDao = appDatabase.sessionsDao()
+
     override fun getSessions(): Observable<List<Session>> {
         return Observable.concatArray(getSessionsFromDb(), getSessionsFromApi())
+    }
+
+    override fun clearUserCache(): Completable {
+        return Completable.fromCallable {
+            sessionsDao.deleteAll()
+            paperService.deletePreferredGym()
+            paperService.deleteUser()
+        }
     }
 
     private fun getSessionsFromDb(): Observable<List<Session>> {
@@ -40,10 +51,12 @@ class DataRepositoryImpl(private val appDatabase: AppDatabase, override val apiS
 
     private fun storeSessions(sessions: List<Session>) {
         val roomSessions = sessions.map { session -> session.toRoomSession() }
-        Observable.fromCallable { appDatabase.sessionsDao().insertAll(roomSessions) }
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
-                .subscribe { Timber.d("Inserted ${sessions.size} sessions from API in DB...") }
+        clearUserCache().doOnComplete {
+            Observable.fromCallable { sessionsDao.insertAll(roomSessions) }
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(Schedulers.io())
+                    .subscribe { Timber.d("Inserted ${sessions.size} sessions from API in DB...") }
+        }
     }
 
 }

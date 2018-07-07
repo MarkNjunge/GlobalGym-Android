@@ -3,6 +3,7 @@ package com.marknkamau.globalgym.data.repository
 import com.marknkamau.globalgym.data.local.PaperService
 import com.marknkamau.globalgym.data.models.Session
 import com.marknkamau.globalgym.data.remote.ApiService
+import io.reactivex.Completable
 import io.reactivex.Observable
 
 /**
@@ -17,5 +18,6 @@ interface DataRepository {
     val paperService: PaperService
 
     fun getSessions(): Observable<List<Session>>
+    fun clearUserCache(): Completable
 
 }

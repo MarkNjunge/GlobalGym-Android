@@ -9,6 +9,7 @@ import com.marknkamau.globalgym.ui.activity.BaseActivity
 import com.marknkamau.globalgym.ui.activity.login.LoginActivity
 import com.marknkamau.globalgym.ui.activity.main.MainActivity
 import com.marknkamau.globalgym.utils.LocaleManager
+import com.marknkamau.globalgym.utils.RxUtils
 import kotlinx.android.synthetic.main.activity_settings.*
 
 class SettingsActivity : BaseActivity() {
@@ -39,11 +40,15 @@ class SettingsActivity : BaseActivity() {
             dialog.show(supportFragmentManager, "lang")
         }
 
-        tvLogout.setOnClickListener{
-            App.authService.signOut()
-            App.dataRepository.paperService.deleteUser()
-            App.dataRepository.paperService.deletePreferredGym()
-            startActivity(Intent(this, LoginActivity::class.java))
+        tvLogout.setOnClickListener {
+            App.dataRepository.clearUserCache()
+                    .compose(RxUtils.applyCompletableSchedulers())
+
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            startActivity(intent)
             finish()
         }
 

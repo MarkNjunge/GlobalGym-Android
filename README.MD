@@ -10,6 +10,7 @@ NB: GlobalGym was created as a school project. It is not used in production.
 ## Requirements
 1. A  _google-services.json_ file from Firebase. The project needs Email/Password sign in enabled.
 2. A Google api key with accesss to Geocoding API and Maps SDK for Android. Add this to _gradle.properties_.
+3. An Uber Client Id and Server token. Only required for fare estimates. [See docs](https://developer.uber.com/docs/riders/ride-requests/tutorials/button/introduction)
 
 ## Screenshots
 ![alt text](/images/screenshots.png "Screenshots")

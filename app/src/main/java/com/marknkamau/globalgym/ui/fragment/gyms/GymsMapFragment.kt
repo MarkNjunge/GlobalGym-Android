@@ -33,6 +33,7 @@ class GymsMapFragment : Fragment(), OnMapReadyCallback, GymsView {
     private lateinit var mapUtils: MapUtils
     private lateinit var presenter: GymsPresenter
     private lateinit var gymSearchAdapter: GymSearchAdapter
+    private var preferredGym: Gym? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_gyms_map, container, false)
@@ -74,6 +75,8 @@ class GymsMapFragment : Fragment(), OnMapReadyCallback, GymsView {
     override fun onMapReady(googleMap: GoogleMap) {
 //        googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style))
 //        googleMap.isMyLocationEnabled = true
+
+        preferredGym = App.dataRepository.paperService.getPreferredGym()
         googleMap.uiSettings.run {
             isMyLocationButtonEnabled = true
             isMapToolbarEnabled = false
@@ -125,6 +128,14 @@ class GymsMapFragment : Fragment(), OnMapReadyCallback, GymsView {
     override fun onGymsRetrieved(gyms: List<Gym>) {
         pbLoading.visibility = View.GONE
         gyms.forEach { gym ->
+            preferredGym?.let {
+                if (gym.gymId == it.gymId) {
+                    mapUtils.addGymMarker(gym, true)
+                } else {
+                    mapUtils.addGymMarker(gym)
+                }
+                return@forEach
+            }
             mapUtils.addGymMarker(gym)
         }
     }

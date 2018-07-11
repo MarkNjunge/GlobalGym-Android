@@ -23,7 +23,7 @@ class DataRepositoryImpl(private val appDatabase: AppDatabase, override val apiS
     }
 
     override fun clearUserCache(): Completable {
-        return Completable.fromCallable {
+        return Completable.create {
             sessionsDao.deleteAll()
             paperService.deletePreferredGym()
             paperService.deleteUser()
@@ -54,12 +54,13 @@ class DataRepositoryImpl(private val appDatabase: AppDatabase, override val apiS
 
     private fun storeSessions(sessions: List<Session>) {
         val roomSessions = sessions.map { session -> session.toRoomSession() }
-        clearUserCache().doOnComplete {
-            Observable.fromCallable { sessionsDao.insertAll(roomSessions) }
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(Schedulers.io())
-                    .subscribe { Timber.d("Inserted ${sessions.size} sessions from API in DB...") }
+        Observable.fromCallable {
+            sessionsDao.deleteAll()
+            sessionsDao.insertAll(roomSessions)
         }
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe { Timber.d("Inserted ${sessions.size} sessions from API in DB...") }
     }
 
 }

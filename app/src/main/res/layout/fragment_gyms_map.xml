@@ -19,43 +19,4 @@
         android:layout_gravity="center"
         android:indeterminate="true" />
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvGymResults"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="8dp"
-            android:background="#EDF1F7"
-            android:paddingTop="60dp"
-            android:visibility="gone"
-            tools:itemCount="3"
-            tools:listitem="@layout/item_gym_search" />
-
-        <EditText
-            android:id="@+id/etGymName"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_margin="8dp"
-            android:ems="10"
-            style="@style/TextInput"
-            android:hint="@string/search_for_gym"
-            android:inputType="textCapWords"
-            android:padding="8dp" />
-
-        <ProgressBar
-            android:id="@+id/pbGymSearch"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:indeterminate="true"
-            android:paddingTop="60dp"
-            android:visibility="gone" />
-
-    </FrameLayout>
-
 </FrameLayout>

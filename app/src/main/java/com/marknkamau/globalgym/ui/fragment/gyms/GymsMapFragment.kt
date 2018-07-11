@@ -32,7 +32,6 @@ class GymsMapFragment : Fragment(), OnMapReadyCallback, GymsView {
     private lateinit var locationUtils: LocationUtils
     private lateinit var mapUtils: MapUtils
     private lateinit var presenter: GymsPresenter
-    private lateinit var gymSearchAdapter: GymSearchAdapter
     private var preferredGym: Gym? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -52,15 +51,6 @@ class GymsMapFragment : Fragment(), OnMapReadyCallback, GymsView {
                         Toast.makeText(context, "Location permission is required", Toast.LENGTH_SHORT).show()
                     }
                 }
-
-        gymSearchAdapter = GymSearchAdapter {
-            val intent = Intent(requireContext(), GymDetailsActivity::class.java)
-            intent.putExtra(GymDetailsActivity.GYM_KEY, it)
-            startActivity(intent)
-        }
-
-        rvGymResults.layoutManager = LinearLayoutManager(requireContext(), LinearLayout.VERTICAL, false)
-        rvGymResults.adapter = gymSearchAdapter
 
         presenter = GymsPresenter(this, App.dataRepository)
 
@@ -107,18 +97,6 @@ class GymsMapFragment : Fragment(), OnMapReadyCallback, GymsView {
                         }
                 )
 
-        // Initialize gym search
-        RxSearch.fromEditText(etGymName)
-                .doOnNext {
-                    if (it.isEmpty())
-                        rvGymResults.visibility = View.GONE
-                }
-                .filter { it.length > 3 }
-                .debounce(300, TimeUnit.MILLISECONDS)
-                .subscribeBy {
-
-                    presenter.searchForGym(it)
-                }
     }
 
     override fun displayMessage(message: String) {
@@ -138,23 +116,6 @@ class GymsMapFragment : Fragment(), OnMapReadyCallback, GymsView {
             }
             mapUtils.addGymMarker(gym)
         }
-    }
-
-    override fun showSearchLoading() {
-        requireActivity().runOnUiThread {
-            pbGymSearch.visibility = View.VISIBLE
-        }
-    }
-
-    override fun hideSearchLoading() {
-        requireActivity().runOnUiThread {
-            pbGymSearch.visibility = View.GONE
-        }
-    }
-
-    override fun onGymSearchResultRetrieved(gyms: List<Gym>) {
-        gymSearchAdapter.setItems(gyms)
-        rvGymResults.visibility = View.VISIBLE
     }
 
 }

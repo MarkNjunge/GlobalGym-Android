@@ -37,29 +37,6 @@ class GymsPresenter(private val view: GymsView, private val dataRepository: Data
         compositeDisposable.add(disposable)
     }
 
-    fun searchForGym(name: String) {
-        view.showSearchLoading()
-        val disposable = dataRepository.apiService.searchGyms(name)
-                .compose(RxUtils.applySingleSchedulers())
-                .subscribeBy(
-                        onSuccess = { gyms ->
-                            view.hideSearchLoading()
-                            if (gyms.isEmpty()) {
-                                view.displayMessage("No gyms have been found")
-                            } else {
-                                view.onGymSearchResultRetrieved(gyms)
-                            }
-                        },
-                        onError = {
-                            view.hideSearchLoading()
-                            Timber.d(it)
-                            view.displayMessage(it.message ?: "Error finding gyms")
-                        }
-                )
-
-        compositeDisposable.add(disposable)
-    }
-
     fun clearDisposables() {
         compositeDisposable.clear()
     }

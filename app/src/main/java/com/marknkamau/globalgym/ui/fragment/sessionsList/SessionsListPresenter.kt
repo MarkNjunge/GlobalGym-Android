@@ -20,7 +20,6 @@ class SessionsListPresenter(val view: SessionsListView, val repository: DataRepo
     fun getSessions() {
         view.showLoading()
         val disposable = repository.getSessions()
-                .debounce(400, TimeUnit.MILLISECONDS)
                 .compose(RxUtils.applyObservableSchedulers())
                 .subscribeBy(
                         onNext = {

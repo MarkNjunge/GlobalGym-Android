@@ -18,7 +18,6 @@ import com.marknkamau.globalgym.App
 import com.marknkamau.globalgym.R
 import com.marknkamau.globalgym.data.models.Gym
 import com.marknkamau.globalgym.ui.activity.gymdetail.GymDetailsActivity
-import com.marknkamau.globalgym.utils.RxSearch
 import com.marknkamau.globalgym.utils.RxUtils
 import com.marknkamau.globalgym.utils.maps.LocationUtils
 import com.marknkamau.globalgym.utils.maps.MapUtils

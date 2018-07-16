@@ -20,6 +20,7 @@ import com.marknkamau.globalgym.ui.activity.BaseActivity
 import com.marknkamau.globalgym.ui.activity.selectGym.SelectGymActivity
 import com.marknkamau.globalgym.utils.DateTime
 import com.marknkamau.globalgym.utils.trimmedText
+import java.util.*
 
 class AddSessionActivity : BaseActivity(), AddSessionView {
     private var dateTime = DateTime.now
@@ -189,7 +190,7 @@ class AddSessionActivity : BaseActivity(), AddSessionView {
         val sessionName = tvSessionName.trimmedText
 
         if (sessionName.isNotEmpty() && exercises.isNotEmpty() && selectedGym != null) {
-            presenter.addSession(sessionName, dateTime.unix, selectedGym!!, exercises)
+            presenter.addSession(sessionName, dateTime.timestamp, selectedGym!!, exercises)
         }
     }
 

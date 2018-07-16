@@ -38,7 +38,7 @@ class SessionListAdapter(private val onClick: (Session) -> Unit) : RecyclerView.
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(session: Session, onClick: (Session) -> Unit) = with(itemView) {
             tvSessionName.text = session.sessionName
-            tvSessionTime.text = DateTime.fromUnix(session.dateTime).format("${DateTime.APP_TIME_FORMAT} ${DateTime.APP_DATE_FORMAT}")
+            tvSessionTime.text = DateTime.fromTimestamp(session.dateTime).format("${DateTime.APP_TIME_FORMAT} ${DateTime.APP_DATE_FORMAT}")
 
             layoutSession.setOnClickListener {
                 onClick(session)

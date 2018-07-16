@@ -1,7 +1,6 @@
 package com.marknkamau.globalgym.ui.activity.sessionDetails
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
@@ -38,7 +37,7 @@ class SessionDetailsActivity : BaseActivity(), SessionDetailsView {
         }
 
         tvSessionName.text = session.sessionName
-        val dateTime = DateTime.fromUnix(session.dateTime)
+        val dateTime = DateTime.fromTimestamp(session.dateTime)
         tvSessionTime.text = dateTime.format("${DateTime.APP_TIME_FORMAT}, ${DateTime.APP_DATE_FORMAT}")
         if (session.completed) {
             btnCompleted.visibility = View.GONE

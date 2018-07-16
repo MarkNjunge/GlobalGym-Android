@@ -13,38 +13,20 @@ class DateTimeTest{
 
     @Test
     fun should_convertToUnix() {
-        val dateTime = DateTime(2018, 1, 16, 8, 30, 0)
-        Assert.assertEquals(1516080600, dateTime.unix)
-    }
-
-    @Test
-    fun should_convertToTimestamp() {
-        val dateTime = DateTime(2018, 1, 16, 8, 30, 0)
-        Assert.assertEquals(1516080600000, dateTime.timestamp)
+        val dateTime = DateTime(2018, 1, 1, 8, 30, 0)
+        Assert.assertEquals(1514784600, dateTime.timestamp)
     }
 
     @Test
     fun should_convertFromUnix() {
-        val fromUnix = DateTime.fromUnix(1516102715)
+        val fromUnix = DateTime.fromTimestamp(1514784600)
 
         Assert.assertEquals(2018, fromUnix.year)
         Assert.assertEquals(1, fromUnix.month)
-        Assert.assertEquals(16, fromUnix.dayOfMonth)
-        Assert.assertEquals(14, fromUnix.hourOfDay)
-        Assert.assertEquals(38, fromUnix.minute)
-        Assert.assertEquals(35, fromUnix.second)
-    }
-
-    @Test
-    fun should_convertFromTimestamp() {
-        val fromUnix = DateTime.fromTimestamp(1515941112000)
-
-        Assert.assertEquals(2018, fromUnix.year)
-        Assert.assertEquals(1, fromUnix.month)
-        Assert.assertEquals(14, fromUnix.dayOfMonth)
-        Assert.assertEquals(17, fromUnix.hourOfDay)
-        Assert.assertEquals(45, fromUnix.minute)
-        Assert.assertEquals(12, fromUnix.second)
+        Assert.assertEquals(1, fromUnix.dayOfMonth)
+        Assert.assertEquals(8, fromUnix.hourOfDay)
+        Assert.assertEquals(30, fromUnix.minute)
+        Assert.assertEquals(0, fromUnix.second)
     }
 
     @Test
@@ -56,6 +38,6 @@ class DateTimeTest{
 
     @Test
     fun should_getNow() {
-        Assert.assertEquals(System.currentTimeMillis(), DateTime.now.timestamp)
+        Assert.assertEquals(System.currentTimeMillis() / 1000, DateTime.now.timestamp)
     }
 }

@@ -9,63 +9,69 @@ import java.util.*
  * https://github.com/MarkNjunge
  */
 
+/**
+ * A class to be used to easily handle dates.
+ * Months begin at 1
+ */
 data class DateTime(var year: Int,
                     var month: Int,
                     var dayOfMonth: Int,
                     var hourOfDay: Int,
                     var minute: Int,
-                    var second: Int = 0,
-                    var millisecond: Int = 0) {
+                    var second: Int = 0) {
 
     companion object {
+        /**
+         * Returns the current time as a DateTime object.
+         */
         val now: DateTime
-            get() = System.currentTimeMillis().toDateTime()
+            get() = Date(System.currentTimeMillis()).toDateTime()
 
-        private fun Long.toDateTime() = Date(this).toDateTime()
-
-        fun fromTimestamp(timestamp: Long): DateTime = Date(timestamp).toDateTime()
-        fun fromUnix(timestamp: Long): DateTime = Date(timestamp * 1000).toDateTime()
+        /**
+         * Converts a timestamp in seconds to a DateTime object
+         */
+        fun fromTimestamp(timestamp: Long): DateTime = Date(timestamp * 1000).toDateTime()
 
         const val APP_DATE_FORMAT = "E, dd MMMM"
         const val APP_TIME_FORMAT = "hh:mm a"
     }
 
-    val unix: Long
-        get() {
-            val now = Calendar.getInstance()
-            // Month starts at 0
-            now.set(this.year, this.month, this.dayOfMonth, this.hourOfDay, this.minute, this.second)
-            return now.time.time / 1000L
-        }
-
+    /**
+     * Time in seconds.
+     */
     val timestamp: Long
         get() {
             val now = Calendar.getInstance()
-            // Month starts at 0
-            now.set(this.year, this.month, this.dayOfMonth, this.hourOfDay, this.minute, this.second)
-            now.set(Calendar.MILLISECOND, this.millisecond)
-            return now.time.time
+            now.set(this.year, this.month - 1, this.dayOfMonth, this.hourOfDay, this.minute, this.second)
+            return now.time.time / 1000L
         }
 
+    /**
+     * Formats the dateTime as the given format
+     */
     fun format(format: String): String {
         val now = Calendar.getInstance()
-        // Month starts at 0
-        now.set(this.year, this.month, this.dayOfMonth, this.hourOfDay, this.minute, this.second)
+        now.set(this.year, this.month - 1, this.dayOfMonth, this.hourOfDay, this.minute, this.second)
         return now.time.format(format)
     }
 
 }
 
+/**
+ * Converts a java date to a DateTime object.
+ */
 fun Date.toDateTime(): DateTime {
     val hourOfDay = this.format("H").toInt() // Format according to 24Hr from 0-23
     val minute = this.format("m").toInt()
     val year = this.format("yyyy").toInt()
-    val month = this.format("M").toInt() - 1
+    val month = this.format("M").toInt()
     val dayOfMonth = this.format("dd").toInt()
     val second = this.format("s").toInt()
-    val millisecond = this.format("S").toInt()
 
-    return DateTime(year, month, dayOfMonth, hourOfDay, minute, second, millisecond)
+    return DateTime(year, month, dayOfMonth, hourOfDay, minute, second)
 }
 
+/**
+ * Helper function to format dates.
+ */
 fun Date.format(pattern: String): String = SimpleDateFormat(pattern).format(this)

@@ -3,6 +3,7 @@ package com.marknkamau.globalgym.ui.activity.login
 import com.marknkamau.globalgym.data.auth.AuthService
 import com.marknkamau.globalgym.data.remote.ApiService
 import com.marknkamau.globalgym.data.repository.DataRepository
+import com.marknkamau.globalgym.data.repository.UserRepository
 import com.marknkamau.globalgym.utils.NetworkUtils
 import com.marknkamau.globalgym.utils.RxUtils
 import io.reactivex.disposables.CompositeDisposable
@@ -17,7 +18,7 @@ import retrofit2.HttpException
 
 class LoginPresenter(private val view: LoginView,
                      private val authService: AuthService,
-                     private val dataRepository: DataRepository) {
+                     private val userRepository: UserRepository) {
 
     private val networkUtils = NetworkUtils()
     private val compositeDisposable = CompositeDisposable()
@@ -40,8 +41,7 @@ class LoginPresenter(private val view: LoginView,
 
     private fun checkIfRegistered() {
         val id = authService.getUser()!!.id
-
-        val disposable = dataRepository.apiService.getUser(id)
+        val disposable = userRepository.setCurrentUser(id)
                 .compose(RxUtils.applySingleSchedulers())
                 .subscribeBy(
                         onSuccess = {

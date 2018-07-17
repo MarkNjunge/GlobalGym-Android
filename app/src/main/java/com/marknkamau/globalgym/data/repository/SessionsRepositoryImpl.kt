@@ -1,11 +1,13 @@
 package com.marknkamau.globalgym.data.repository
 
-import com.marknkamau.globalgym.data.local.AppDatabase
 import com.marknkamau.globalgym.data.local.PaperService
+import com.marknkamau.globalgym.data.local.SessionsDao
 import com.marknkamau.globalgym.data.models.Session
+import com.marknkamau.globalgym.data.models.SessionCompleted
 import com.marknkamau.globalgym.data.remote.ApiService
 import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
@@ -15,23 +17,39 @@ import timber.log.Timber
  * https://github.com/MarkNjunge
  */
 
-class DataRepositoryImpl(private val appDatabase: AppDatabase, override val apiService: ApiService, override val paperService: PaperService) : DataRepository {
-    private val sessionsDao = appDatabase.sessionsDao()
-
+class SessionsRepositoryImpl(private val apiService: ApiService, private val sessionsDao: SessionsDao, private val paperService: PaperService) : SessionsRepository {
     override fun getSessions(): Observable<List<Session>> {
         return Observable.concatArray(getSessionsFromDb(), getSessionsFromApi())
     }
 
-    override fun clearUserCache(): Completable {
+    override fun createSession(session: Session): Single<Session> {
+        return apiService.createSession(session)
+    }
+
+    override fun setSessionCompleted(sessionCompleted: SessionCompleted): Completable {
+        return apiService.setSessionCompleted(sessionCompleted)
+                .flatMapCompletable { apiResponse ->
+                    Timber.d(apiResponse.toString())
+                    Completable.complete()
+                }
+    }
+
+    override fun deleteSession(sessionId: String): Completable {
+        return apiService.deleteSession(sessionId)
+                .flatMapCompletable { apiResponse ->
+                    Timber.d(apiResponse.toString())
+                    Completable.complete()
+                }
+    }
+
+    override fun deleteSessionsCache(): Completable {
         return Completable.create {
             sessionsDao.deleteAll()
-            paperService.deletePreferredGym()
-            paperService.deleteUser()
         }
     }
 
     private fun getSessionsFromDb(): Observable<List<Session>> {
-        return appDatabase.sessionsDao().getSessions()
+        return sessionsDao.getSessions()
                 .filter { it.isNotEmpty() }
                 .map {
                     it.map { roomSession -> roomSession.toSession() }
@@ -62,5 +80,4 @@ class DataRepositoryImpl(private val appDatabase: AppDatabase, override val apiS
                 .observeOn(Schedulers.io())
                 .subscribe { Timber.d("Inserted ${sessions.size} sessions from API in DB...") }
     }
-
 }

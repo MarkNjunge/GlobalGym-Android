@@ -9,8 +9,7 @@ import com.marknkamau.globalgym.data.local.PaperService
 import com.marknkamau.globalgym.data.local.PaperServiceImpl
 import com.marknkamau.globalgym.data.remote.ApiService
 import com.marknkamau.globalgym.data.remote.NetworkProvider
-import com.marknkamau.globalgym.data.repository.DataRepository
-import com.marknkamau.globalgym.data.repository.DataRepositoryImpl
+import com.marknkamau.globalgym.data.repository.*
 import com.marknkamau.globalgym.utils.NetworkUtils
 import com.marknkamau.globalgym.utils.RxUtils
 import com.marknkamau.globalgym.utils.maps.LocationUtils
@@ -30,7 +29,10 @@ class App : Application() {
 
     companion object {
         lateinit var authService: AuthService
-        lateinit var dataRepository: DataRepository
+        lateinit var gymRepository: GymRepository
+        lateinit var sessionsRepository: SessionsRepository
+        lateinit var settingsRepository: SettingsRepository
+        lateinit var userRepository: UserRepository
         lateinit var uberSession: ServerTokenSession
     }
 
@@ -53,7 +55,10 @@ class App : Application() {
         val apiService = networkProvider.apiService
         val paperService = PaperServiceImpl(this)
 
-        dataRepository = DataRepositoryImpl(appDatabase, apiService, paperService)
+        gymRepository = GymRepositoryImpl(apiService)
+        sessionsRepository = SessionsRepositoryImpl(apiService, appDatabase.sessionsDao(), paperService)
+        settingsRepository = SettingsRepositoryImpl(paperService)
+        userRepository = UserRepositoryImpl(apiService, paperService)
 
         val configuration = SessionConfiguration.Builder()
                 .setClientId(getString(R.string.uber_client_id))

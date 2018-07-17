@@ -18,7 +18,7 @@ class RegisterActivity : BaseActivity(), RegisterView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        presenter = RegisterPresenter(this, App.authService, App.dataRepository)
+        presenter = RegisterPresenter(this, App.authService, App.userRepository)
 
         val userDetailsFragment = UserDetailsFragment()
         userDetailsFragment.onComplete = {

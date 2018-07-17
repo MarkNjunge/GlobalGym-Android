@@ -51,7 +51,7 @@ class GymsMapFragment : Fragment(), OnMapReadyCallback, GymsView {
                     }
                 }
 
-        presenter = GymsPresenter(this, App.dataRepository)
+        presenter = GymsPresenter(this, App.gymRepository, App.settingsRepository)
 
     }
 
@@ -65,7 +65,7 @@ class GymsMapFragment : Fragment(), OnMapReadyCallback, GymsView {
 //        googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style))
 //        googleMap.isMyLocationEnabled = true
 
-        preferredGym = App.dataRepository.paperService.getPreferredGym()
+        preferredGym = App.userRepository.getPreferredGym()
         googleMap.uiSettings.run {
             isMyLocationButtonEnabled = true
             isMapToolbarEnabled = false

@@ -36,11 +36,10 @@ class EditProfileActivity : BaseActivity() {
             val (firstName, lastName, phone, year, country, gender, weight, targetWeight) = it
             val newUser = User(user.userId, firstName, lastName, user.email, phone, user.profilePhoto, year, country, gender, weight, targetWeight, user.preferredGym)
 
-            val disposable = App.dataRepository.apiService.updateUser(newUser)
+            val disposable = App.userRepository.updateUser(newUser)
                     .compose(RxUtils.applySingleSchedulers())
                     .subscribeBy(
                             onSuccess = {
-                                App.dataRepository.paperService.saveUser(newUser)
                                 finish()
                                 Toast.makeText(this, "Profile updated", Toast.LENGTH_SHORT).show()
                             },

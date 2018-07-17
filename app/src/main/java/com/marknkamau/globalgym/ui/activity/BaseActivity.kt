@@ -16,13 +16,13 @@ import com.marknkamau.globalgym.utils.LocaleManager
 @SuppressLint("Registered")
 open class BaseActivity : AppCompatActivity() {
     override fun attachBaseContext(newBase: Context) {
-        val languageCode = App.dataRepository.paperService.getLanguageCode()
+        val languageCode = App.settingsRepository.getLanguageCode()
         super.attachBaseContext(LocaleManager.updateResources(newBase, languageCode))
     }
 
     override fun onConfigurationChanged(newConfig: Configuration?) {
         super.onConfigurationChanged(newConfig)
-        val languageCode = App.dataRepository.paperService.getLanguageCode()
+        val languageCode = App.settingsRepository.getLanguageCode()
         LocaleManager.updateResources(this, languageCode)
     }
 }

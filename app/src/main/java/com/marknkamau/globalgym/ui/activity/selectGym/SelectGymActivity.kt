@@ -15,7 +15,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.marknkamau.globalgym.App
 import com.marknkamau.globalgym.R
 import com.marknkamau.globalgym.data.models.Gym
-import com.marknkamau.globalgym.data.remote.ApiService
 import com.marknkamau.globalgym.ui.activity.BaseActivity
 import com.marknkamau.globalgym.ui.fragment.gyms.GymInfoWindowAdapter
 import com.marknkamau.globalgym.utils.RxUtils
@@ -31,7 +30,6 @@ class SelectGymActivity : BaseActivity(), OnMapReadyCallback {
 
     private lateinit var locationUtils: LocationUtils
     private lateinit var mapUtils: MapUtils
-    private lateinit var apiService: ApiService
     private val compositeDisposable = CompositeDisposable()
 
     companion object {
@@ -45,8 +43,6 @@ class SelectGymActivity : BaseActivity(), OnMapReadyCallback {
         supportActionBar?.run {
             title = getString(R.string.select_gym)
         }
-
-        apiService = App.dataRepository.apiService
 
         val rxPermissions = RxPermissions(this)
         rxPermissions.request(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -90,7 +86,7 @@ class SelectGymActivity : BaseActivity(), OnMapReadyCallback {
                     Timber.d("${address.latitude},${address.longitude}")
                     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(address.latitude, address.longitude), 13f))
 
-                    apiService.getNearbyGyms(App.dataRepository.paperService.getCurrentCountry(), address.latitude, address.longitude, 50 * 1000)
+                    App.gymRepository.getNearbyGyms(App.settingsRepository.getCurrentCountry(), address.latitude, address.longitude, 50 * 1000)
                             .compose(RxUtils.applySingleSchedulers())
                 }
                 .subscribeBy(

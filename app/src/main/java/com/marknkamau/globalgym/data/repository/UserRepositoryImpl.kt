@@ -14,9 +14,9 @@ import io.reactivex.Single
  * https://github.com/MarkNjunge
  */
 
-class UserRepositoryImpl(private val apiService: ApiService, private val paperService: PaperService) : UserRepository{
+class UserRepositoryImpl(private val apiService: ApiService, private val paperService: PaperService) : UserRepository {
     override fun getCurrentUser(): User? {
-       return paperService.getUser()
+        return paperService.getUser()
     }
 
     override fun setCurrentUser(userId: String): Single<User> {
@@ -32,6 +32,9 @@ class UserRepositoryImpl(private val apiService: ApiService, private val paperSe
 
     override fun updateUser(user: User): Single<User> {
         return apiService.updateUser(user)
+                .doOnSuccess {
+                    paperService.saveUser(user)
+                }
     }
 
     override fun getPreferredGym(): Gym? {
@@ -40,7 +43,15 @@ class UserRepositoryImpl(private val apiService: ApiService, private val paperSe
 
     override fun updatePreferredGym(gym: Gym): Completable {
         paperService.getUser()?.let { user ->
-            return Completable.fromSingle(apiService.updateUser(UserPreferredGym(user.userId, gym.gymId)))
+            return apiService.updateUser(UserPreferredGym(user.userId, gym.gymId))
+                    .flatMap {
+                        val copy = user.copy(preferredGym = gym.gymId)
+                        updateUser(copy)
+                    }
+                    .flatMapCompletable {
+                        Completable.fromCallable { paperService.savePreferredGym(gym) }
+                    }
+
         }
         return Completable.error(Exception("User is not logged in"))
     }

@@ -42,6 +42,12 @@ class SessionsRepositoryImpl(private val apiService: ApiService, private val ses
                 }
     }
 
+    override fun deleteSessionsCache(): Completable {
+        return Completable.create {
+            sessionsDao.deleteAll()
+        }
+    }
+
     private fun getSessionsFromDb(): Observable<List<Session>> {
         return sessionsDao.getSessions()
                 .filter { it.isNotEmpty() }

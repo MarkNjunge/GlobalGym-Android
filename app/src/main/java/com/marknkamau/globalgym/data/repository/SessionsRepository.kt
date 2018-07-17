@@ -20,4 +20,6 @@ interface SessionsRepository {
     fun setSessionCompleted(sessionCompleted: SessionCompleted): Completable
 
     fun deleteSession(sessionId: String): Completable
+
+    fun deleteSessionsCache(): Completable
 }

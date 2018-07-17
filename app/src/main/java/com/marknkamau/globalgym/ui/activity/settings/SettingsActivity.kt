@@ -24,7 +24,7 @@ class SettingsActivity : BaseActivity() {
         dialog.onSelected = { language ->
             val code = LocaleManager.getCode(language)
 
-            App.dataRepository.paperService.saveLanguageCode(code)
+            App.settingsRepository.saveLanguageCode(code)
 
             LocaleManager.updateResources(this, code)
 
@@ -33,7 +33,7 @@ class SettingsActivity : BaseActivity() {
             startActivity(intent)
         }
 
-        val code = App.dataRepository.paperService.getLanguageCode()
+        val code = App.settingsRepository.getLanguageCode()
         tvCurrentLanguage.text = LocaleManager.getLanguage(code)
 
         layoutLanguage.setOnClickListener {
@@ -41,7 +41,9 @@ class SettingsActivity : BaseActivity() {
         }
 
         layoutLogout.setOnClickListener {
-            App.dataRepository.clearUserCache()
+            App.userRepository.deleteUserLocal()
+            App.userRepository.deletePreferredGymLocal()
+            App.sessionsRepository.deleteSessionsCache()
                     .compose(RxUtils.applyCompletableSchedulers())
 
             val intent = Intent(this, LoginActivity::class.java)

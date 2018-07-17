@@ -2,8 +2,7 @@ package com.marknkamau.globalgym.ui.activity.register
 
 import com.marknkamau.globalgym.data.auth.AuthService
 import com.marknkamau.globalgym.data.models.User
-import com.marknkamau.globalgym.data.remote.ApiService
-import com.marknkamau.globalgym.data.repository.DataRepository
+import com.marknkamau.globalgym.data.repository.UserRepository
 import com.marknkamau.globalgym.utils.NetworkUtils
 import com.marknkamau.globalgym.utils.RxUtils
 import io.reactivex.disposables.CompositeDisposable
@@ -19,7 +18,7 @@ import timber.log.Timber
 
 class RegisterPresenter(private val view: RegisterView,
                         private val authService: AuthService,
-                        private val dataRepository: DataRepository) {
+                        private val userRepository: UserRepository) {
 
     private val networkUtils = NetworkUtils()
     private val compositeDisposable = CompositeDisposable()
@@ -55,7 +54,7 @@ class RegisterPresenter(private val view: RegisterView,
                 targetWeight,
                 null)
 
-        val disposable = dataRepository.apiService.registerUser(user)
+        val disposable = userRepository.registerUser(user)
                 .compose(RxUtils.applySingleSchedulers())
                 .subscribeBy(
                         onSuccess = {

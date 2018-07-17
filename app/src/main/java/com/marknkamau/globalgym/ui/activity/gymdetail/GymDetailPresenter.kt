@@ -2,8 +2,8 @@ package com.marknkamau.globalgym.ui.activity.gymdetail
 
 import com.marknkamau.globalgym.data.models.Gym
 import com.marknkamau.globalgym.data.models.User
-import com.marknkamau.globalgym.data.models.UserPreferredGym
-import com.marknkamau.globalgym.data.repository.DataRepository
+import com.marknkamau.globalgym.data.repository.GymRepository
+import com.marknkamau.globalgym.data.repository.UserRepository
 import com.marknkamau.globalgym.utils.RxUtils
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
@@ -17,9 +17,11 @@ import timber.log.Timber
 
 class GymDetailPresenter(private val view: GymDetailView,
                          private val gym: Gym,
-                         private val dataRepository: DataRepository) {
+                         private val userRepository: UserRepository,
+                         private val gymRepository: GymRepository) {
 
-    private val user: User = dataRepository.paperService.getUser()!!
+    // TODO Go to log in if null
+    private val user: User = userRepository.getCurrentUser()!!
 
     init {
         if (user.preferredGym == gym.gymId) {
@@ -30,7 +32,7 @@ class GymDetailPresenter(private val view: GymDetailView,
     private val compositeDisposable = CompositeDisposable()
 
     fun getInstructors(instructors: List<String>) {
-        val disposable = dataRepository.apiService.getInstructors(instructors)
+        val disposable = gymRepository.getInstructors(instructors)
                 .compose(RxUtils.applySingleSchedulers())
                 .subscribeBy(
                         onSuccess = {
@@ -47,13 +49,10 @@ class GymDetailPresenter(private val view: GymDetailView,
     }
 
     fun setGymAsPreferred() {
-        val disposable = dataRepository.apiService.updateUser(UserPreferredGym(user.userId, gym.gymId))
-                .compose(RxUtils.applySingleSchedulers())
+        val disposable = userRepository.updatePreferredGym(gym)
+                .compose(RxUtils.applyCompletableSchedulers())
                 .subscribeBy(
-                        onSuccess = {
-                            val copy = user.copy(preferredGym = gym.gymId)
-                            dataRepository.paperService.saveUser(copy)
-                            dataRepository.paperService.savePreferredGym(gym)
+                        onComplete = {
                             view.displayMessage("Gym set as preferred")
                             view.onGymIsPreferred()
                         },

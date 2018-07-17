@@ -1,8 +1,6 @@
 package com.marknkamau.globalgym.ui.activity.login
 
 import com.marknkamau.globalgym.data.auth.AuthService
-import com.marknkamau.globalgym.data.remote.ApiService
-import com.marknkamau.globalgym.data.repository.DataRepository
 import com.marknkamau.globalgym.data.repository.UserRepository
 import com.marknkamau.globalgym.utils.NetworkUtils
 import com.marknkamau.globalgym.utils.RxUtils

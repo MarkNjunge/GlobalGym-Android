@@ -25,7 +25,7 @@ class SessionsListFragment : Fragment(), SessionsListView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        presenter = SessionsListPresenter(this, App.dataRepository)
+        presenter = SessionsListPresenter(this, App.sessionsRepository)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

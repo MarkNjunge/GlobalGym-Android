@@ -29,7 +29,6 @@ class App : Application() {
 
     companion object {
         lateinit var authService: AuthService
-        lateinit var dataRepository: DataRepository
         lateinit var gymRepository: GymRepository
         lateinit var sessionsRepository: SessionsRepository
         lateinit var settingsRepository: SettingsRepository
@@ -56,7 +55,6 @@ class App : Application() {
         val apiService = networkProvider.apiService
         val paperService = PaperServiceImpl(this)
 
-        dataRepository = DataRepositoryImpl(appDatabase, apiService, paperService)
         gymRepository = GymRepositoryImpl(apiService)
         sessionsRepository = SessionsRepositoryImpl(apiService, appDatabase.sessionsDao(), paperService)
         settingsRepository = SettingsRepositoryImpl(paperService)

@@ -69,11 +69,6 @@ class MainActivity : BaseActivity(), MainView {
         presenter = MainPresenter(this, App.authService)
     }
 
-    override fun onStop() {
-        super.onStop()
-        presenter.clearDisposables()
-    }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
         return super.onCreateOptionsMenu(menu)
@@ -105,13 +100,8 @@ class MainActivity : BaseActivity(), MainView {
         finish()
     }
 
-    override fun onNotRegistered() {
-        startActivity(Intent(this@MainActivity, RegisterActivity::class.java))
-        finish()
-    }
-
-    override fun onSignedInAndRegistered() {
-        switchFragment(lastFragmentId, lastFragmentTag!!)
+    override fun onSignedIn() {
+        switchFragment(lastFragmentId, lastFragmentTag)
         navigation.visibility = View.VISIBLE
         pbLoading.visibility = View.GONE
     }

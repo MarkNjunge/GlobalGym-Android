@@ -8,6 +8,6 @@ package com.marknkamau.globalgym.ui.activity.main
 
 interface MainView{
     fun onNotSignedIn()
-    fun onNotRegistered()
-    fun onSignedInAndRegistered()
+
+    fun onSignedIn()
 }

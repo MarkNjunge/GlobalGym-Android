@@ -23,6 +23,15 @@ class LoginPresenter(private val view: LoginView,
 
     fun sendPasswordReset(email: String) {
         authService.setPasswordReset(email)
+                .compose(RxUtils.applyCompletableSchedulers())
+                .subscribeBy(
+                        onComplete = {
+                            view.displayMessage("Password reset email sent")
+                        },
+                        onError = {
+                            view.displayMessage(it.message ?: "There was an error logging in")
+                        }
+                )
     }
 
     fun logIn(email: String, password: String) {
@@ -62,7 +71,7 @@ class LoginPresenter(private val view: LoginView,
         compositeDisposable.add(disposable)
     }
 
-    fun clearDisposables(){
+    fun clearDisposables() {
         compositeDisposable.clear()
     }
 

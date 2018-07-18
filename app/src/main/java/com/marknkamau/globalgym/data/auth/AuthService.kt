@@ -15,7 +15,7 @@ interface AuthService{
 
     fun logIn(email: String, password: String): Completable
 
-    fun setPasswordReset(email: String)
+    fun setPasswordReset(email: String): Completable
 
     fun signOut()
 

@@ -63,8 +63,6 @@ class LoginActivity : BaseActivity(), LoginView {
         }
 
         presenter.sendPasswordReset(email)
-
-        displayMessage("Password reset email sent")
     }
 
     private fun login() {

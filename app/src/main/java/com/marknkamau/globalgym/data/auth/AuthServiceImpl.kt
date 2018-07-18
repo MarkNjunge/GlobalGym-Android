@@ -31,8 +31,12 @@ class AuthServiceImpl : AuthService {
         }.compose(RxUtils.applyCompletableSchedulers())
     }
 
-    override fun setPasswordReset(email: String) {
-        firebaseAuth.sendPasswordResetEmail(email)
+    override fun setPasswordReset(email: String): Completable {
+        return Completable.create { emitter ->
+            firebaseAuth.sendPasswordResetEmail(email)
+                    .addOnSuccessListener { emitter.onComplete() }
+                    .addOnFailureListener { emitter.onError(it) }
+        }
     }
 
     override fun signOut() {

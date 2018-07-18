@@ -34,7 +34,7 @@ class ProfilePresenter(private val view: ProfileView,
             }
         }
 
-        val disposable = userRepository.setCurrentUser(authService.getUser()!!.id)
+        val disposable = userRepository.getUser(authService.getUser()!!.id)
                 .compose(RxUtils.applySingleSchedulers())
                 .subscribeBy(
                         onSuccess = { user ->

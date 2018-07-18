@@ -14,7 +14,9 @@ import io.reactivex.Single
 interface UserRepository {
     fun getCurrentUser(): User?
 
-    fun setCurrentUser(userId: String): Single<User>
+    fun setCurrentUser(user: User): Completable
+
+    fun getUser(userId: String): Single<User>
 
     fun registerUser(user: User): Single<User>
 

@@ -79,7 +79,7 @@ class LoginPresenterTest {
         RxAndroidPlugins.setInitMainThreadSchedulerHandler { Schedulers.trampoline() }
 
         Mockito.`when`(authService.logIn("", "")).thenReturn(Completable.complete())
-        Mockito.`when`(userRepository.setCurrentUser("")).thenReturn(Single.just(user))
+        Mockito.`when`(userRepository.getUser("")).thenReturn(Single.just(user))
 
         presenter.logIn("", "")
 
@@ -90,7 +90,7 @@ class LoginPresenterTest {
     fun login_with_validCredentialsAndNotRegistered() {
         Mockito.`when`(authService.logIn("", "")).thenReturn(Completable.complete())
         val response = Helpers.createHttpErrorResponse(404)
-        Mockito.`when`(userRepository.setCurrentUser("")).thenReturn(Single.error(HttpException(response)))
+        Mockito.`when`(userRepository.getUser("")).thenReturn(Single.error(HttpException(response)))
 
         presenter.logIn("", "")
 

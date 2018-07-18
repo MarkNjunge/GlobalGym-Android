@@ -48,10 +48,14 @@ class LoginPresenter(private val view: LoginView,
 
     private fun checkIfRegistered() {
         val id = authService.getUser()!!.id
-        val disposable = userRepository.setCurrentUser(id)
+        val disposable = userRepository.getUser(id)
                 .compose(RxUtils.applySingleSchedulers())
+                .flatMapCompletable { user ->
+                    userRepository.setCurrentUser(user)
+                }
+                .compose(RxUtils.applyCompletableSchedulers())
                 .subscribeBy(
-                        onSuccess = {
+                        onComplete = {
                             view.onLoggedIn()
                         },
                         onError = {

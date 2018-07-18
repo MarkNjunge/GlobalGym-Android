@@ -32,7 +32,7 @@ class MainPresenter(private val view: MainView,
 
     private fun checkIfRegistered() {
         if (userRepository.getCurrentUser() == null) {
-            val disposable = userRepository.setCurrentUser(authService.getUser()!!.id)
+            val disposable = userRepository.getUser(authService.getUser()!!.id)
                     .compose(RxUtils.applySingleSchedulers())
                     .subscribeBy(
                             onSuccess = { user ->

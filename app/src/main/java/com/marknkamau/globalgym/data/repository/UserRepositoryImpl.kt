@@ -19,11 +19,15 @@ class UserRepositoryImpl(private val apiService: ApiService, private val paperSe
         return paperService.getUser()
     }
 
-    override fun setCurrentUser(userId: String): Single<User> {
+    override fun setCurrentUser(user: User): Completable {
+        return Completable.create { emitter ->
+            paperService.saveUser(user)
+            emitter.onComplete()
+        }
+    }
+
+    override fun getUser(userId: String): Single<User> {
         return apiService.getUser(userId)
-                .doOnSuccess { user ->
-                    paperService.saveUser(user)
-                }
     }
 
     override fun registerUser(user: User): Single<User> {

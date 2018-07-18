@@ -66,7 +66,7 @@ class MainActivity : BaseActivity(), MainView {
             false
         }
 
-        presenter = MainPresenter(this, App.authService, App.userRepository)
+        presenter = MainPresenter(this, App.authService)
     }
 
     override fun onStop() {

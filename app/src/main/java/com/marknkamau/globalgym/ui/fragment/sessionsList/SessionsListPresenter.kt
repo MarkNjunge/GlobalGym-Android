@@ -2,8 +2,10 @@ package com.marknkamau.globalgym.ui.fragment.sessionsList
 
 import com.marknkamau.globalgym.data.repository.SessionsRepository
 import com.marknkamau.globalgym.utils.RxUtils
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
 /**
@@ -19,7 +21,8 @@ class SessionsListPresenter(private val view: SessionsListView, private val sess
     fun getSessions() {
         view.showLoading()
         val disposable = sessionRepository.getSessions()
-                .compose(RxUtils.applyObservableSchedulers())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread(), true)
                 .subscribeBy(
                         onNext = {
                             view.hideLoading()

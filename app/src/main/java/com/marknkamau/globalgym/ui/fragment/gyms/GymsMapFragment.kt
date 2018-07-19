@@ -99,14 +99,17 @@ class GymsMapFragment : Fragment(), OnMapReadyCallback, GymsView {
     }
 
     override fun displayNoInternetMessage() {
+        pbLoading.visibility = View.GONE
         Toast.makeText(requireContext(), R.string.no_internet, Toast.LENGTH_SHORT).show()
     }
 
     override fun displayDefaultErrorMessage() {
+        pbLoading.visibility = View.GONE
         Toast.makeText(requireContext(), R.string.an_error_has_occurred, Toast.LENGTH_SHORT).show()
     }
 
     override fun displayMessage(message: String) {
+        pbLoading.visibility = View.GONE
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 

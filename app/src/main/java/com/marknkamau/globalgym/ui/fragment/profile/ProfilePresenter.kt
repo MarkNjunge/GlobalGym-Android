@@ -3,10 +3,13 @@ package com.marknkamau.globalgym.ui.fragment.profile
 import com.marknkamau.globalgym.data.auth.AuthService
 import com.marknkamau.globalgym.data.repository.GymRepository
 import com.marknkamau.globalgym.data.repository.UserRepository
+import com.marknkamau.globalgym.utils.NetworkUtils
 import com.marknkamau.globalgym.utils.RxUtils
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
+import retrofit2.HttpException
 import timber.log.Timber
+import java.net.UnknownHostException
 
 /**
  * Created by MarkNjunge.
@@ -19,8 +22,20 @@ class ProfilePresenter(private val view: ProfileView,
                        private val userRepository: UserRepository,
                        private val gymRepository: GymRepository) {
 
-
     private val compositeDisposable = CompositeDisposable()
+
+    private val onError: (Throwable) -> Unit = { e ->
+        Timber.e(e)
+        when {
+            e is UnknownHostException -> view.displayNoInternetMessage()
+            e is HttpException -> {
+                val apiError = NetworkUtils.parseError(e.response())
+                view.displayMessage(apiError.message)
+            }
+            e.message != null -> view.displayMessage(e.message.toString())
+            else -> view.displayDefaultErrorMessage()
+        }
+    }
 
     fun clearDisposables() {
         compositeDisposable.clear()
@@ -44,10 +59,7 @@ class ProfilePresenter(private val view: ProfileView,
                                 getGym(it)
                             }
                         },
-                        onError = {
-                            view.displayMessage(it.message
-                                    ?: "There was an error retrieving your profile")
-                        }
+                        onError = onError
                 )
 
         compositeDisposable.add(disposable)
@@ -65,11 +77,7 @@ class ProfilePresenter(private val view: ProfileView,
                             view.onGymRetrieved(it)
                             userRepository.updatePreferredGym(it)
                         },
-                        onError = {
-                            Timber.e(it)
-                            view.displayMessage(it.message
-                                    ?: "There was an error retrieving your preferred gym")
-                        }
+                        onError = onError
                 )
 
         compositeDisposable.add(disposable)

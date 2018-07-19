@@ -2,6 +2,7 @@ package com.marknkamau.globalgym.ui.fragment.profile
 
 import com.marknkamau.globalgym.data.models.Gym
 import com.marknkamau.globalgym.data.models.User
+import com.marknkamau.globalgym.ui.BaseView
 
 /**
  * Created by MarkNjunge.
@@ -9,8 +10,7 @@ import com.marknkamau.globalgym.data.models.User
  * https://github.com/MarkNjunge
  */
 
-interface ProfileView {
-    fun displayMessage(message: String)
+interface ProfileView : BaseView {
     fun onUserRetrieved(user: User)
     fun onGymRetrieved(gym: Gym)
 }

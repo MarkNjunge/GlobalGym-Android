@@ -40,9 +40,16 @@ class LoginActivity : BaseActivity(), LoginView {
         presenter.clearDisposables()
     }
 
+    override fun displayNoInternetMessage() {
+        Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun displayDefaultErrorMessage() {
+        Toast.makeText(this, R.string.an_error_has_occurred, Toast.LENGTH_SHORT).show()
+    }
+
     override fun displayMessage(message: String) {
-        pbLoading.visibility = View.GONE
-        Toast.makeText(this@LoginActivity, message, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onLoggedIn() {

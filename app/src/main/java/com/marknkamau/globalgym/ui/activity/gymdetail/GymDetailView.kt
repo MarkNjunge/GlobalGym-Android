@@ -1,6 +1,7 @@
 package com.marknkamau.globalgym.ui.activity.gymdetail
 
 import com.marknkamau.globalgym.data.models.Instructor
+import com.marknkamau.globalgym.ui.BaseView
 
 /**
  * Created by MarkNjunge.
@@ -8,8 +9,7 @@ import com.marknkamau.globalgym.data.models.Instructor
  * https://github.com/MarkNjunge
  */
 
-interface GymDetailView {
-    fun displayMessage(message: String)
+interface GymDetailView : BaseView{
     fun onInstructorsReceived(instructors: List<Instructor>)
     fun onGymIsPreferred()
 }

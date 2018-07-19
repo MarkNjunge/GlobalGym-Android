@@ -5,10 +5,13 @@ import com.marknkamau.globalgym.data.models.Gym
 import com.marknkamau.globalgym.data.models.Session
 import com.marknkamau.globalgym.data.repository.SessionsRepository
 import com.marknkamau.globalgym.data.repository.UserRepository
+import com.marknkamau.globalgym.utils.NetworkUtils
 import com.marknkamau.globalgym.utils.RxUtils
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
+import retrofit2.HttpException
 import timber.log.Timber
+import java.net.UnknownHostException
 
 /**
  * Created by MarkNjunge.
@@ -22,6 +25,19 @@ class AddSessionPresenter(private val view: AddSessionView,
 
     private val compositeDisposable = CompositeDisposable()
 
+    private val onError: (Throwable) -> Unit = { e ->
+        Timber.e(e)
+        when {
+            e is UnknownHostException -> view.displayNoInternetMessage()
+            e is HttpException -> {
+                val apiError = NetworkUtils.parseError(e.response())
+                view.displayMessage(apiError.message)
+            }
+            e.message != null -> view.displayMessage(e.message.toString())
+            else -> view.displayDefaultErrorMessage()
+        }
+    }
+
     fun addSession(sessionName: String, dateTime: Long, gym: Gym, sessionSteps: List<Exercise>) {
         userRepository.getCurrentUser()?.let { user ->
             val session = Session("", user.userId, sessionName, dateTime, gym.gymId, sessionSteps)
@@ -32,10 +48,7 @@ class AddSessionPresenter(private val view: AddSessionView,
                             onSuccess = {
                                 view.onSessionAdded()
                             },
-                            onError = {
-                                Timber.e(it)
-                                view.displayMessage(it.message ?: "Error adding session")
-                            }
+                            onError = onError
                     )
 
             compositeDisposable.add(disposable)

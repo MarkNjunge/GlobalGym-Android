@@ -4,10 +4,13 @@ import com.marknkamau.globalgym.data.models.Gym
 import com.marknkamau.globalgym.data.models.User
 import com.marknkamau.globalgym.data.repository.GymRepository
 import com.marknkamau.globalgym.data.repository.UserRepository
+import com.marknkamau.globalgym.utils.NetworkUtils
 import com.marknkamau.globalgym.utils.RxUtils
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
+import retrofit2.HttpException
 import timber.log.Timber
+import java.net.UnknownHostException
 
 /**
  * Created by MarkNjunge.
@@ -31,6 +34,19 @@ class GymDetailPresenter(private val view: GymDetailView,
 
     private val compositeDisposable = CompositeDisposable()
 
+    private val onError: (Throwable) -> Unit = { e ->
+        Timber.e(e)
+        when {
+            e is UnknownHostException -> view.displayNoInternetMessage()
+            e is HttpException -> {
+                val apiError = NetworkUtils.parseError(e.response())
+                view.displayMessage(apiError.message)
+            }
+            e.message != null -> view.displayMessage(e.message.toString())
+            else -> view.displayDefaultErrorMessage()
+        }
+    }
+
     fun getInstructors(instructors: List<String>) {
         val disposable = gymRepository.getInstructors(instructors)
                 .compose(RxUtils.applySingleSchedulers())
@@ -39,10 +55,7 @@ class GymDetailPresenter(private val view: GymDetailView,
                             view.onInstructorsReceived(it)
                             Timber.d(it.toString())
                         },
-                        onError = {
-                            Timber.e(it)
-                            view.displayMessage(it.message ?: "Error getting instructors")
-                        }
+                        onError = onError
                 )
 
         compositeDisposable.add(disposable)
@@ -56,10 +69,7 @@ class GymDetailPresenter(private val view: GymDetailView,
                             view.displayMessage("Gym set as preferred")
                             view.onGymIsPreferred()
                         },
-                        onError = {
-                            Timber.e(it)
-                            view.displayMessage(it.message ?: "Error setting as preferred gym")
-                        }
+                        onError = onError
                 )
 
         compositeDisposable.add(disposable)

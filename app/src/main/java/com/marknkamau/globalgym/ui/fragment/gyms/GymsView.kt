@@ -1,6 +1,7 @@
 package com.marknkamau.globalgym.ui.fragment.gyms
 
 import com.marknkamau.globalgym.data.models.Gym
+import com.marknkamau.globalgym.ui.BaseView
 
 /**
  * Created by MarkNjunge.
@@ -8,7 +9,6 @@ import com.marknkamau.globalgym.data.models.Gym
  * https://github.com/MarkNjunge
  */
 
-interface GymsView {
-    fun displayMessage(message: String)
+interface GymsView : BaseView {
     fun onGymsRetrieved(gyms: List<Gym>)
 }

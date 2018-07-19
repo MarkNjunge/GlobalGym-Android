@@ -12,7 +12,7 @@ import retrofit2.Response
  * https://github.com/MarkNjunge
  */
 
-class NetworkUtils {
+object NetworkUtils {
     private val apiErrorAdapter: JsonAdapter<ApiError>
 
     init {

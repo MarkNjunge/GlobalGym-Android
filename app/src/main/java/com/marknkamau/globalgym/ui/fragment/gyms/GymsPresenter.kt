@@ -2,10 +2,13 @@ package com.marknkamau.globalgym.ui.fragment.gyms
 
 import com.marknkamau.globalgym.data.repository.GymRepository
 import com.marknkamau.globalgym.data.repository.SettingsRepository
+import com.marknkamau.globalgym.utils.NetworkUtils
 import com.marknkamau.globalgym.utils.RxUtils
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
+import retrofit2.HttpException
 import timber.log.Timber
+import java.net.UnknownHostException
 
 /**
  * Created by MarkNjunge.
@@ -19,6 +22,19 @@ class GymsPresenter(private val view: GymsView,
 
     private val compositeDisposable = CompositeDisposable()
 
+    private val onError: (Throwable) -> Unit = { e ->
+        Timber.e(e)
+        when {
+            e is UnknownHostException -> view.displayNoInternetMessage()
+            e is HttpException -> {
+                val apiError = NetworkUtils.parseError(e.response())
+                view.displayMessage(apiError.message)
+            }
+            e.message != null -> view.displayMessage(e.message.toString())
+            else -> view.displayDefaultErrorMessage()
+        }
+    }
+
     fun getGyms(lat: Double, lng: Double) {
         val disposable = gymRepository.getNearbyGyms(settingsRepository.getCurrentCountry(), lat, lng, 50 * 1000)
                 .compose(RxUtils.applySingleSchedulers())
@@ -30,10 +46,7 @@ class GymsPresenter(private val view: GymsView,
                                 view.onGymsRetrieved(gyms)
                             }
                         },
-                        onError = {
-                            Timber.d(it)
-                            view.displayMessage(it.message ?: "Error finding gyms")
-                        }
+                        onError = onError
 
                 )
 

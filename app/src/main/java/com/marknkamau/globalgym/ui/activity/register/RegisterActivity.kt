@@ -39,6 +39,14 @@ class RegisterActivity : BaseActivity(), RegisterView {
         presenter.clearDisposables()
     }
 
+    override fun displayNoInternetMessage() {
+        Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun displayDefaultErrorMessage() {
+        Toast.makeText(this, R.string.an_error_has_occurred, Toast.LENGTH_SHORT).show()
+    }
+
     override fun displayMessage(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }

@@ -1,6 +1,7 @@
 package com.marknkamau.globalgym.ui.activity.sessionDetails
 
 import com.marknkamau.globalgym.data.models.Gym
+import com.marknkamau.globalgym.ui.BaseView
 
 /**
  * Created by MarkNjunge.
@@ -8,8 +9,7 @@ import com.marknkamau.globalgym.data.models.Gym
  * https://github.com/MarkNjunge
  */
 
-interface SessionDetailsView{
-    fun displayMessage(message:String)
+interface SessionDetailsView : BaseView{
     fun onGymRetrieved(gym: Gym)
     fun onSessionCompleted()
     fun onSessionDeleted()

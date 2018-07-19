@@ -98,8 +98,16 @@ class GymsMapFragment : Fragment(), OnMapReadyCallback, GymsView {
 
     }
 
+    override fun displayNoInternetMessage() {
+        Toast.makeText(requireContext(), R.string.no_internet, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun displayDefaultErrorMessage() {
+        Toast.makeText(requireContext(), R.string.an_error_has_occurred, Toast.LENGTH_SHORT).show()
+    }
+
     override fun displayMessage(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onGymsRetrieved(gyms: List<Gym>) {

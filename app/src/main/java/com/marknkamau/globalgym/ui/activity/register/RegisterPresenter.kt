@@ -9,6 +9,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 import retrofit2.HttpException
 import timber.log.Timber
+import java.net.UnknownHostException
 
 /**
  * Created by MarkNjunge.
@@ -20,8 +21,20 @@ class RegisterPresenter(private val view: RegisterView,
                         private val authService: AuthService,
                         private val userRepository: UserRepository) {
 
-    private val networkUtils = NetworkUtils()
     private val compositeDisposable = CompositeDisposable()
+
+    private val onError: (Throwable) -> Unit = { e ->
+        Timber.e(e)
+        when {
+            e is UnknownHostException -> view.displayNoInternetMessage()
+            e is HttpException -> {
+                val apiError = NetworkUtils.parseError(e.response())
+                view.displayMessage(apiError.message)
+            }
+            e.message != null -> view.displayMessage(e.message.toString())
+            else -> view.displayDefaultErrorMessage()
+        }
+    }
 
     fun registerUser(firstName: String,
                      lastName: String,
@@ -60,16 +73,7 @@ class RegisterPresenter(private val view: RegisterView,
                         onSuccess = {
                             view.onRegistered()
                         },
-                        onError = {
-                            if (it is HttpException) {
-                                val apiError = networkUtils.parseError(it.response())
-                                Timber.d(apiError.message)
-                                view.displayMessage(apiError.message)
-                            } else {
-                                Timber.e(it)
-                                view.displayMessage(it.message ?: "Unable to create account")
-                            }
-                        }
+                        onError = onError
                 )
 
         compositeDisposable.add(disposable)

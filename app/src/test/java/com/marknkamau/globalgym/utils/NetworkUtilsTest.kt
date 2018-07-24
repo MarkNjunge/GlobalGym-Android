@@ -15,13 +15,12 @@ import retrofit2.Response
 
 class NetworkUtilsTest {
 
-    private val networkUtils = NetworkUtils()
 
     @Test
     fun should_parseError() {
         val responseBody = ResponseBody.create(MediaType.parse("application/json"), "{\"message\": \"Server error\"}")
         val response = Response.error<ApiResponse>(500, responseBody)
-        val error = networkUtils.parseError(response)
+        val error = NetworkUtils.parseError(response)
 
         Assert.assertEquals("Server error", error.message)
     }

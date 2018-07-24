@@ -75,13 +75,12 @@ class LoginPresenterTest {
 
     @Test
     fun login_with_validCredentialsAndRegistered() {
-        RxJavaPlugins.setIoSchedulerHandler { Schedulers.trampoline() }
-        RxAndroidPlugins.setInitMainThreadSchedulerHandler { Schedulers.trampoline() }
+        Mockito.`when`(authService.getUser()).thenReturn(authUser)
+        Mockito.`when`(authService.logIn(user.email, "")).thenReturn(Completable.complete())
+        Mockito.`when`(userRepository.getUser(user.userId)).thenReturn(Single.just(user))
+        Mockito.`when`(userRepository.setCurrentUser(user)).thenReturn(Completable.complete())
 
-        Mockito.`when`(authService.logIn("", "")).thenReturn(Completable.complete())
-        Mockito.`when`(userRepository.getUser("")).thenReturn(Single.just(user))
-
-        presenter.logIn("", "")
+        presenter.logIn(user.email, "")
 
         Mockito.verify(view).onLoggedIn()
     }

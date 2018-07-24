@@ -4,6 +4,7 @@ import com.marknkamau.globalgym.data.auth.AuthService
 import com.marknkamau.globalgym.data.models.AuthUser
 import com.marknkamau.globalgym.data.models.User
 import com.marknkamau.globalgym.data.repository.UserRepository
+import com.marknkamau.globalgym.helpers.Constants
 import com.marknkamau.globalgym.helpers.Helpers
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -36,8 +37,7 @@ class LoginPresenterTest {
     private lateinit var userRepository: UserRepository
 
     private lateinit var presenter: LoginPresenter
-    private val authUser = AuthUser("", "test@mail.com")
-    private val user = User("", "", "", "test@mail.com", "", "", 0, "", "", 0, 0, null)
+
 
     @Before
     fun setup() {
@@ -46,7 +46,7 @@ class LoginPresenterTest {
 
         presenter = LoginPresenter(view, authService, userRepository)
 
-        Mockito.`when`(authService.getUser()).thenReturn(authUser)
+        Mockito.`when`(authService.getUser()).thenReturn(Constants.authUser)
     }
 
     @After
@@ -57,50 +57,50 @@ class LoginPresenterTest {
 
     @Test
     fun sentPasswordRestEmail_success(){
-        Mockito.`when`(authService.setPasswordReset("")).thenReturn(Completable.complete())
+        Mockito.`when`(authService.setPasswordReset(Constants.user.email)).thenReturn(Completable.complete())
 
-        presenter.sendPasswordReset("")
+        presenter.sendPasswordReset(Constants.user.email)
 
         Mockito.verify(view).displayMessage(Mockito.anyString())
     }
 
     @Test
     fun sentPasswordRestEmail_failure(){
-        Mockito.`when`(authService.setPasswordReset("")).thenReturn(Completable.error(Exception("")))
+        Mockito.`when`(authService.setPasswordReset(Constants.user.email)).thenReturn(Completable.error(Exception("")))
 
-        presenter.sendPasswordReset("")
+        presenter.sendPasswordReset(Constants.user.email)
 
         Mockito.verify(view).displayMessage(Mockito.anyString())
     }
 
     @Test
     fun login_with_validCredentialsAndRegistered() {
-        Mockito.`when`(authService.getUser()).thenReturn(authUser)
-        Mockito.`when`(authService.logIn(user.email, "")).thenReturn(Completable.complete())
-        Mockito.`when`(userRepository.getUser(user.userId)).thenReturn(Single.just(user))
-        Mockito.`when`(userRepository.setCurrentUser(user)).thenReturn(Completable.complete())
+        Mockito.`when`(authService.getUser()).thenReturn(Constants.authUser)
+        Mockito.`when`(authService.logIn(Constants.user.email, Constants.userPassword)).thenReturn(Completable.complete())
+        Mockito.`when`(userRepository.getUser(Constants.user.userId)).thenReturn(Single.just(Constants.user))
+        Mockito.`when`(userRepository.setCurrentUser(Constants.user)).thenReturn(Completable.complete())
 
-        presenter.logIn(user.email, "")
+        presenter.logIn(Constants.user.email, Constants.userPassword)
 
         Mockito.verify(view).onLoggedIn()
     }
 
     @Test
     fun login_with_validCredentialsAndNotRegistered() {
-        Mockito.`when`(authService.logIn("", "")).thenReturn(Completable.complete())
+        Mockito.`when`(authService.logIn(Constants.user.email, Constants.userPassword)).thenReturn(Completable.complete())
         val response = Helpers.createHttpErrorResponse(404)
-        Mockito.`when`(userRepository.getUser("")).thenReturn(Single.error(HttpException(response)))
+        Mockito.`when`(userRepository.getUser(Constants.user.userId)).thenReturn(Single.error(HttpException(response)))
 
-        presenter.logIn("", "")
+        presenter.logIn(Constants.user.email, Constants.userPassword)
 
         Mockito.verify(view).onNotRegistered()
     }
 
     @Test
     fun should_failLogin_with_invalidCredentials() {
-        Mockito.`when`(authService.logIn("", "")).thenReturn(Completable.error(Exception("error")))
+        Mockito.`when`(authService.logIn(Constants.user.email, Constants.userPassword)).thenReturn(Completable.error(Exception("error")))
 
-        presenter.logIn("", "")
+        presenter.logIn(Constants.user.email, Constants.userPassword)
 
         Mockito.verify(view).displayMessage(Mockito.anyString())
     }

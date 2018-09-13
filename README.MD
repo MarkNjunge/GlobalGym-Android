@@ -1,6 +1,8 @@
 ![alt text](/images/banner.png "Banner")
 
 # Global Gym - Android
+[![Build Status](https://app.bitrise.io/app/f14c58c94e802fdb/status.svg?token=zJ0oZ4xl2xYiiKxxzsZ1Aw&branch=master)](https://app.bitrise.io/app/f14c58c94e802fdb)  
+
 GlobalGym is an app that allows users to access any member gym across Africa.
 
 See backend API - [GlobalGym API](https://github.com/MarkNjunge/GlobalGym-api).

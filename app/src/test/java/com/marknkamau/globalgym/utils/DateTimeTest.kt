@@ -1,7 +1,9 @@
 package com.marknkamau.globalgym.utils
 
 import org.junit.Assert
+import org.junit.Before
 import org.junit.Test
+import java.util.*
 
 /**
  * Created by MarkNjunge.
@@ -9,7 +11,13 @@ import org.junit.Test
  * https://github.com/MarkNjunge
  */
 
-class DateTimeTest{
+class DateTimeTest {
+
+    @Before
+    fun setup(){
+        // Tests are configured based on GMT +3
+        TimeZone.setDefault(TimeZone.getTimeZone("Africa/Nairobi"))
+    }
 
     @Test
     fun should_convertToUnix() {

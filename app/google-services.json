@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "877114918573",
+    "firebase_url": "https://globalgym-65a9a.firebaseio.com",
+    "project_id": "globalgym-65a9a",
+    "storage_bucket": "globalgym-65a9a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:877114918573:android:0fe7e2119956ce2c",
+        "android_client_info": {
+          "package_name": "com.marknkamau.globalgym"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "877114918573-lpdv8kt3kpae5mq1fag0mnc46ofgmp73.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "877114918573-lpdv8kt3kpae5mq1fag0mnc46ofgmp73.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeVHOANf3dEOGn9s0bRVVVBDahn75twok"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

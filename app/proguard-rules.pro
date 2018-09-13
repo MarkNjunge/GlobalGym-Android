@@ -79,3 +79,12 @@
 # Kotlin
 ############################
 -keep class kotlin.reflect.jvm.internal.impl.** { *; }
+
+############################
+# Uber?
+############################
+-dontwarn org.apache.commons.logging.**
+-dontwarn org.apache.log4j.**
+
+-dontwarn android.net.http.**
+-dontwarn com.android.internal.http.**

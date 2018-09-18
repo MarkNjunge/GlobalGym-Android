@@ -70,4 +70,7 @@
     <string name="search_for_gym">Search for gym...</string>
     <string name="no_internet">Unable to connect to the internet</string>
     <string name="an_error_has_occurred">An error has ocurred</string>
+    <string name="location_icon">Location icon</string>
+    <string name="maps">Maps</string>
+    <string name="google_maps_icon">Google Maps Icon</string>
 </resources>

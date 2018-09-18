@@ -150,9 +150,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
-                    android:contentDescription="@string/directions_icon"
+                    android:contentDescription="@string/google_maps_icon"
                     android:padding="8dp"
-                    app:srcCompat="@drawable/ic_directions" />
+                    app:srcCompat="@drawable/ic_map" />
 
                 <TextView
                     android:id="@+id/textView17"
@@ -161,7 +161,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
-                    android:text="@string/directions" />
+                    android:text="@string/maps" />
 
             </LinearLayout>
 

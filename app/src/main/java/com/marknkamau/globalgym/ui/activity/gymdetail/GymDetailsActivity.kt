@@ -69,7 +69,7 @@ class GymDetailsActivity : BaseActivity(), GymDetailView {
         }
 
         layoutDirections.setOnClickListener {
-            val gmmIntentUri = Uri.parse("google.navigation:q=${gym.cords.lat},${gym.cords.lng}")
+            val gmmIntentUri = Uri.parse("geo:${gym.cords.lat},${gym.cords.lng}?q=${gym.cords.lat},${gym.cords.lng}(${gym.name})")
             val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
             mapIntent.`package` = "com.google.android.apps.maps"
             if (mapIntent.resolveActivity(packageManager) != null) {

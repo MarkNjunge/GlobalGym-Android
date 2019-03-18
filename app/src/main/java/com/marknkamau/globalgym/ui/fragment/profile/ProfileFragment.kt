@@ -15,7 +15,6 @@ import com.marknkamau.globalgym.data.models.Gym
 import com.marknkamau.globalgym.data.models.User
 import com.marknkamau.globalgym.ui.activity.editProfile.EditProfileActivity
 import com.marknkamau.globalgym.ui.activity.gymdetail.GymDetailsActivity
-import com.marknkamau.globalgym.utils.GlideApp
 import com.marknkamau.globalgym.utils.onClick
 import kotlinx.android.synthetic.main.fragment_profile.*
 
@@ -66,11 +65,6 @@ class ProfileFragment : Fragment(), ProfileView {
         tvGender.text = user.genderFull
         tvWeight.text = user.weight.toString() + "kg"
         tvTargetWeight.text = user.targetWeight.toString() + "kg"
-
-        GlideApp.with(this@ProfileFragment)
-                .load(user.profilePhoto)
-                .circleCrop()
-                .into(imgProfileIcon)
 
         btnEditProfile.setOnClickListener {
             val i = Intent(requireContext(), EditProfileActivity::class.java)

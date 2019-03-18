@@ -2,6 +2,7 @@ package com.marknkamau.globalgym.data.models
 
 import android.os.Parcel
 import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
 /**
  * Created by MarkNjunge.
@@ -9,6 +10,7 @@ import android.os.Parcelable
  * https://github.com/MarkNjunge
  */
 
+@Parcelize
 data class Gym(val gymId: String,
                val name: String,
                val logo: String,
@@ -20,44 +22,4 @@ data class Gym(val gymId: String,
                val instructors: List<String>,
                val city: String,
                val images: List<String>,
-               val cords: Cords) : Parcelable {
-    constructor(source: Parcel) : this(
-            source.readString(),
-            source.readString(),
-            source.readString(),
-            source.readString(),
-            source.readString(),
-            source.readString(),
-            source.readString(),
-            source.readString(),
-            source.createStringArrayList(),
-            source.readString(),
-            source.createStringArrayList(),
-            source.readParcelable<Cords>(Cords::class.java.classLoader)
-    )
-
-    override fun describeContents() = 0
-
-    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
-        writeString(gymId)
-        writeString(name)
-        writeString(logo)
-        writeString(phone)
-        writeString(website)
-        writeString(openTime)
-        writeString(closeTime)
-        writeString(country)
-        writeStringList(instructors)
-        writeString(city)
-        writeStringList(images)
-        writeParcelable(cords, 0)
-    }
-
-    companion object {
-        @JvmField
-        val CREATOR: Parcelable.Creator<Gym> = object : Parcelable.Creator<Gym> {
-            override fun createFromParcel(source: Parcel): Gym = Gym(source)
-            override fun newArray(size: Int): Array<Gym?> = arrayOfNulls(size)
-        }
-    }
-}
+               val cords: Cords) : Parcelable

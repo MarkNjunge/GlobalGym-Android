@@ -78,7 +78,8 @@ class UserDetailsFragment : Fragment() {
             return
         }
 
-        onComplete?.invoke(UserDetailsResponse(firstName, lastName, phone, year.toInt(), country, gender, weight.toInt(), targetWeight.toInt()))
+        val apiGender = if (gender == "Female" || gender == "Mwanamke") "F" else "M"
+        onComplete?.invoke(UserDetailsResponse(firstName, lastName, phone, year.toInt(), country, apiGender, weight.toInt(), targetWeight.toInt()))
     }
 
     data class UserDetailsResponse(val firstName: String,

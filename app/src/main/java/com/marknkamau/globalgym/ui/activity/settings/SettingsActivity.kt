@@ -45,6 +45,7 @@ class SettingsActivity : BaseActivity() {
             App.userRepository.deletePreferredGymLocal()
             App.sessionsRepository.deleteSessionsCache()
                     .compose(RxUtils.applyCompletableSchedulers())
+            App.authService.signOut()
 
             val intent = Intent(this, LoginActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

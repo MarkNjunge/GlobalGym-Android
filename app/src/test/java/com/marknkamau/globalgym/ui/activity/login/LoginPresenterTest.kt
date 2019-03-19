@@ -1,11 +1,11 @@
 package com.marknkamau.globalgym.ui.activity.login
 
 import com.marknkamau.globalgym.data.auth.AuthService
-import com.marknkamau.globalgym.data.models.AuthUser
-import com.marknkamau.globalgym.data.models.User
 import com.marknkamau.globalgym.data.repository.UserRepository
 import com.marknkamau.globalgym.helpers.Constants
 import com.marknkamau.globalgym.helpers.Helpers
+import com.marknkamau.globalgym.ui.login.LoginPresenter
+import com.marknkamau.globalgym.ui.login.LoginView
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.android.plugins.RxAndroidPlugins

@@ -7,7 +7,7 @@
     android:fillViewport="true"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context=".ui.activity.addSession.AddSessionActivity">
+    tools:context=".ui.addSession.AddSessionActivity">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

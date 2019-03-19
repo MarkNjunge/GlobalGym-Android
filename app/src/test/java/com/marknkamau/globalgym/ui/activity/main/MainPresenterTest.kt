@@ -1,11 +1,8 @@
 package com.marknkamau.globalgym.ui.activity.main
 
 import com.marknkamau.globalgym.data.auth.AuthService
-import com.marknkamau.globalgym.data.models.AuthUser
-import io.reactivex.android.plugins.RxAndroidPlugins
-import io.reactivex.plugins.RxJavaPlugins
-import io.reactivex.schedulers.Schedulers
-import org.junit.After
+import com.marknkamau.globalgym.ui.main.MainPresenter
+import com.marknkamau.globalgym.ui.main.MainView
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.main.MainActivity">
+        <activity android:name=".ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,29 +21,29 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.login.LoginActivity"
+            android:name=".ui.login.LoginActivity"
             android:theme="@style/AppThemeNoBar" />
         <activity
-            android:name=".ui.activity.signup.SignUpActivity"
+            android:name=".ui.signup.SignUpActivity"
             android:theme="@style/AppThemeNoBar" />
-        <activity android:name=".ui.activity.register.RegisterActivity" />
+        <activity android:name=".ui.register.RegisterActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".ui.activity.gymdetail.GymDetailsActivity" />
+        <activity android:name=".ui.gymDetail.GymDetailsActivity" />
         <activity
-            android:name=".ui.activity.addSession.AddSessionActivity"
-            android:parentActivityName=".ui.activity.main.MainActivity" />
-        <activity android:name=".ui.activity.selectGym.SelectGymActivity" />
+            android:name="com.marknkamau.globalgym.ui.addSession.AddSessionActivity"
+            android:parentActivityName=".ui.main.MainActivity" />
+        <activity android:name=".ui.selectGym.SelectGymActivity" />
         <activity
-            android:name=".ui.activity.settings.SettingsActivity"
-            android:parentActivityName=".ui.activity.main.MainActivity" />
+            android:name=".ui.settings.SettingsActivity"
+            android:parentActivityName=".ui.main.MainActivity" />
         <activity
-            android:name=".ui.activity.sessionDetails.SessionDetailsActivity"
-            android:parentActivityName=".ui.activity.main.MainActivity" />
-        <activity android:name=".ui.activity.editProfile.EditProfileActivity" />
+            android:name=".ui.sessionDetails.SessionDetailsActivity"
+            android:parentActivityName=".ui.main.MainActivity" />
+        <activity android:name=".ui.editProfile.EditProfileActivity" />
 
         <meta-data android:name="firebase_crashlytics_collection_enabled" android:value="false" />
     </application>

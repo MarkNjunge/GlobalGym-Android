@@ -9,6 +9,10 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'io.fabric'
 
 android {
+    def keysPropertiesFile = rootProject.file("keys.properties")
+    def keys = new Properties()
+    keys.load(new FileInputStream(keysPropertiesFile))
+
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.marknkamau.globalgym"
@@ -17,9 +21,9 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        resValue "string", "google_maps_key", (project.findProperty("GOOGLE_API_KEY") ?: "")
-        resValue "string", "uber_client_id", (project.findProperty("UBER_CLENT_ID") ?: "")
-        resValue "string", "uber_server_token", (project.findProperty("UBER_SERVER_TOKEN") ?: "")
+        resValue "string", "google_maps_key", keys['GOOGLE_API_KEY']
+        resValue "string", "uber_client_id", keys['UBER_CLIENT_ID']
+        resValue "string", "uber_server_token", keys['UBER_SERVER_TOKEN']
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]

@@ -9,6 +9,7 @@ import android.app.TimePickerDialog
 import android.content.Intent
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
 import com.marknkamau.globalgym.App
@@ -112,7 +113,7 @@ class AddSessionActivity : BaseActivity(), AddSessionView {
             refreshStepIndices()
         }
         val gym = intent.getParcelableExtra<Gym>(PREVIOUS_SESSION_GYM)
-        if (gym != null){
+        if (gym != null) {
             selectedGym = gym
             tvLocation.text = gym.name
         }
@@ -143,14 +144,17 @@ class AddSessionActivity : BaseActivity(), AddSessionView {
 
     override fun displayNoInternetMessage() {
         Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show()
+        pbLoading.visibility = View.VISIBLE
     }
 
     override fun displayDefaultErrorMessage() {
         Toast.makeText(this, R.string.an_error_has_occurred, Toast.LENGTH_SHORT).show()
+        pbLoading.visibility = View.VISIBLE
     }
 
     override fun displayMessage(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        pbLoading.visibility = View.VISIBLE
     }
 
     override fun onSessionAdded() {
@@ -185,7 +189,7 @@ class AddSessionActivity : BaseActivity(), AddSessionView {
             tvTime.text = dateTime.format(DateTime.APP_TIME_FORMAT)
         }
 
-        val hourOfDay =  dateTime.hourOfDay
+        val hourOfDay = dateTime.hourOfDay
         val minute = dateTime.minute
 
         val timePickerDialog = TimePickerDialog(this, listener, hourOfDay, minute, true)
@@ -196,9 +200,26 @@ class AddSessionActivity : BaseActivity(), AddSessionView {
     private fun saveSession() {
         val sessionName = tvSessionName.trimmedText
 
-        if (sessionName.isNotEmpty() && exercises.isNotEmpty() && selectedGym != null) {
-            presenter.addSession(sessionName, dateTime.timestamp, selectedGym!!, exercises)
+        var valid = true
+        if (sessionName.isEmpty()) {
+            tvSessionName.error = "Please enter a name"
+            valid = false
         }
+        if (exercises.isEmpty()) {
+            Toast.makeText(this, "Please add at least one exercise", Toast.LENGTH_SHORT).show()
+            valid = false
+        }
+        if (selectedGym == null) {
+            Toast.makeText(this, "Please select a gym", Toast.LENGTH_SHORT).show()
+            valid = false
+        }
+
+        if (!valid) {
+            return
+        }
+
+        presenter.addSession(sessionName, dateTime.timestamp, selectedGym!!, exercises)
+        pbLoading.visibility = View.VISIBLE
     }
 
     private fun refreshStepIndices() {

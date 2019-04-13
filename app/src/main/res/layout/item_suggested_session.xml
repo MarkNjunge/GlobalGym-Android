@@ -47,28 +47,31 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#EDF1F7"
+            android:background="#f4f8ff"
             android:orientation="vertical">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rvExercises"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                android:nestedScrollingEnabled="false"
                 app:layout_constraintTop_toBottomOf="@+id/tvSessionName"
                 tools:itemCount="3"
                 tools:listitem="@layout/item_suggested_exercise" />
 
-            <Button
+            <android.support.design.button.MaterialButton
                 android:id="@+id/btnUseExercise"
-                style="@style/ButtonPrimary"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:text="@string/add" />
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/add"
+                app:strokeColor="@color/colorAccent" />
         </LinearLayout>
 
     </com.github.florent37.expansionpanel.ExpansionLayout>

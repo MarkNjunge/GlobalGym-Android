@@ -1,6 +1,7 @@
 package com.marknkamau.globalgym.ui.settings
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import com.marknkamau.globalgym.App
 import com.marknkamau.globalgym.BuildConfig
@@ -40,7 +41,11 @@ class SettingsActivity : BaseActivity() {
             dialog.show(supportFragmentManager, "lang")
         }
 
-        layoutLogout.setOnClickListener {
+        llSourceCode.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/MarkNjunge/GlobalGym-Android")))
+        }
+
+        tvLogout.setOnClickListener {
             App.userRepository.deleteUserLocal()
             App.userRepository.deletePreferredGymLocal()
             App.sessionsRepository.deleteSessionsCache()

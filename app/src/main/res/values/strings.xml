@@ -37,8 +37,8 @@
     <string name="call">Call</string>
     <string name="instructors">Instructors</string>
     <string name="exercise_title_hint">Title</string>
-    <string name="exercise_reps_hint">Reps</string>
-    <string name="exercise_sets_hint">Sets</string>
+    <string name="exercise_reps_hint" translatable="false">Reps</string>
+    <string name="exercise_sets_hint" translatable="false">Sets</string>
     <string name="save_exercise">Save</string>
     <string name="delete_exercise">Delete</string>
     <string name="session_name">Session name</string>
@@ -61,7 +61,7 @@
     <string name="version">Version: %s</string>
     <string name="developer">Developer</string>
     <string name="developer_name" translatable="false">Mark Njung\'e</string>
-    <string name="developer_email" translatable="false">mark.kamau@outlook.com</string>
+    <string name="developer_email" translatable="false">contact@marknjunge.com</string>
     <string name="preferred_gym">Preferred Gym</string>
     <string name="reapeat_session">Reapeat session</string>
     <string name="delete">Delete</string>
@@ -72,5 +72,5 @@
     <string name="an_error_has_occurred">An error has ocurred</string>
     <string name="location_icon">Location icon</string>
     <string name="maps">Maps</string>
-    <string name="google_maps_icon">Google Maps Icon</string>
+    <string name="google_maps_icon" translatable="false">Google Maps Icon</string>
 </resources>

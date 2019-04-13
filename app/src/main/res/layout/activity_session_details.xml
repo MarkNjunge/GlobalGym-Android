@@ -83,9 +83,10 @@
         tools:itemCount="2"
         tools:listitem="@layout/item_exercise" />
 
-    <Button
+    <android.support.design.button.MaterialButton
         android:id="@+id/btnCompleted"
-        style="@style/ButtonPrimary"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_height="56dp"
         android:layout_width="0dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -95,9 +96,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+    <android.support.design.button.MaterialButton
         android:id="@+id/btnRepeatSession"
-        style="@style/ButtonSecondary"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_height="56dp"
         android:layout_width="0dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -109,19 +111,23 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:visibility="visible" />
 
-    <Button
+    <android.support.design.button.MaterialButton
         android:id="@+id/btnDelete"
-        style="@style/ButtonDanger"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_height="56dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/delete"
+        android:textColor="@color/colorAccentAlt"
         app:layout_constraintBottom_toTopOf="@+id/btnCompleted"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rvExercises"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="1.0"
+        app:rippleColor="@color/colorAccentAlt"
+        app:strokeColor="@color/colorAccentAlt" />
 
 </android.support.constraint.ConstraintLayout>

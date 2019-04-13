@@ -66,4 +66,7 @@
     <string name="suggested_sessions">Mazoezi yaliyopendekezwa</string>
     <string name="search_for_gym">Jina la chumba</string>
     <string name="location_icon">Ishara ya eneo</string>
+    <string name="maps">Ramani</string>
+    <string name="an_error_has_occurred">Kuna shida limetokea</string>
+    <string name="no_internet">Tafadhali angalia internet yako</string>
 </resources>

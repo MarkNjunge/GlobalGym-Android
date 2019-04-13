@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:alpha=".87"
         android:textColor="@color/colorBlack_87"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -25,11 +26,11 @@
         style="@style/TextContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
         android:textColor="@color/colorBlack_87"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvSessionName"
-        tools:text="6:00 AM, ,25 - Jun - 2018" />
+        tools:text="6:00 AM,25 - Jun - 2018" />
 </android.support.constraint.ConstraintLayout>

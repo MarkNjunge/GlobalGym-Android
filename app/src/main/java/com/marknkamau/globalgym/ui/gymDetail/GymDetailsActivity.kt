@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.transition.TransitionManager
 import android.support.v7.widget.LinearLayoutManager
+import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -32,7 +33,7 @@ class GymDetailsActivity : BaseActivity(), GymDetailView {
     private lateinit var presenter: GymDetailPresenter
     private lateinit var adapter: InstructorsAdapter
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_gym_details)
@@ -41,6 +42,8 @@ class GymDetailsActivity : BaseActivity(), GymDetailView {
 
         supportActionBar?.run {
             title = gym.name
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayHomeAsUpEnabled(true)
         }
 
         presenter = GymDetailPresenter(this, gym, App.userRepository, App.gymRepository)
@@ -142,6 +145,13 @@ class GymDetailsActivity : BaseActivity(), GymDetailView {
                             Timber.e(it)
                         }
                 )
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onStop() {

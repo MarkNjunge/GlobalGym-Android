@@ -1,6 +1,5 @@
 package com.marknkamau.globalgym.ui.sessionsList
 
-import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -62,7 +61,6 @@ class SuggestedSessionsAdapter(private val onClick: (SuggestedSession) -> Unit) 
             adapter.setItems(item.exercises)
 
             rvExercises.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
-            rvExercises.addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
 //            rvExercises.recycledViewPool = viewPool
             rvExercises.adapter = adapter
 

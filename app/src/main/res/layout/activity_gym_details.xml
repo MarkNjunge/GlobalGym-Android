@@ -23,7 +23,7 @@
             <ImageView
                 android:id="@+id/imgHeader"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="250dp"
                 android:contentDescription="@string/gym_image"
                 android:scaleType="centerCrop"
                 app:srcCompat="@drawable/ic_launcher_background" />
@@ -31,7 +31,7 @@
             <ImageView
                 android:id="@+id/imageView7"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
+                android:layout_height="150dp"
                 android:layout_gravity="bottom"
                 app:srcCompat="@drawable/fade" />
 

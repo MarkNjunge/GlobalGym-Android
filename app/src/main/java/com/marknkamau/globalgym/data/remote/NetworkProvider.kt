@@ -34,10 +34,11 @@ class NetworkProvider {
 
     private fun provideOkHttpClient(): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor()
-        loggingInterceptor.level = HttpLoggingInterceptor.Level.BASIC
+        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
         return OkHttpClient.Builder()
-                .addInterceptor(loggingInterceptor)
+                .addNetworkInterceptor(AuthorizationInterceptor())
+                .addNetworkInterceptor(loggingInterceptor)
                 .readTimeout(TIMEOUT, TimeUnit.SECONDS)
                 .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
